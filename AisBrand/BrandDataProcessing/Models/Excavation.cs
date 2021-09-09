@@ -1,5 +1,8 @@
-﻿namespace BrandDataProcessing.Models
+﻿using System;
+
+namespace BrandDataProcessing.Models
 {
+    [Serializable]
     public class Excavation
     {
         public int ID { get; set; }

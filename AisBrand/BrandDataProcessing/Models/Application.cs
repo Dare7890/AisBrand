@@ -1,5 +1,6 @@
 ﻿namespace BrandDataProcessing.Models
 {
+    [Serializable]
     public class Application
     {
         public int ClassificationID { get; set; }
