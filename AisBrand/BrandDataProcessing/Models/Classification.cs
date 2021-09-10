@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BrandDataProcessing.Models
 {
@@ -10,5 +11,7 @@ namespace BrandDataProcessing.Models
         public string Name { get; set; }
 
         public string Author { get; set; }
+
+        public List<ClassificationElement> ClassificationElements { get; set; }
     }
 }

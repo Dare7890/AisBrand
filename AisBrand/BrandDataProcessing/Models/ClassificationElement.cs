@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BrandDataProcessing.Models
 {
@@ -6,7 +7,7 @@ namespace BrandDataProcessing.Models
     public class ClassificationElement
     {
         public int ID { get; set; }
-
+        // TODO: удостовериться
         public int ClassificationID { get; set; }
 
         public string Type { get; set; }
@@ -16,5 +17,7 @@ namespace BrandDataProcessing.Models
         public string Description { get; set; }
 
         public byte[] Image { get; set; }
+
+        public List<Application> Applications { get; set; }
     }
 }

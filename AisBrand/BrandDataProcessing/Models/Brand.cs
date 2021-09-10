@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BrandDataProcessing.Models
 {
@@ -6,8 +7,6 @@ namespace BrandDataProcessing.Models
     public class Brand
     {
         public int ID { get; set; }
-
-        public int ExcavationID { get; set; }
 
         public string Formation { get; set; }
 
@@ -44,5 +43,9 @@ namespace BrandDataProcessing.Models
         public string Analogy { get; set; }
 
         public string Note { get; set; }
+
+        public List<Excavation> Excavations { get; set; }
+
+        public ClassifiedBrand ClassifiedBrand { get; set; }
     }
 }
