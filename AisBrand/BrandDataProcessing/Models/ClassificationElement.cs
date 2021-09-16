@@ -7,8 +7,6 @@ namespace BrandDataProcessing.Models
     public class ClassificationElement
     {
         public int ID { get; set; }
-        // TODO: удостовериться
-        public int ClassificationID { get; set; }
 
         public string Type { get; set; }
 
@@ -18,6 +16,6 @@ namespace BrandDataProcessing.Models
 
         public byte[] Image { get; set; }
 
-        public List<Application> Applications { get; set; }
+        public Classification Classification { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace BrandDataProcessing.Models
     [Serializable]
     public class Application
     {
-        public Classification Classification { get; set; }
+        public int ClassificationID { get; set; }
 
         public byte[] File { get; set; }
     }
