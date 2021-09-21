@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace BrandDataProcessing.Models
 {
@@ -30,9 +29,9 @@ namespace BrandDataProcessing.Models
 
         public string ReconstructionReliability { get; set; }
 
-        public string DatingLowerBound { get; set; }
+        public int DatingLowerBound { get; set; }
 
-        public string DatingUpperBound { get; set; }
+        public int DatingUpperBound { get; set; }
 
         public string Description { get; set; }
 
@@ -43,8 +42,6 @@ namespace BrandDataProcessing.Models
         public string Analogy { get; set; }
 
         public string Note { get; set; }
-
-        public List<Excavation> Excavations { get; set; }
 
         public ClassifiedBrand ClassifiedBrand { get; set; }
     }
