@@ -16,6 +16,6 @@ namespace BrandDataProcessing.Models
 
         public byte[] Image { get; set; }
 
-        public Classification Classification { get; set; }
+        public List<Brand> Brands { get; set; }
     }
 }
