@@ -43,6 +43,8 @@ namespace BrandDataProcessing.Models
 
         public string Note { get; set; }
 
-        public ClassifiedBrand ClassifiedBrand { get; set; }
+        public int? ClassificationElementID { get; set; }
+
+        public ClassificationElement ClassificationElement { get; set; }
     }
 }
