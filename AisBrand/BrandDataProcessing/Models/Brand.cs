@@ -42,9 +42,5 @@ namespace BrandDataProcessing.Models
         public string Analogy { get; set; }
 
         public string Note { get; set; }
-
-        public int? ClassificationElementID { get; set; }
-
-        public ClassificationElement ClassificationElement { get; set; }
     }
 }

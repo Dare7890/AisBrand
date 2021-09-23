@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -22,8 +23,10 @@ namespace BrandDataProcessing.DAL
                 throw new ArgumentNullException(nameof(brand));
 
             XDocument xmlDocument = XDocument.Load(fileName);
+            IEnumerable<Brand> brands = GetBrands(xmlDocument, excavationID);
+            int brendID = GetNextElementID(brands);
             XElement element = new XElement(nameof(Brand),
-                new XElement(nameof(brand.ID), brand.ID),
+                new XElement(nameof(brand.ID), brendID),
                 new XElement(nameof(brand.Formation), brand.Formation),
                 new XElement(nameof(brand.Square), brand.Square),
                 new XElement(nameof(brand.Depth), brand.Depth),
@@ -100,6 +103,23 @@ namespace BrandDataProcessing.DAL
 
                 xmlDocument.Save(fileName);
             }
+        }
+
+        private static IEnumerable<Brand> GetBrands(XDocument xmlDocument, int excavationID)
+        {
+            return Serializated<Brand>.XmlDeserialization(xmlDocument.Element(RootElementName)
+                                                                        .Elements(nameof(Excavation))
+                                                                        .Elements(nameof(Brand)));
+        }
+
+        private static int GetNextElementID(IEnumerable<Brand> brands)
+        {
+            return GetMaxBrandID(brands) + 1;
+        }
+
+        private static int GetMaxBrandID(IEnumerable<Brand> brands)
+        {
+            return brands.Count() == 0 ? 0 : brands.Max(i => i.ID);
         }
     }
 }
