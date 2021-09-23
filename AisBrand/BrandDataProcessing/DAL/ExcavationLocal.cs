@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using BrandDataProcessing.Models;
@@ -24,6 +25,14 @@ namespace BrandDataProcessing.DAL
 
             if (excavation == null)
                 throw new ArgumentNullException(nameof(excavation));
+            // TODO: вынести создание файла в отдельный класс.
+            if (!File.Exists(fileName))
+            {
+                using (File.Create(fileName)){}
+
+                XDocument newXml = new XDocument(new XElement(RootElementName));
+                newXml.Save(fileName);
+            }
 
             XDocument xmlDocument = XDocument.Load(fileName);
             IEnumerable<Excavation> excavations = GetExcavations(xmlDocument);
@@ -74,7 +83,7 @@ namespace BrandDataProcessing.DAL
 
         private static int GetMaxExcavationID(IEnumerable<Excavation> excavations)
         {
-            return excavations.Max(i => i.ID);
+            return excavations.Count() == 0 ? 0 : excavations.Max(i => i.ID);
         }
     }
 }
