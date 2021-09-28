@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
@@ -34,13 +36,27 @@ namespace BrandDataProcessing.Models
         public int DatingUpperBound { get; set; }
 
         public string Description { get; set; }
-
-        public byte[] Image { get; set; }
-
-        public byte[] Photo { get; set; }
+        [XmlIgnore]
+        public string ImageAsString { get; set; }
+        [XmlIgnore]
+        public string PhotoAsString { get; set; }
 
         public string Analogy { get; set; }
 
         public string Note { get; set; }
+
+        [XmlElement(ElementName = "ImageAsString", DataType = "hexBinary")]
+        public byte[] Image
+        {
+            get { return Encoding.UTF8.GetBytes(ImageAsString ?? string.Empty); }
+            set { ImageAsString = Encoding.UTF8.GetString(value); }
+        }
+
+        [XmlElement(ElementName = "PhotoAsString", DataType = "hexBinary")]
+        public byte[] Photo
+        {
+            get { return Encoding.UTF8.GetBytes(PhotoAsString ?? string.Empty); }
+            set { PhotoAsString = Encoding.UTF8.GetString(value); }
+        }
     }
 }
