@@ -7,6 +7,8 @@ namespace BrandDataProcessing.Models
     [Serializable]
     public class Application
     {
+        public int ID { get; set; }
+
         public int ClassificationID { get; set; }
 
         [XmlIgnore]
