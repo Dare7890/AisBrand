@@ -16,7 +16,7 @@ namespace BrandDataProcessing.DAL
         {
             this.fileName = fileName;
         }
-
+        // TODO: добавить подэлемент Brands.
         public void Add(Brand brand, int excavationID)
         {
             if (brand == null)
@@ -55,12 +55,11 @@ namespace BrandDataProcessing.DAL
             xmlDocument.Save(fileName);
         }
 
-        public void Delete(int id, int excavationID)
+        public void Delete(int id)
         {
             XDocument xmlDocument = XDocument.Load(fileName);
             xmlDocument.Element(RootElementName)
                 .Elements(nameof(Excavation))
-                .FirstOrDefault(e => int.Parse(e.Element("ID").Value) == excavationID)
                 .Elements(nameof(Brand))
                 .FirstOrDefault(b => int.Parse(b.Element("ID").Value) == id)
                 ?.Remove();
@@ -68,7 +67,7 @@ namespace BrandDataProcessing.DAL
             xmlDocument.Save(fileName);
         }
 
-        public void Update(Brand brand, int excavationID)
+        public void Update(Brand brand)
         {
             if (brand == null)
                 throw new ArgumentNullException(nameof(brand));
@@ -76,7 +75,6 @@ namespace BrandDataProcessing.DAL
             XDocument xmlDocument = XDocument.Load(fileName);
             XElement updatedBrand = xmlDocument.Element(RootElementName)
                                         .Elements(nameof(Excavation))
-                                        .FirstOrDefault(e => int.Parse(e.Element("ID").Value) == excavationID)
                                         .Elements(nameof(Brand))
                                         .FirstOrDefault(b => int.Parse(b.Element("ID").Value) == brand.ID);
 

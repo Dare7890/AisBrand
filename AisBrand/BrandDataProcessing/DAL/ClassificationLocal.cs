@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using BrandDataProcessing;
 using BrandDataProcessing.Models;
 
-namespace ClassificationDataProcessing.DAL
+namespace BrandDataProcessing.DAL
 {
     public class ClassificationLocal
     {
@@ -23,7 +23,7 @@ namespace ClassificationDataProcessing.DAL
                 throw new ArgumentNullException(nameof(classification));
 
             XDocument xmlDocument = XDocument.Load(fileName);
-            IEnumerable<Classification> classifications = GetClassifications(xmlDocument, excavationID);
+            IEnumerable<Classification> classifications = GetClassifications(xmlDocument);
             int classificationsID = GetNextElementID(classifications);
             XElement element = new XElement(nameof(Classification),
                 new XElement(nameof(classification.ID), classificationsID),
@@ -39,12 +39,11 @@ namespace ClassificationDataProcessing.DAL
             xmlDocument.Save(fileName);
         }
 
-        public void Delete(int id, int classificationID)
+        public void Delete(int id)
         {
             XDocument xmlDocument = XDocument.Load(fileName);
             xmlDocument.Element(RootElementName)
                 .Elements(nameof(Excavation))
-                .FirstOrDefault(e => int.Parse(e.Element("ID").Value) == classificationID)
                 .Elements(nameof(Classification))
                 .FirstOrDefault(b => int.Parse(b.Element("ID").Value) == id)
                 ?.Remove();
@@ -52,7 +51,7 @@ namespace ClassificationDataProcessing.DAL
             xmlDocument.Save(fileName);
         }
 
-        public void Update(Classification classification, int excavationID)
+        public void Update(Classification classification)
         {
             if (classification == null)
                 throw new ArgumentNullException(nameof(classification));
@@ -60,7 +59,6 @@ namespace ClassificationDataProcessing.DAL
             XDocument xmlDocument = XDocument.Load(fileName);
             XElement updatedClassification = xmlDocument.Element(RootElementName)
                                         .Elements(nameof(Excavation))
-                                        .FirstOrDefault(e => int.Parse(e.Element("ID").Value) == excavationID)
                                         .Elements(nameof(Classification))
                                         .FirstOrDefault(b => int.Parse(b.Element("ID").Value) == classification.ID);
 
@@ -73,7 +71,7 @@ namespace ClassificationDataProcessing.DAL
             }
         }
 
-        private static IEnumerable<Classification> GetClassifications(XDocument xmlDocument, int excavationID)
+        private static IEnumerable<Classification> GetClassifications(XDocument xmlDocument)
         {
             return Serializated<Classification>.XmlDeserialization(xmlDocument.Element(RootElementName)
                                                                         .Elements(nameof(Excavation))
