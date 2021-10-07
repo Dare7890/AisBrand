@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    public class Classification
+    public class Classification : IIdentifier
     {
         public int ID { get; set; }
 

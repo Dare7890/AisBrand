@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    public class Application
+    public class Application : IIdentifier
     {
         public int ID { get; set; }
 

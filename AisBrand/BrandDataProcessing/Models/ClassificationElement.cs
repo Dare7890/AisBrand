@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    public class ClassificationElement
+    public class ClassificationElement : IIdentifier
     {
         public int ID { get; set; }
 
