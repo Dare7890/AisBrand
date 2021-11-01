@@ -8,9 +8,9 @@ namespace BrandDataProcessing
     {
         private const int oneDateBoundaryAmount = 1;
         private const int twoDateBoundaryAmount = 2;
+        private const int maxDateBoundaryAmount = 2;
 
         private const int firstDateBoundaryIndex = 0;
-        private const int secondDateBoundaryIndex = 1;
 
         private const int halfCenturyNumberIndex = 0;
         private const int halfCenturyIndex = 1;
@@ -25,8 +25,14 @@ namespace BrandDataProcessing
         private const string BCDeterminant = "до";
         private const string halfCenturyText = "пол.";
 
+        private const string centuryText = "в.";
+        private const string millenniumText = "тыс.";
+
         private const int halfCentury = 50;
+        private const int lastCenturyYear = 100;
         private const int halfMillennium = 500;
+        private const int lastMillenniumYear = 1000;
+
         private const int firstHalfCenturyNumber = 1;
         private const int secondHalfCenturyNumber = 2;
 
@@ -41,29 +47,19 @@ namespace BrandDataProcessing
             string[] lineParts = line.Split(dateBoundaryRangeSeparator);
 
             int dateBoundaryAmount = lineParts.Length;
+            if (dateBoundaryAmount > maxDateBoundaryAmount)
+            {
+                string exceptionMessage = string.Format("The date boundary amount must be {0} or {1}. Current date boundary amount is {2}", oneDateBoundaryAmount, twoDateBoundaryAmount, dateBoundaryAmount);
+                throw new FormatException(exceptionMessage);
+            }
+
+            int secondDateBoundaryIndex = dateBoundaryAmount - 1;
             DatingBound datingBound = new DatingBound(line);
+            datingBound.DatingLowerBound = ParseDateBoundary(lineParts[firstDateBoundaryIndex]);
+            datingBound.DatingUpperBound = ParseDateBoundary(lineParts[secondDateBoundaryIndex], false);
+            ValidationDateBound(datingBound.DatingLowerBound, datingBound.DatingUpperBound);
 
-            // TODO : переписать.
-            if (dateBoundaryAmount == oneDateBoundaryAmount)
-            {
-                datingBound.DatingLowerBound = ParseDateBoundary(lineParts[firstDateBoundaryIndex]);
-                datingBound.DatingUpperBound = ParseDateBoundary(lineParts[firstDateBoundaryIndex], false);
-                ValidationDateBound(datingBound.DatingLowerBound, datingBound.DatingUpperBound);
-
-                return datingBound;
-            }
-
-            if (dateBoundaryAmount == twoDateBoundaryAmount)
-            {
-                datingBound.DatingLowerBound = ParseDateBoundary(lineParts[firstDateBoundaryIndex]);
-                datingBound.DatingUpperBound = ParseDateBoundary(lineParts[secondDateBoundaryIndex], false);
-                ValidationDateBound(datingBound.DatingLowerBound, datingBound.DatingUpperBound);
-
-                return datingBound;
-            }
-
-            string exceptionMessage = string.Format("The date boundary amount must be {0} or {1}. Current date boundary amount is {2}", oneDateBoundaryAmount, twoDateBoundaryAmount, dateBoundaryAmount);
-            throw new FormatException(exceptionMessage);
+            return datingBound;
         }
 
         private static void ValidationDateBound(int datingLowerBound, int datingUpperBound)
@@ -78,27 +74,23 @@ namespace BrandDataProcessing
         public static int ParseDateBoundary(string dateBoundaryLine, bool isFirstDateBoundary = true)
         {
             string[] dateBoundaryLineParts = dateBoundaryLine.TrimStart().TrimEnd().Split(dateBoundaryLineSeparator);
-            string[] wholeDateBoundaryParts;
+            int? halfCenturyNumber = null;
             if (dateBoundaryLineParts[halfCenturyIndex] == halfCenturyText)
             {
                 string halfCenturyNumberLine = dateBoundaryLineParts[halfCenturyNumberIndex];
-                int halfCenturyNumber = ParseHalfCenturyNumber(halfCenturyNumberLine);
-                // TODO: Добавить строчку с вычислением тысячелетия и с проверкой.
-
-                wholeDateBoundaryParts = ExtractWholeDateBoundary(dateBoundaryLineParts);
-                int wholeDateBoundary = ParseWholeDateBoundary(isFirstDateBoundary, wholeDateBoundaryParts);
-                return TakeIntoAccountCenturyHalf(isFirstDateBoundary, halfCenturyNumber, halfCentury, wholeDateBoundary);
+                halfCenturyNumber = ParseHalfCenturyNumber(halfCenturyNumberLine);
+                dateBoundaryLineParts = ExtractWholeDateBoundary(dateBoundaryLineParts);
             }
 
-            return ParseWholeDateBoundary(isFirstDateBoundary, dateBoundaryLineParts);
+            return ParseWholeDateBoundary(isFirstDateBoundary, dateBoundaryLineParts, halfCenturyNumber);
         }
 
-        private static int TakeIntoAccountCenturyHalf(bool isFirstDateBoundary, int halfNumber, int half, int wholeDateBoundary)
+        private static int TakeIntoAccountPeriodHalf(bool isFirstDateBoundary, int halfNumber, int half, int wholeDateBoundary, bool isBC)
         {
-            if (halfNumber == firstHalfCenturyNumber && !isFirstDateBoundary)
-                wholeDateBoundary -= half;
-            else if (halfNumber == secondHalfCenturyNumber && isFirstDateBoundary)
-                wholeDateBoundary += half;
+            if (halfNumber == firstHalfCenturyNumber && !isFirstDateBoundary && isBC || halfNumber == secondHalfCenturyNumber && isFirstDateBoundary && !isBC)
+                    wholeDateBoundary += half;
+            else if (halfNumber == secondHalfCenturyNumber && isFirstDateBoundary && isBC || halfNumber == firstHalfCenturyNumber && !isFirstDateBoundary && !isBC)
+                    wholeDateBoundary -= half;
 
             return wholeDateBoundary;
         }
@@ -132,7 +124,7 @@ namespace BrandDataProcessing
             }
         }
 
-        private static int ParseWholeDateBoundary(bool isFirstDateBoundary, string[] dateBoundaryLineParts)
+        private static int ParseWholeDateBoundary(bool isFirstDateBoundary, string[] dateBoundaryLineParts, int? halfNumber = null)
         {
             string yearValue = dateBoundaryLineParts[yearIndex];
             bool isBc = dateBoundaryLineParts[BCDeterminantIndex] == BCDeterminant;
@@ -140,20 +132,29 @@ namespace BrandDataProcessing
             if (IsRomanNumerals(yearValue))
             {
                 string period = dateBoundaryLineParts[periodIndex];
+                int lastYear;
+                int halfPeriod;
                 switch (period)
                 {
-                    case "тыс.":
+                    case millenniumText:
                         year = ParseMillenniumByRomanNumerals(yearValue);
+                        lastYear = lastMillenniumYear;
+                        halfPeriod = halfMillennium;
                         break;
-                    case "в.":
+                    case centuryText:
                         year = ParseYearByRomanNumerals(yearValue);
+                        lastYear = lastCenturyYear;
+                        halfPeriod = halfCentury;
                         break;
                     default:
                         throw new InvalidOperationException("Incorrect name of period. Must be \"тыс.\" or \"в.\"");
                 }
 
                 if (!isFirstDateBoundary && isBc || isFirstDateBoundary && !isBc)
-                    year = ConvertToCenturyBeginning(year);
+                    year = ConvertToPeriodBeginning(year, lastYear);
+
+                if (halfNumber.HasValue)
+                    year = TakeIntoAccountPeriodHalf(isFirstDateBoundary, halfNumber.Value, halfPeriod, year, isBc);
             }
             else
             {
@@ -172,9 +173,9 @@ namespace BrandDataProcessing
             return year *= -1;
         }
 
-        private static int ConvertToCenturyBeginning(int year)
+        private static int ConvertToPeriodBeginning(int year, int lastPeriodAge)
         {
-            return year -= 100;
+            return year -= lastPeriodAge;
         }
 
         private static bool IsRomanNumerals(string yearValue)
@@ -197,11 +198,10 @@ namespace BrandDataProcessing
         private static void ValidationYear(int year)
         {
             int maxYear = DateTime.Now.Date.Year;
-            int minYear = -5000;
 
-            if (year > maxYear || year < minYear)
+            if (year > maxYear)
             {
-                string exceptionMessage = string.Format("The year {0} must be more than {1} and less than {2}", year, minYear, maxYear);
+                string exceptionMessage = string.Format("The year {0} must be less than {1}", year, maxYear);
                 throw new FormatException(exceptionMessage);
             }
         }
@@ -213,18 +213,16 @@ namespace BrandDataProcessing
 
         private static int ParseYearByRomanNumerals(string romanNumber)
         {
-            const int centuryNumber = 100;
             int century = ParseCenturyByRomanNumerals(romanNumber);
 
-            return century * centuryNumber;
+            return century * lastCenturyYear;
         }
 
         private static int ParseMillenniumByRomanNumerals(string romanNumber)
         {
-            const int millenniumNumber = 1000;
             int century = ParseCenturyByRomanNumerals(romanNumber);
 
-            return century * millenniumNumber;
+            return century * lastMillenniumYear;
         }
 
         private static int ParseCenturyByRomanNumerals(string romanNumber)
@@ -239,10 +237,11 @@ namespace BrandDataProcessing
 
             for (int i = 0; i < romanNumber.Length - 1; i++)
             {
-                if (EnumParse(romanNumber[i].ToString()) >= EnumParse(romanNumber[i + 1].ToString()))
-                    arabicNumber += EnumParse(romanNumber[i].ToString());
+                int number = EnumParse(romanNumber[i].ToString());
+                if (number >= EnumParse(romanNumber[i + 1].ToString()))
+                    arabicNumber += number;
                 else
-                    arabicNumber -= EnumParse(romanNumber[i].ToString());
+                    arabicNumber -= number;
             }
 
             arabicNumber += EnumParse(romanNumber[romanNumber.Length - 1].ToString());
