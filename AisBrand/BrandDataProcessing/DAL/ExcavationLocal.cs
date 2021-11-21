@@ -1,11 +1,12 @@
 ﻿using BrandDataProcessing.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 
 namespace BrandDataProcessing.DAL
 {
-    public class ExcavationLocal
+    public class ExcavationLocal : IRepository<Excavation>
     {
         private const string rootElementName = "ArrayOfExcavation";
         private readonly string fileName;
@@ -42,6 +43,12 @@ namespace BrandDataProcessing.DAL
         public void Update(Excavation excavation)
         {
             query.Update(excavation, excavation.ID, ConstructorXML.Update);
+        }
+
+        public IEnumerable<Excavation> GetAll()
+        {
+            IEnumerable<XElement> excavationsElements = query.GetAll();
+            return Serializated<Excavation>.XmlDeserialization(excavationsElements);
         }
     }
 }
