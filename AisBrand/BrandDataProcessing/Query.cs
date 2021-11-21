@@ -43,6 +43,11 @@ namespace BrandDataProcessing
             xmlDocument.Save(filePath);
         }
 
+        public IEnumerable<XElement> GetAll()
+        {
+            return GetDescendants(parentElements, typeof(T));
+        }
+
         public void Delete(int id)
         {
             IEnumerable<XElement> descendants = GetDescendants(parentElements, typeof(T));
