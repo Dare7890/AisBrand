@@ -10,5 +10,6 @@ namespace BrandDataProcessingBL
 
         string GetFilePath();
         event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
+        event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
     }
 }

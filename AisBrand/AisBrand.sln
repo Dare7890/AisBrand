@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrandDataProcessing", "BrandDataProcessing\BrandDataProcessing.csproj", "{83EB8AD1-309F-4F68-A5F8-6C031BB75A5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrandDataProcessing", "BrandDataProcessing\BrandDataProcessing.csproj", "{83EB8AD1-309F-4F68-A5F8-6C031BB75A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrandDataProcessingTests", "BrandDataProcessingTests\BrandDataProcessingTests.csproj", "{D580C5E0-0D13-40B2-B6F9-1C43FAF70047}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrandDataProcessingTests", "BrandDataProcessingTests\BrandDataProcessingTests.csproj", "{D580C5E0-0D13-40B2-B6F9-1C43FAF70047}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericFilter", "GenericFilter\GenericFilter.csproj", "{18DA9684-C783-435B-A6BE-EB9ADD5754FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericFilterTests", "GenericFilterTests\GenericFilterTests.csproj", "{E731C06B-FF68-4932-ACBA-02667628C9CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrandDataProcessingUI", "BrandDataProcessingUI\BrandDataProcessingUI.csproj", "{628FC87A-FB78-4462-B578-89E8ED66002E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrandDataProcessingBL", "BrandDataProcessingBL\BrandDataProcessingBL.csproj", "{83C059FE-BC91-49B5-8D0C-054BF20E4253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{D580C5E0-0D13-40B2-B6F9-1C43FAF70047}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D580C5E0-0D13-40B2-B6F9-1C43FAF70047}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D580C5E0-0D13-40B2-B6F9-1C43FAF70047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18DA9684-C783-435B-A6BE-EB9ADD5754FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18DA9684-C783-435B-A6BE-EB9ADD5754FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18DA9684-C783-435B-A6BE-EB9ADD5754FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18DA9684-C783-435B-A6BE-EB9ADD5754FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E731C06B-FF68-4932-ACBA-02667628C9CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E731C06B-FF68-4932-ACBA-02667628C9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E731C06B-FF68-4932-ACBA-02667628C9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E731C06B-FF68-4932-ACBA-02667628C9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{628FC87A-FB78-4462-B578-89E8ED66002E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628FC87A-FB78-4462-B578-89E8ED66002E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628FC87A-FB78-4462-B578-89E8ED66002E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628FC87A-FB78-4462-B578-89E8ED66002E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
