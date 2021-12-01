@@ -50,5 +50,10 @@ namespace BrandDataProcessing.DAL
             IEnumerable<XElement> excavationsElements = query.GetAll();
             return Serializated<Excavation>.XmlDeserialization(excavationsElements);
         }
+
+        public IEnumerable<XElement> GetAllElements()
+        {
+            return query.GetAll();
+        }
     }
 }

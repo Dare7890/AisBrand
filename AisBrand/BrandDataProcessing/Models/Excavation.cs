@@ -12,6 +12,15 @@ namespace BrandDataProcessing.Models
 
         public string Monument { get; set; }
 
-        public List<Brand> Brands { get; set; }
+        public List<Classification> Classifications { get; set; }
+
+        public Excavation() { }
+
+        public Excavation(int id, string name, string monument)
+        {
+            ID = id;
+            Name = name;
+            Monument = monument;
+        }
     }
 }

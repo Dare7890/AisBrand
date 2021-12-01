@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
@@ -8,12 +10,24 @@ namespace BrandDataProcessing.Models
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Type { get; set; }
 
-        public string Author { get; set; }
+        public string Variant { get; set; }
 
-        public List<Application> Applications { get; set; }
+        public string Description { get; set; }
 
-        public List<ClassificationElement> ClassificationElements { get; set; }
+        public string FindsClass { get; set; }
+
+        [XmlIgnore]
+        public string ImageAsString { get; set; }
+
+        [XmlElement(ElementName = "ImageAsString", DataType = "hexBinary")]
+        public byte[] Image
+        {
+            get { return Encoding.UTF8.GetBytes(ImageAsString ?? string.Empty); }
+            set { ImageAsString = Encoding.UTF8.GetString(value); }
+        }
+
+        public List<Find> Finds { get; set; }
     }
 }
