@@ -1,7 +1,8 @@
-﻿using BrandDataProcessing;
+﻿using System;
+using System.Linq;
+using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
-using System.Linq;
 
 namespace BrandDataProcessingBL
 {
@@ -14,6 +15,17 @@ namespace BrandDataProcessingBL
         {
             this.view = view;
             this.view.FillExcavationsList += View_FillExcavationsList;
+            this.view.DeleteExcavation += View_DeleteExcavation;
+        }
+
+        private void View_DeleteExcavation(object sender, DeleteExcavationEventArgs e)
+        {
+            repository = new ExcavationLocal(e.FilePath);
+            Excavation deletedExcavation = view.CustomerList.Where((ex, i) => i == e.DeletedLineIndex)
+                                                            .FirstOrDefault();
+
+            repository.Delete(deletedExcavation.ID);
+            RefreshExcavationsList();
         }
 
         private void View_FillExcavationsList(object sender, FillExcavationsEventArgs e)
@@ -24,7 +36,9 @@ namespace BrandDataProcessingBL
 
         private void RefreshExcavationsList()
         {
-            view.CustomerList = repository.GetAll().ToList();
+            view.CustomerList = repository.GetAll()
+                                        //.Select(e => new Excavation(e.ID, e.Name, e.Monument))
+                                        .ToList();
         }
     }
 }

@@ -9,6 +9,9 @@ namespace BrandDataProcessingUI
     public partial class BrandDataProcessingForm : Form, ISearchView
     {
         public event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
+        public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
+
+        public string FilePath { get; private set; }
 
         //private IEnumerable<Excavation> excavations;
 
@@ -37,33 +40,62 @@ namespace BrandDataProcessingUI
             }
         }
 
+        // TODO: filePath as property, delete from eventArgs
+
         private void mnsOpenFile_Click(object sender, EventArgs e)
         {
             string filePath = GetFilePath();
+            // TODO: filePath as property, delete from eventArgs
+            FilePath = filePath;
 
             if (FillExcavationsList != null)
                 FillExcavationsList.Invoke(this, new FillExcavationsEventArgs(filePath));
-            //OpenFile();
-            //dgvTable.DataSource = excavations.Select(e => new { e.ID, e.Name, e.Monument }).ToList();
-            //const int idIndex = 0;
-            //dgvTable.Columns[idIndex].Width = 50;
-            //dgvTable.Columns[idIndex].HeaderText = "Индекс";
+
+            ClearTableSelection();
         }
 
-        //private void OpenFile()
-        //{
-        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-        //    {
-        //        openFileDialog.Filter = "xml files (*.xml)|*.xml";
-        //        openFileDialog.RestoreDirectory = true;
+        private void ClearTableSelection()
+        {
+            dgvTable.ClearSelection();
+        }
 
-        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            string filePath = openFileDialog.FileName;
-        //            //IEnumerable<XElement> excavationsElements = XDocument.Load(filePath).Descendants(nameof(Excavation));
-        //            //excavations = Serializated<Excavation>.XmlDeserialization(excavationsElements);
-        //        }
-        //    }
-        //}
+        private void dgvTable_RowContextMenuStripNeeded(object sender, DataGridViewRowContextMenuStripNeededEventArgs e)
+        {
+            e.ContextMenuStrip = cmsContext;
+        }
+
+        private void dgvTable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            SelectRowByRightClick(e);
+        }
+
+        private void SelectRowByRightClick(DataGridViewCellMouseEventArgs e)
+        {
+            const int headerIndex = -1;
+            if (e.Button == MouseButtons.Right && e.RowIndex != headerIndex)
+            {
+                dgvTable.ClearSelection();
+                dgvTable.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private void smiDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult isDelete = ConfirmDeletion();
+            if (isDelete == DialogResult.No)
+                return;
+
+            int deletedIndex = dgvTable.CurrentCell.RowIndex;
+
+            if (DeleteExcavation != null)
+                DeleteExcavation.Invoke(this, new DeleteExcavationEventArgs(FilePath, deletedIndex));
+
+            ClearTableSelection();
+        }
+
+        private static DialogResult ConfirmDeletion()
+        {
+            return MessageBox.Show("Вы уверены?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        }
     }
 }
