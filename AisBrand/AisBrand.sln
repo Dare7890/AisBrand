@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericFilterTests", "Gener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrandDataProcessingUI", "BrandDataProcessingUI\BrandDataProcessingUI.csproj", "{628FC87A-FB78-4462-B578-89E8ED66002E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrandDataProcessingBL", "BrandDataProcessingBL\BrandDataProcessingBL.csproj", "{83C059FE-BC91-49B5-8D0C-054BF20E4253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrandDataProcessingBL", "BrandDataProcessingBL\BrandDataProcessingBL.csproj", "{83C059FE-BC91-49B5-8D0C-054BF20E4253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddBrandDataUI", "AddBrandDataUI\AddBrandDataUI.csproj", "{A7F39964-EFBA-41D3-9BDE-063062CF4E08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C059FE-BC91-49B5-8D0C-054BF20E4253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F39964-EFBA-41D3-9BDE-063062CF4E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F39964-EFBA-41D3-9BDE-063062CF4E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F39964-EFBA-41D3-9BDE-063062CF4E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F39964-EFBA-41D3-9BDE-063062CF4E08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
