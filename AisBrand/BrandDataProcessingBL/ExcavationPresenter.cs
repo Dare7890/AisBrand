@@ -16,6 +16,14 @@ namespace BrandDataProcessingBL
             this.view = view;
             this.view.FillExcavationsList += View_FillExcavationsList;
             this.view.DeleteExcavation += View_DeleteExcavation;
+            this.view.AddExcavation += View_AddExcavation;
+        }
+
+        private void View_AddExcavation(object sender, AddExcavationEventArgs e)
+        {
+            repository = new ExcavationLocal(e.FilePath);
+            repository.Add(e.Excavation);
+            RefreshExcavationsList();
         }
 
         private void View_DeleteExcavation(object sender, DeleteExcavationEventArgs e)
@@ -37,7 +45,6 @@ namespace BrandDataProcessingBL
         private void RefreshExcavationsList()
         {
             view.CustomerList = repository.GetAll()
-                                        //.Select(e => new Excavation(e.ID, e.Name, e.Monument))
                                         .ToList();
         }
     }

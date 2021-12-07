@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using BrandDataProcessingBL;
+using AddBrandDataUI;
 
 namespace BrandDataProcessingUI
 {
@@ -10,6 +11,7 @@ namespace BrandDataProcessingUI
     {
         public event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
         public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
+        public event EventHandler<AddExcavationEventArgs> AddExcavation;
 
         public string FilePath { get; private set; }
 
@@ -52,6 +54,12 @@ namespace BrandDataProcessingUI
                 FillExcavationsList.Invoke(this, new FillExcavationsEventArgs(filePath));
 
             ClearTableSelection();
+            EnableAddButton();
+        }
+
+        private void EnableAddButton()
+        {
+            btnAddExcavation.Enabled = true;
         }
 
         private void ClearTableSelection()
@@ -96,6 +104,40 @@ namespace BrandDataProcessingUI
         private static DialogResult ConfirmDeletion()
         {
             return MessageBox.Show("Вы уверены?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        }
+
+        private void mnsClose_Click(object sender, EventArgs e)
+        {
+            CloseWindow();
+        }
+
+        private void CloseWindow()
+        {
+            this.Close();
+        }
+
+        private void btnAddExcavation_Click(object sender, EventArgs e)
+        {
+            OpenAddBrandDataForm();
+        }
+
+        private void OpenAddBrandDataForm()
+        {
+            using (AddBrandDataForm addForm = new AddBrandDataForm())
+            {
+                if (addForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    Excavation excavation = new Excavation();
+                    excavation.Name = addForm.Excavation.Name;
+                    excavation.Monument = addForm.Excavation.Monument;
+                    excavation.Classifications = new List<Classification>();
+
+                    if (AddExcavation != null)
+                        AddExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, excavation));
+                }
+
+                addForm.Close();
+            }
         }
     }
 }
