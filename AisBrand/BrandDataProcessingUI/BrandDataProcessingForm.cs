@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 using BrandDataProcessingBL;
 using AddBrandDataUI;
+using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
+using Excavation = BrandDataProcessing.Models.Excavation;
 
 namespace BrandDataProcessingUI
 {
@@ -12,6 +15,7 @@ namespace BrandDataProcessingUI
         public event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
         public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
         public event EventHandler<AddExcavationEventArgs> AddExcavation;
+        public event EventHandler<AddExcavationEventArgs> UpdateExcavation;
 
         public string FilePath { get; private set; }
 
@@ -118,10 +122,10 @@ namespace BrandDataProcessingUI
 
         private void btnAddExcavation_Click(object sender, EventArgs e)
         {
-            OpenAddBrandDataForm();
+            AddExcavationData();
         }
 
-        private void OpenAddBrandDataForm()
+        private void AddExcavationData()
         {
             using (AddBrandDataForm addForm = new AddBrandDataForm())
             {
@@ -137,6 +141,52 @@ namespace BrandDataProcessingUI
                 }
 
                 addForm.Close();
+            }
+        }
+
+        private void smiUpdate_Click(object sender, EventArgs e)
+        {
+            int selectedExcavationID = GetSelectedExcavationID();
+            Excavation selectedExcavation = GetSelectedExcavation(selectedExcavationID);
+            UpdateExcavationData(selectedExcavation);
+        }
+
+        private Excavation GetSelectedExcavation(int id)
+        {
+            return CustomerList.Where(c => c.ID == id).FirstOrDefault();
+        }
+
+        private int GetSelectedExcavationID()
+        {
+            const int selectedRowIndex = 0;
+            const int selectedIdCellIndex = 0;
+            return (int)dgvTable.SelectedRows[selectedRowIndex].Cells[selectedIdCellIndex].Value;
+        }
+
+        private void UpdateExcavationData(Excavation excavation)
+        {
+            if (excavation == null)
+                return;
+
+            //TODO: переделать связывание через фреймворк.
+            ViewModelExcavation viewModelExcavation = new ViewModelExcavation(excavation.Name, excavation.Monument);
+
+            using (AddBrandDataForm updateForm = new AddBrandDataForm(viewModelExcavation))
+            {
+                if (updateForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    Excavation updatedExcavation = new Excavation();
+                    //TODO: add id, need not viewModel
+                    updatedExcavation.ID = excavation.ID;
+                    updatedExcavation.Name = updateForm.Excavation.Name;
+                    updatedExcavation.Monument = updateForm.Excavation.Monument;
+                    updatedExcavation.Classifications = new List<Classification>();
+
+                    if (UpdateExcavation != null)
+                        UpdateExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, updatedExcavation));
+                }
+
+                updateForm.Close();
             }
         }
     }

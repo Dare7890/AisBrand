@@ -12,5 +12,6 @@ namespace BrandDataProcessingBL
         event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
         event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
         event EventHandler<AddExcavationEventArgs> AddExcavation;
+        event EventHandler<AddExcavationEventArgs> UpdateExcavation;
     }
 }

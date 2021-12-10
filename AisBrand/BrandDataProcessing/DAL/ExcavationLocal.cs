@@ -31,7 +31,6 @@ namespace BrandDataProcessing.DAL
                 newXml.Save(fileName);
             }
 
-            Query<Excavation> query = new Query<Excavation>(fileName, rootElementName);
             query.Add(excavation, ConstructorXML.Create, null);
         }
 

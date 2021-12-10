@@ -29,29 +29,13 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.tlpAddPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pnlAddButtons = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.excAdd = new AddBrandDataUI.AddExcavationUserControl();
-            this.tlpAddPanel.SuspendLayout();
+            this.tlpAddPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pnlAddButtons.SuspendLayout();
+            this.tlpAddPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tlpAddPanel
-            // 
-            this.tlpAddPanel.ColumnCount = 1;
-            this.tlpAddPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpAddPanel.Controls.Add(this.pnlAddButtons, 0, 1);
-            this.tlpAddPanel.Controls.Add(this.excAdd, 0, 0);
-            this.tlpAddPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpAddPanel.Location = new System.Drawing.Point(0, 0);
-            this.tlpAddPanel.Name = "tlpAddPanel";
-            this.tlpAddPanel.RowCount = 2;
-            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpAddPanel.Size = new System.Drawing.Size(800, 450);
-            this.tlpAddPanel.TabIndex = 0;
             // 
             // pnlAddButtons
             // 
@@ -65,6 +49,7 @@ namespace AddBrandDataUI
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Location = new System.Drawing.Point(639, 7);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(125, 32);
@@ -75,6 +60,7 @@ namespace AddBrandDataUI
             // 
             // btnAdd
             // 
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAdd.Location = new System.Drawing.Point(50, 7);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(125, 32);
@@ -83,13 +69,19 @@ namespace AddBrandDataUI
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // excAdd
+            // tlpAddPanel
             // 
-            this.excAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.excAdd.Location = new System.Drawing.Point(3, 3);
-            this.excAdd.Name = "excAdd";
-            this.excAdd.Size = new System.Drawing.Size(794, 394);
-            this.excAdd.TabIndex = 1;
+            this.tlpAddPanel.ColumnCount = 1;
+            this.tlpAddPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpAddPanel.Controls.Add(this.pnlAddButtons, 0, 1);
+            this.tlpAddPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpAddPanel.Location = new System.Drawing.Point(0, 0);
+            this.tlpAddPanel.Name = "tlpAddPanel";
+            this.tlpAddPanel.RowCount = 2;
+            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpAddPanel.Size = new System.Drawing.Size(800, 450);
+            this.tlpAddPanel.TabIndex = 0;
             // 
             // AddBrandDataForm
             // 
@@ -100,19 +92,18 @@ namespace AddBrandDataUI
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "AddBrandDataForm";
             this.Text = "Form1";
-            this.tlpAddPanel.ResumeLayout(false);
             this.pnlAddButtons.ResumeLayout(false);
+            this.tlpAddPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tlpAddPanel;
+        private AddExcavationUserControl excAdd;
         private System.Windows.Forms.Panel pnlAddButtons;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAdd;
-        private AddExcavationUserControl excAdd;
+        private System.Windows.Forms.TableLayoutPanel tlpAddPanel;
     }
 }
 

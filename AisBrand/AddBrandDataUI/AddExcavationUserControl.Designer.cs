@@ -37,6 +37,8 @@ namespace AddBrandDataUI
             // 
             // lblName
             // 
+            this.lblName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(13, 23);
             this.lblName.Name = "lblName";
@@ -46,6 +48,8 @@ namespace AddBrandDataUI
             // 
             // lblMonument
             // 
+            this.lblMonument.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMonument.AutoSize = true;
             this.lblMonument.Location = new System.Drawing.Point(13, 56);
             this.lblMonument.Name = "lblMonument";
@@ -55,6 +59,8 @@ namespace AddBrandDataUI
             // 
             // txtName
             // 
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(81, 20);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(175, 23);
@@ -62,12 +68,14 @@ namespace AddBrandDataUI
             // 
             // txtMonument
             // 
+            this.txtMonument.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMonument.Location = new System.Drawing.Point(81, 53);
             this.txtMonument.Name = "txtMonument";
             this.txtMonument.Size = new System.Drawing.Size(175, 23);
             this.txtMonument.TabIndex = 3;
             // 
-            // addExcavation
+            // AddExcavationUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -75,7 +83,7 @@ namespace AddBrandDataUI
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblMonument);
             this.Controls.Add(this.lblName);
-            this.Name = "addExcavation";
+            this.Name = "AddExcavationUserControl";
             this.Size = new System.Drawing.Size(270, 97);
             this.ResumeLayout(false);
             this.PerformLayout();

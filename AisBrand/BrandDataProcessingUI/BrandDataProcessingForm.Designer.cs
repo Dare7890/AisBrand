@@ -83,6 +83,8 @@ namespace BrandDataProcessingUI
             // 
             // dgvTable
             // 
+            this.dgvTable.AllowUserToAddRows = false;
+            this.dgvTable.AllowUserToDeleteRows = false;
             this.dgvTable.AllowUserToResizeColumns = false;
             this.dgvTable.AllowUserToResizeRows = false;
             this.dgvTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -105,6 +107,7 @@ namespace BrandDataProcessingUI
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvTable.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvTable.Location = new System.Drawing.Point(3, 103);
             this.dgvTable.MultiSelect = false;
             this.dgvTable.Name = "dgvTable";
@@ -305,6 +308,7 @@ namespace BrandDataProcessingUI
             this.smiUpdate.Name = "smiUpdate";
             this.smiUpdate.Size = new System.Drawing.Size(154, 22);
             this.smiUpdate.Text = "Редактировать";
+            this.smiUpdate.Click += new System.EventHandler(this.smiUpdate_Click);
             // 
             // smiDelete
             // 

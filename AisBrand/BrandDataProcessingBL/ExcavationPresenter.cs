@@ -17,6 +17,14 @@ namespace BrandDataProcessingBL
             this.view.FillExcavationsList += View_FillExcavationsList;
             this.view.DeleteExcavation += View_DeleteExcavation;
             this.view.AddExcavation += View_AddExcavation;
+            this.view.UpdateExcavation += View_UpdateExcavation;
+        }
+
+        private void View_UpdateExcavation(object sender, AddExcavationEventArgs e)
+        {
+            repository = new ExcavationLocal(e.FilePath);
+            repository.Update(e.Excavation);
+            RefreshExcavationsList();
         }
 
         private void View_AddExcavation(object sender, AddExcavationEventArgs e)
