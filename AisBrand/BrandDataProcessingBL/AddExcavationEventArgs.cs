@@ -1,8 +1,9 @@
 ﻿using BrandDataProcessing.Models;
+using System;
 
 namespace BrandDataProcessingBL
 {
-    public class AddExcavationEventArgs
+    public class AddExcavationEventArgs : EventArgs
     {
         public string FilePath { get; }
 

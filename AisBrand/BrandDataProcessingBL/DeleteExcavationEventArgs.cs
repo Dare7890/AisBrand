@@ -1,15 +1,20 @@
-﻿namespace BrandDataProcessingBL
+﻿using AddBrandDataUI.ViewModels;
+using System;
+
+//TODO: перенести viewModel в другую библиотеку.
+
+namespace BrandDataProcessingBL
 {
-    public class DeleteExcavationEventArgs
+    public class DeleteExcavationEventArgs : EventArgs
     {
         public string FilePath { get; set; }
 
-        public int DeletedLineIndex { get; set; }
+        public Excavation DeletedExcavation { get; set; }
 
-        public DeleteExcavationEventArgs(string filePath, int deletedLineIndex)
+        public DeleteExcavationEventArgs(string filePath, Excavation excavation)
         {
             FilePath = filePath;
-            DeletedLineIndex = deletedLineIndex;
+            DeletedExcavation = excavation;
         }
     }
 }
