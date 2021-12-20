@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
@@ -11,6 +12,8 @@ namespace BrandDataProcessingBL
         private IRepository<Excavation> repository;
         private readonly ISearchView view;
 
+        private IEnumerable<Excavation> excavations;
+
         public ExcavationPresenter(ISearchView view)
         {
             this.view = view;
@@ -20,10 +23,16 @@ namespace BrandDataProcessingBL
             this.view.UpdateExcavation += View_UpdateExcavation;
         }
 
-        private void View_UpdateExcavation(object sender, AddExcavationEventArgs e)
+        private void View_UpdateExcavation(object sender, UpdateExcavationEventArgs e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            repository.Update(e.Excavation);
+            Excavation updatedExcavation = GetExcavation(excavations, e.SourceExcavation.Name, e.SourceExcavation.Monument);
+
+            //  TODO: create mapper.
+            updatedExcavation.Name = e.UpdatedExcavation.Name;
+            updatedExcavation.Monument = e.UpdatedExcavation.Monument;
+
+            repository.Update(updatedExcavation);
             RefreshExcavationsList();
         }
 
@@ -37,11 +46,19 @@ namespace BrandDataProcessingBL
         private void View_DeleteExcavation(object sender, DeleteExcavationEventArgs e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            Excavation deletedExcavation = view.CustomerList.Where((ex, i) => i == e.DeletedLineIndex)
-                                                            .FirstOrDefault();
-
-            repository.Delete(deletedExcavation.ID);
+            int deletedId = GetExcavationId(excavations, e.DeletedExcavation.Name, e.DeletedExcavation.Monument);
+            repository.Delete(deletedId);
             RefreshExcavationsList();
+        }
+
+        private Excavation GetExcavation(IEnumerable<Excavation> excavations, string deletedName, string deletedMonument)
+        {
+            return excavations.SingleOrDefault(e => e.Name == deletedName && e.Monument == deletedMonument);
+        }
+
+        private int GetExcavationId(IEnumerable<Excavation> excavations, string deletedName, string deletedMonument)
+        {
+            return GetExcavation(excavations, deletedName, deletedMonument).ID;
         }
 
         private void View_FillExcavationsList(object sender, FillExcavationsEventArgs e)
@@ -52,8 +69,10 @@ namespace BrandDataProcessingBL
 
         private void RefreshExcavationsList()
         {
-            view.CustomerList = repository.GetAll()
-                                        .ToList();
+            excavations = repository.GetAll();
+
+            view.BrandDataList = excavations.Select(e => new { e.Name, e.Monument })
+                                            .ToList();
         }
     }
 }

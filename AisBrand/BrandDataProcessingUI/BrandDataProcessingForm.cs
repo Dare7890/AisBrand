@@ -1,12 +1,13 @@
 ﻿using BrandDataProcessing.Models;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
 using BrandDataProcessingBL;
 using AddBrandDataUI;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using Excavation = BrandDataProcessing.Models.Excavation;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BrandDataProcessingUI
 {
@@ -15,15 +16,15 @@ namespace BrandDataProcessingUI
         public event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
         public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
         public event EventHandler<AddExcavationEventArgs> AddExcavation;
-        public event EventHandler<AddExcavationEventArgs> UpdateExcavation;
+        public event EventHandler<UpdateExcavationEventArgs> UpdateExcavation;
 
         public string FilePath { get; private set; }
 
         //private IEnumerable<Excavation> excavations;
 
-        public IList<Excavation> CustomerList
+        public IEnumerable BrandDataList
         {
-            get { return (IList<Excavation>)dgvTable.DataSource; }
+            get { return (IEnumerable)dgvTable.DataSource; }
             set { dgvTable.DataSource = value; }
         }
 
@@ -93,16 +94,31 @@ namespace BrandDataProcessingUI
 
         private void smiDelete_Click(object sender, EventArgs e)
         {
+            Delete();
+            ClearTableSelection();
+        }
+
+        private void Delete()
+        {
             DialogResult isDelete = ConfirmDeletion();
             if (isDelete == DialogResult.No)
                 return;
 
-            int deletedIndex = dgvTable.CurrentCell.RowIndex;
+            ViewModelExcavation deletedExcavation = GetSelectedExcavation();
 
             if (DeleteExcavation != null)
-                DeleteExcavation.Invoke(this, new DeleteExcavationEventArgs(FilePath, deletedIndex));
+                DeleteExcavation.Invoke(this, new DeleteExcavationEventArgs(FilePath, deletedExcavation));
+        }
 
-            ClearTableSelection();
+        private ViewModelExcavation GetSelectedExcavation()
+        {
+            const int deletedRowIndex = 0;
+            const int deletedNameIndex = 0;
+            const int deletedMonumentIndex = 1;
+            string deletedName = dgvTable.SelectedRows[deletedRowIndex].Cells[deletedNameIndex].Value.ToString();
+            string deletedMonument = dgvTable.SelectedRows[deletedRowIndex].Cells[deletedMonumentIndex].Value.ToString();
+
+            return new ViewModelExcavation(deletedName, deletedMonument);
         }
 
         private static DialogResult ConfirmDeletion()
@@ -146,48 +162,32 @@ namespace BrandDataProcessingUI
 
         private void smiUpdate_Click(object sender, EventArgs e)
         {
-            int selectedExcavationID = GetSelectedExcavationID();
-            Excavation selectedExcavation = GetSelectedExcavation(selectedExcavationID);
-            UpdateExcavationData(selectedExcavation);
+            ViewModelExcavation updatedExcavation = GetSelectedExcavation();
+            UpdateExcavationData(updatedExcavation);
         }
 
-        private Excavation GetSelectedExcavation(int id)
+        private void UpdateExcavationData(ViewModelExcavation sourceExcavation)
         {
-            return CustomerList.Where(c => c.ID == id).FirstOrDefault();
-        }
-
-        private int GetSelectedExcavationID()
-        {
-            const int selectedRowIndex = 0;
-            const int selectedIdCellIndex = 0;
-            return (int)dgvTable.SelectedRows[selectedRowIndex].Cells[selectedIdCellIndex].Value;
-        }
-
-        private void UpdateExcavationData(Excavation excavation)
-        {
-            if (excavation == null)
+            if (sourceExcavation == null)
                 return;
 
             //TODO: переделать связывание через фреймворк.
-            ViewModelExcavation viewModelExcavation = new ViewModelExcavation(excavation.Name, excavation.Monument);
-
-            using (AddBrandDataForm updateForm = new AddBrandDataForm(viewModelExcavation))
+            using (AddBrandDataForm updateForm = new AddBrandDataForm(sourceExcavation))
             {
                 if (updateForm.ShowDialog(this) == DialogResult.OK)
                 {
-                    Excavation updatedExcavation = new Excavation();
-                    //TODO: add id, need not viewModel
-                    updatedExcavation.ID = excavation.ID;
-                    updatedExcavation.Name = updateForm.Excavation.Name;
-                    updatedExcavation.Monument = updateForm.Excavation.Monument;
-                    updatedExcavation.Classifications = new List<Classification>();
-
+                    ViewModelExcavation updatedExcavation = new ViewModelExcavation(updateForm.Excavation.Name, updateForm.Excavation.Monument);
                     if (UpdateExcavation != null)
-                        UpdateExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, updatedExcavation));
+                        UpdateExcavation.Invoke(this, new UpdateExcavationEventArgs(FilePath, sourceExcavation, updatedExcavation));
                 }
 
                 updateForm.Close();
             }
+        }
+
+        private void dgvTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
