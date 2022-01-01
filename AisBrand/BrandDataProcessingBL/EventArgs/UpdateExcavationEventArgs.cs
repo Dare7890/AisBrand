@@ -1,9 +1,8 @@
-﻿using System;
-using AddBrandDataUI.ViewModels;
+﻿using AddBrandDataUI.ViewModels;
 
-namespace BrandDataProcessingBL
+namespace BrandDataProcessingBL.EventArgs
 {
-    public class UpdateExcavationEventArgs : EventArgs
+    public class UpdateExcavationEventArgs : System.EventArgs
     {
         public string FilePath { get; set; }
 

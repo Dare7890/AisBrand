@@ -4,6 +4,7 @@ using System.Linq;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
+using BrandDataProcessingBL.EventArgs;
 
 namespace BrandDataProcessingBL
 {
@@ -39,7 +40,12 @@ namespace BrandDataProcessingBL
         private void View_AddExcavation(object sender, AddExcavationEventArgs e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            repository.Add(e.Excavation);
+
+            Excavation excavation = new Excavation();
+            excavation.Name = e.Excavation.Name;
+            excavation.Monument = e.Excavation.Monument;
+
+            repository.Add(excavation);
             RefreshExcavationsList();
         }
 
@@ -61,7 +67,7 @@ namespace BrandDataProcessingBL
             return GetExcavation(excavations, deletedName, deletedMonument).ID;
         }
 
-        private void View_FillExcavationsList(object sender, FillExcavationsEventArgs e)
+        private void View_FillExcavationsList(object sender, FillEventArgs e)
         {
             repository = new ExcavationLocal(e.FilePath);
             RefreshExcavationsList();

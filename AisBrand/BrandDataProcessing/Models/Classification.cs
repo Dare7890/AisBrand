@@ -16,8 +16,6 @@ namespace BrandDataProcessing.Models
 
         public string Description { get; set; }
 
-        public string FindsClass { get; set; }
-
         [XmlIgnore]
         public string ImageAsString { get; set; }
 

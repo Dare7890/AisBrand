@@ -1,34 +1,28 @@
 ﻿using BrandDataProcessing.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace BrandDataProcessing.DAL
 {
     public class BrandLocal
     {
-        private readonly string fileName;
+        private readonly Query<Brand> query;
 
-        public BrandLocal(string fileName)
+        public BrandLocal(string filePath)
         {
-            this.fileName = fileName;
+            query = new Query<Brand>(filePath, nameof(Find));
         }
 
         public void AddInClassificationElement(Brand brand, int elementID)
         {
-            Query<Brand> query = new Query<Brand>(fileName, nameof(Find));
             query.Add(brand, ConstructorXML.Create, elementID);
         }
 
         public void DeleteInClassificationElement(int id)
         {
-            Query<Brand> query = new Query<Brand>(fileName, nameof(Find));
             query.Delete(id);
         }
 
         public void UpdateInClassificationElement(Brand brand)
         {
-            Query<Brand> query = new Query<Brand>(fileName, nameof(Find));
             query.Update(brand, brand.ID, ConstructorXML.Update);
         }
 

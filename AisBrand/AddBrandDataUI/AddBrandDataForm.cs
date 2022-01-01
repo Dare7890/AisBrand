@@ -4,26 +4,41 @@ using System.Windows.Forms;
 
 namespace AddBrandDataUI
 {
-    public partial class AddBrandDataForm : Form
+    public partial class AddBrandDataForm<T> : Form where T : class
     {
-        private AddExcavationUserControl addExcavationUserControl;
+        private IUserControl<T> userControl;
 
-        public Excavation Excavation { get; set; }
+        public T BrandData { get; set; }
 
-        public AddBrandDataForm(Excavation excavation = null)
+        public AddBrandDataForm(T brandData = null)
         {
             InitializeComponent();
 
-            InitElementsName(excavation);
-            ShowExcavationAddFields(excavation);
+            InitElementsName(brandData);
+            ShowExcavationAddFields(brandData);
         }
 
-        private void InitElementsName(Excavation excavation)
+        private void InitUserControl(T brandData)
+        {
+            switch (typeof(T).Name)
+            {
+                case nameof(Excavation):
+                    userControl = (IUserControl<T>)new AddExcavationUserControl(brandData as Excavation);
+                    break;
+                case nameof(FindsClass):
+                    userControl = (IUserControl<T>)new AddFindsClassUserControl(brandData as FindsClass);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void InitElementsName(T excavation)
         {
             if (excavation == null)
-                SetElementsName("Добавить раскопы", "Добавить");
+                SetElementsName("Добавить", "Добавить");
             else
-                SetElementsName("Обновить раскопы", "Обновить");
+                SetElementsName("Обновить", "Обновить");
         }
 
         private void SetElementsName(string formName, string buttonText)
@@ -32,22 +47,29 @@ namespace AddBrandDataUI
             btnAdd.Text = buttonText;
         }
 
-        private void ShowExcavationAddFields(Excavation excavation)
+        private void ShowExcavationAddFields(T brandData)
         {
-            addExcavationUserControl = new AddExcavationUserControl(excavation);
-            tlpAddPanel.Controls.Add(addExcavationUserControl, 0, 0);
+            InitUserControl(brandData);
+            ShowUserControl();
+        }
+
+        private void ShowUserControl()
+        {
+            Control control = userControl as Control;
+            if (control != null)
+                tlpAddPanel.Controls.Add(control, 0, 0);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            AddExcavation();
+            Add();
         }
 
-        private void AddExcavation()
+        private void Add()
         {
-            Excavation = addExcavationUserControl.Add();
+            BrandData = userControl.Add();
 
-            DialogResult = Excavation != null ? DialogResult.OK : DialogResult.None;
+            DialogResult = BrandData != null ? DialogResult.OK : DialogResult.None;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

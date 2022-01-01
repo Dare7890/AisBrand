@@ -1,7 +1,7 @@
 ﻿
 namespace AddBrandDataUI
 {
-    partial class AddBrandDataForm
+    partial class AddBrandDataForm<T>
     {
         /// <summary>
         ///  Required designer variable.

@@ -12,7 +12,7 @@ namespace BrandDataProcessing.Models
 
         public string Monument { get; set; }
 
-        public List<Classification> Classifications { get; set; }
+        public List<FindsClass> FindsClasses { get; set; }
 
         public Excavation() { }
 

@@ -20,7 +20,8 @@ namespace BrandDataProcessingUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             BrandDataProcessingForm form = new BrandDataProcessingForm();
-            ExcavationPresenter presenter = new ExcavationPresenter(form);
+            ExcavationPresenter excavationPresenter = new ExcavationPresenter(form);
+            FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form);
             Application.Run(form);
         }
     }

@@ -1,26 +1,29 @@
 ﻿using BrandDataProcessing.Models;
 using System;
 using System.Windows.Forms;
-using System.Linq;
 using BrandDataProcessingBL;
 using AddBrandDataUI;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using Excavation = BrandDataProcessing.Models.Excavation;
 using System.Collections;
 using System.Collections.Generic;
+using BrandDataProcessingBL.EventArgs;
+using BrandDataProcessingUI.Map;
 
 namespace BrandDataProcessingUI
 {
     public partial class BrandDataProcessingForm : Form, ISearchView
     {
-        public event EventHandler<FillExcavationsEventArgs> FillExcavationsList;
+        private string currentTableName = nameof(Excavation);
+
+        public event EventHandler<FillEventArgs> FillExcavationsList;
         public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
         public event EventHandler<AddExcavationEventArgs> AddExcavation;
         public event EventHandler<UpdateExcavationEventArgs> UpdateExcavation;
 
-        public string FilePath { get; private set; }
+        public event EventHandler<FillEventArgs> FillFindsClassListEvent;
 
-        //private IEnumerable<Excavation> excavations;
+        public string FilePath { get; private set; }
 
         public IEnumerable BrandDataList
         {
@@ -51,15 +54,28 @@ namespace BrandDataProcessingUI
 
         private void mnsOpenFile_Click(object sender, EventArgs e)
         {
+            FillList();
+
+            ClearTableSelection();
+            EnableAddButton();
+        }
+
+        private void FillList()
+        {
             string filePath = GetFilePath();
             // TODO: filePath as property, delete from eventArgs
             FilePath = filePath;
 
             if (FillExcavationsList != null)
-                FillExcavationsList.Invoke(this, new FillExcavationsEventArgs(filePath));
+                FillExcavationsList.Invoke(this, new FillEventArgs(filePath));
+        }
 
-            ClearTableSelection();
-            EnableAddButton();
+        private void FillFindsClassList()
+        {
+            // TODO: filePath as property, delete from eventArgs
+
+            if (FillFindsClassListEvent != null)
+                FillFindsClassListEvent.Invoke(this, new FillEventArgs(FilePath));
         }
 
         private void EnableAddButton()
@@ -138,25 +154,29 @@ namespace BrandDataProcessingUI
 
         private void btnAddExcavation_Click(object sender, EventArgs e)
         {
-            AddExcavationData();
+            AddData();
         }
 
-        private void AddExcavationData()
+        private void AddData()
         {
-            using (AddBrandDataForm addForm = new AddBrandDataForm())
+            using (AddBrandDataForm<ViewModelExcavation> form = new AddBrandDataForm<ViewModelExcavation>())
             {
-                if (addForm.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    Excavation excavation = new Excavation();
-                    excavation.Name = addForm.Excavation.Name;
-                    excavation.Monument = addForm.Excavation.Monument;
-                    excavation.Classifications = new List<Classification>();
-
-                    if (AddExcavation != null)
-                        AddExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, excavation));
+                    switch (currentTableName)
+                    {
+                        case nameof(AddBrandDataUI.ViewModels.Excavation):
+                            IMapper<ViewModelExcavation> mapper = new ExcavationMapper();
+                            ViewModelExcavation excavation = mapper.Map(form);
+                            if (AddExcavation != null)
+                                AddExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, excavation));
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
-                addForm.Close();
+                form.Close();
             }
         }
 
@@ -172,22 +192,31 @@ namespace BrandDataProcessingUI
                 return;
 
             //TODO: переделать связывание через фреймворк.
-            using (AddBrandDataForm updateForm = new AddBrandDataForm(sourceExcavation))
+            using (AddBrandDataForm<ViewModelExcavation> form = new AddBrandDataForm<ViewModelExcavation>(sourceExcavation))
             {
-                if (updateForm.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    ViewModelExcavation updatedExcavation = new ViewModelExcavation(updateForm.Excavation.Name, updateForm.Excavation.Monument);
+                    IMapper<ViewModelExcavation> mapper = new ExcavationMapper();
+                    ViewModelExcavation updatedExcavation = mapper.Map(form);
                     if (UpdateExcavation != null)
                         UpdateExcavation.Invoke(this, new UpdateExcavationEventArgs(FilePath, sourceExcavation, updatedExcavation));
                 }
 
-                updateForm.Close();
+                form.Close();
             }
         }
 
         private void dgvTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            switch (currentTableName)
+            {
+                case nameof(Excavation):
+                    FillFindsClassList();
+                    currentTableName = nameof(FindsClass);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

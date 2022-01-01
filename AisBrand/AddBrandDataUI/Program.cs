@@ -17,7 +17,7 @@ namespace AddBrandDataUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AddBrandDataForm());
+            //Application.Run(new AddBrandDataForm());
         }
     }
 }

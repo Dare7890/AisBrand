@@ -18,7 +18,7 @@ namespace BrandDataProcessing.DAL
             query = new Query<Excavation>(fileName, rootElementName);
         }
 
-        public void Add(Excavation excavation)
+        public void Add(Excavation excavation, int? id = null)
         {
             if (excavation == null)
                 throw new ArgumentNullException(nameof(excavation));

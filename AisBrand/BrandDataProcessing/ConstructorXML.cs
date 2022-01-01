@@ -35,7 +35,6 @@ namespace BrandDataProcessing
                 new XElement(nameof(classification.Type), classification.Type),
                 new XElement(nameof(classification.Variant), classification.Variant),
                 new XElement(nameof(classification.Description), classification.Description),
-                new XElement(nameof(classification.FindsClass), classification.FindsClass),
                 new XElement(nameof(classification.Image), classification.Image)
                 );
         }
@@ -56,6 +55,14 @@ namespace BrandDataProcessing
                 new XElement(nameof(find.Photo), find.Photo),
                 new XElement(nameof(find.Analogy), find.Analogy),
                 new XElement(nameof(find.Note), find.Note)
+                );
+        }
+
+        public static XElement Create(FindsClass findsClass)
+        {
+            return new XElement(nameof(FindsClass),
+                new XElement(nameof(findsClass.ID), findsClass.ID),
+                new XElement(nameof(findsClass.Class), findsClass.Class)
                 );
         }
 
@@ -80,7 +87,6 @@ namespace BrandDataProcessing
             updatedClassification.Element(nameof(classification.Type)).Value = classification.Type;
             updatedClassification.Element(nameof(classification.Variant)).Value = classification.Variant;
             updatedClassification.Element(nameof(classification.Description)).Value = classification.Description;
-            updatedClassification.Element(nameof(classification.FindsClass)).Value = classification.FindsClass;
             updatedClassification.Element(nameof(classification.Image)).Value = classification.ImageAsString;
         }
 
@@ -98,6 +104,11 @@ namespace BrandDataProcessing
             updatedFind.Element(nameof(find.Photo)).Value = Encoding.Default.GetString(find.Photo);
             updatedFind.Element(nameof(find.Analogy)).Value = find.Analogy;
             updatedFind.Element(nameof(find.Note)).Value = find.Note;
+        }
+
+        public static void Update(FindsClass findsClass, XElement updatedClass)
+        {
+            updatedClass.Element(nameof(findsClass.Class)).Value = findsClass.Class;
         }
     }
 }

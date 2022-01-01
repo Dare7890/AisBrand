@@ -1,11 +1,10 @@
 ﻿using AddBrandDataUI.ViewModels;
-using System;
 
 //TODO: перенести viewModel в другую библиотеку.
 
-namespace BrandDataProcessingBL
+namespace BrandDataProcessingBL.EventArgs
 {
-    public class DeleteExcavationEventArgs : EventArgs
+    public class DeleteExcavationEventArgs : System.EventArgs
     {
         public string FilePath { get; set; }
 

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using AddBrandDataUI.ViewModels;
 
 namespace AddBrandDataUI
 {
-    public partial class AddExcavationUserControl : UserControl
+    public partial class AddExcavationUserControl : UserControl, IUserControl<Excavation>
     {
         public AddExcavationUserControl(Excavation excavation = null)
         {
