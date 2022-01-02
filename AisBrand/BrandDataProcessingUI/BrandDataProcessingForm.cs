@@ -1,12 +1,11 @@
 ﻿using BrandDataProcessing.Models;
 using System;
 using System.Windows.Forms;
-using AddBrandDataUI;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
+using ViewModelFindsClass = AddBrandDataUI.ViewModels.FindsClass;
 using Excavation = BrandDataProcessing.Models.Excavation;
 using System.Collections;
 using Tools;
-using Tools.EventArgs;
 using Tools.CrudView;
 using Tools.Map;
 
@@ -14,12 +13,11 @@ namespace BrandDataProcessingUI
 {
     public partial class BrandDataProcessingForm : Form, ISearchView
     {
+        private const int selectedRowIndex = 0;
         private string currentTableName = nameof(Excavation);
 
-        public event EventHandler<FillEventArgs> FillFindsClassListEvent;
-
-        public BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; private set; }
-        public BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; private set; }
+        public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
+        public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
         public string FilePath { get; private set; }
 
         public IEnumerable BrandDataList
@@ -52,7 +50,7 @@ namespace BrandDataProcessingUI
 
         // TODO: filePath as property, delete from eventArgs
 
-        private void mnsOpenFile_Click(object sender, System.EventArgs e)
+        private void mnsOpenFile_Click(object sender, EventArgs e)
         {
             FillList();
 
@@ -109,7 +107,7 @@ namespace BrandDataProcessingUI
             }
         }
 
-        private void smiDelete_Click(object sender, System.EventArgs e)
+        private void smiDelete_Click(object sender, EventArgs e)
         {
             Delete();
             ClearTableSelection();
@@ -121,14 +119,15 @@ namespace BrandDataProcessingUI
             if (isDelete == DialogResult.No)
                 return;
 
+            DataGridViewCellCollection cells = GetSelectedCells();
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ViewModelExcavation deletedExcavation = GetSelectedExcavation();
+                    ViewModelExcavation deletedExcavation = RetrieverSelectedData.GetSelectedExcavation(cells);
                     ExcavationCrud.Delete(deletedExcavation);
                     break;
                 case nameof(FindsClass):
-                    AddBrandDataUI.ViewModels.FindsClass deletedFindsClass = GetSelectedFindsClass();
+                    ViewModelFindsClass deletedFindsClass = RetrieverSelectedData.GetSelectedFindsClass(cells);
                     FindsClassCrud.Delete(deletedFindsClass);
                     break;
                 default:
@@ -136,24 +135,9 @@ namespace BrandDataProcessingUI
             }
         }
 
-        private ViewModelExcavation GetSelectedExcavation()
+        private DataGridViewCellCollection GetSelectedCells()
         {
-            const int deletedRowIndex = 0;
-            const int deletedNameIndex = 0;
-            const int deletedMonumentIndex = 1;
-            string deletedName = dgvTable.SelectedRows[deletedRowIndex].Cells[deletedNameIndex].Value.ToString();
-            string deletedMonument = dgvTable.SelectedRows[deletedRowIndex].Cells[deletedMonumentIndex].Value.ToString();
-
-            return new ViewModelExcavation(deletedName, deletedMonument);
-        }
-
-        private AddBrandDataUI.ViewModels.FindsClass GetSelectedFindsClass()
-        {
-            const int rowIndex = 0;
-            const int classIndex = 0;
-            string findsClass = dgvTable.SelectedRows[rowIndex].Cells[classIndex].Value.ToString();
-
-            return new AddBrandDataUI.ViewModels.FindsClass(findsClass);
+            return dgvTable.SelectedRows[selectedRowIndex].Cells;
         }
 
         private static DialogResult ConfirmDeletion()
@@ -161,7 +145,7 @@ namespace BrandDataProcessingUI
             return MessageBox.Show("Вы уверены?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
-        private void mnsClose_Click(object sender, System.EventArgs e)
+        private void mnsClose_Click(object sender, EventArgs e)
         {
             CloseWindow();
         }
@@ -171,7 +155,7 @@ namespace BrandDataProcessingUI
             this.Close();
         }
 
-        private void btnAddExcavation_Click(object sender, System.EventArgs e)
+        private void btnAddExcavation_Click(object sender, EventArgs e)
         {
             AddData();
         }
@@ -191,18 +175,19 @@ namespace BrandDataProcessingUI
             }
         }
 
-        private void smiUpdate_Click(object sender, System.EventArgs e)
+        private void smiUpdate_Click(object sender, EventArgs e)
         {
+            DataGridViewCellCollection cells = GetSelectedCells();
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ViewModelExcavation updatedExcavation = GetSelectedExcavation();
+                    ViewModelExcavation updatedExcavation = RetrieverSelectedData.GetSelectedExcavation(cells);
                     IMapper<ViewModelExcavation> excavationMapper = new ExcavationMapper();
                     UpdateData(updatedExcavation, excavationMapper);
                     break;
                 case nameof(FindsClass):
-                    AddBrandDataUI.ViewModels.FindsClass updatedFindsClass = GetSelectedFindsClass();
-                    IMapper<AddBrandDataUI.ViewModels.FindsClass> findsClassMapper = new FindsClassMapper();
+                    ViewModelFindsClass updatedFindsClass = RetrieverSelectedData.GetSelectedFindsClass(cells);
+                    IMapper<ViewModelFindsClass> findsClassMapper = new FindsClassMapper();
                     UpdateData(updatedFindsClass,findsClassMapper);
                     break;
                 default:
@@ -221,7 +206,7 @@ namespace BrandDataProcessingUI
                     ExcavationCrud.Update(this, (IMapper<ViewModelExcavation>)mapper, sourceBrandData as ViewModelExcavation);
                     break;
                 case nameof(FindsClass):
-                    FindsClassCrud.Update(this, (IMapper<AddBrandDataUI.ViewModels.FindsClass>)mapper, sourceBrandData as AddBrandDataUI.ViewModels.FindsClass);
+                    FindsClassCrud.Update(this, (IMapper<ViewModelFindsClass>)mapper, sourceBrandData as ViewModelFindsClass);
                     break;
                 default:
                     break;
