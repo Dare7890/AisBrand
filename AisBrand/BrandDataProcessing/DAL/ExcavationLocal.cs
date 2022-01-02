@@ -15,6 +15,13 @@ namespace BrandDataProcessing.DAL
         public ExcavationLocal(string fileName)
         {
             this.fileName = fileName;
+            if (!File.Exists(fileName))
+            {
+                using (File.Create(fileName)) { }
+                XDocument newXml = new XDocument(new XElement(rootElementName));
+                newXml.Save(fileName);
+            }
+
             query = new Query<Excavation>(fileName, rootElementName);
         }
 
@@ -22,14 +29,6 @@ namespace BrandDataProcessing.DAL
         {
             if (excavation == null)
                 throw new ArgumentNullException(nameof(excavation));
-            // TODO: вынести создание файла в отдельный класс.
-            if (!File.Exists(fileName))
-            {
-                using (File.Create(fileName)){}
-
-                XDocument newXml = new XDocument(new XElement(rootElementName));
-                newXml.Save(fileName);
-            }
 
             query.Add(excavation, ConstructorXML.Create, null);
         }

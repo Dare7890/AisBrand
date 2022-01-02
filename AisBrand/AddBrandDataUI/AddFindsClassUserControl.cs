@@ -3,7 +3,7 @@ using AddBrandDataUI.ViewModels;
 
 namespace AddBrandDataUI
 {
-    public partial class AddFindsClassUserControl : UserControl
+    public partial class AddFindsClassUserControl : UserControl, IUserControl<FindsClass>
     {
         public AddFindsClassUserControl(FindsClass findsClass = null)
         {

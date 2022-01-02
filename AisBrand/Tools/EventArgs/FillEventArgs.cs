@@ -1,4 +1,4 @@
-﻿namespace BrandDataProcessingBL.EventArgs
+﻿namespace Tools.EventArgs
 {
     public class FillEventArgs : System.EventArgs
     {

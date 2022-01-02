@@ -1,14 +1,14 @@
 ﻿using BrandDataProcessing.Models;
 using System;
 using System.Windows.Forms;
-using BrandDataProcessingBL;
 using AddBrandDataUI;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using Excavation = BrandDataProcessing.Models.Excavation;
 using System.Collections;
-using System.Collections.Generic;
-using BrandDataProcessingBL.EventArgs;
-using BrandDataProcessingUI.Map;
+using Tools;
+using Tools.EventArgs;
+using Tools.CrudView;
+using Tools.Map;
 
 namespace BrandDataProcessingUI
 {
@@ -16,13 +16,10 @@ namespace BrandDataProcessingUI
     {
         private string currentTableName = nameof(Excavation);
 
-        public event EventHandler<FillEventArgs> FillExcavationsList;
-        public event EventHandler<DeleteExcavationEventArgs> DeleteExcavation;
-        public event EventHandler<AddExcavationEventArgs> AddExcavation;
-        public event EventHandler<UpdateExcavationEventArgs> UpdateExcavation;
-
         public event EventHandler<FillEventArgs> FillFindsClassListEvent;
 
+        public BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; private set; }
+        public BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; private set; }
         public string FilePath { get; private set; }
 
         public IEnumerable BrandDataList
@@ -34,6 +31,9 @@ namespace BrandDataProcessingUI
         public BrandDataProcessingForm()
         {
             InitializeComponent();
+
+            ExcavationCrud = new();
+            FindsClassCrud = new();
         }
 
         public string GetFilePath()
@@ -52,7 +52,7 @@ namespace BrandDataProcessingUI
 
         // TODO: filePath as property, delete from eventArgs
 
-        private void mnsOpenFile_Click(object sender, EventArgs e)
+        private void mnsOpenFile_Click(object sender, System.EventArgs e)
         {
             FillList();
 
@@ -62,20 +62,21 @@ namespace BrandDataProcessingUI
 
         private void FillList()
         {
-            string filePath = GetFilePath();
-            // TODO: filePath as property, delete from eventArgs
-            FilePath = filePath;
+            if (FilePath == null)
+            {
+                string filePath = GetFilePath();
+                // TODO: filePath as property, delete from eventArgs
+                FilePath = filePath;
+                SetCrudsEntitiesFilePath();
+            }
 
-            if (FillExcavationsList != null)
-                FillExcavationsList.Invoke(this, new FillEventArgs(filePath));
+            ExcavationCrud.Fill();
         }
 
-        private void FillFindsClassList()
+        private void SetCrudsEntitiesFilePath()
         {
-            // TODO: filePath as property, delete from eventArgs
-
-            if (FillFindsClassListEvent != null)
-                FillFindsClassListEvent.Invoke(this, new FillEventArgs(FilePath));
+            ExcavationCrud.FilePath = FilePath;
+            FindsClassCrud.FilePath = FilePath;
         }
 
         private void EnableAddButton()
@@ -108,7 +109,7 @@ namespace BrandDataProcessingUI
             }
         }
 
-        private void smiDelete_Click(object sender, EventArgs e)
+        private void smiDelete_Click(object sender, System.EventArgs e)
         {
             Delete();
             ClearTableSelection();
@@ -120,10 +121,19 @@ namespace BrandDataProcessingUI
             if (isDelete == DialogResult.No)
                 return;
 
-            ViewModelExcavation deletedExcavation = GetSelectedExcavation();
-
-            if (DeleteExcavation != null)
-                DeleteExcavation.Invoke(this, new DeleteExcavationEventArgs(FilePath, deletedExcavation));
+            switch (currentTableName)
+            {
+                case nameof(Excavation):
+                    ViewModelExcavation deletedExcavation = GetSelectedExcavation();
+                    ExcavationCrud.Delete(deletedExcavation);
+                    break;
+                case nameof(FindsClass):
+                    AddBrandDataUI.ViewModels.FindsClass deletedFindsClass = GetSelectedFindsClass();
+                    FindsClassCrud.Delete(deletedFindsClass);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private ViewModelExcavation GetSelectedExcavation()
@@ -137,12 +147,21 @@ namespace BrandDataProcessingUI
             return new ViewModelExcavation(deletedName, deletedMonument);
         }
 
+        private AddBrandDataUI.ViewModels.FindsClass GetSelectedFindsClass()
+        {
+            const int rowIndex = 0;
+            const int classIndex = 0;
+            string findsClass = dgvTable.SelectedRows[rowIndex].Cells[classIndex].Value.ToString();
+
+            return new AddBrandDataUI.ViewModels.FindsClass(findsClass);
+        }
+
         private static DialogResult ConfirmDeletion()
         {
             return MessageBox.Show("Вы уверены?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
-        private void mnsClose_Click(object sender, EventArgs e)
+        private void mnsClose_Click(object sender, System.EventArgs e)
         {
             CloseWindow();
         }
@@ -152,57 +171,60 @@ namespace BrandDataProcessingUI
             this.Close();
         }
 
-        private void btnAddExcavation_Click(object sender, EventArgs e)
+        private void btnAddExcavation_Click(object sender, System.EventArgs e)
         {
             AddData();
         }
 
         private void AddData()
         {
-            using (AddBrandDataForm<ViewModelExcavation> form = new AddBrandDataForm<ViewModelExcavation>())
+            switch (currentTableName)
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    switch (currentTableName)
-                    {
-                        case nameof(AddBrandDataUI.ViewModels.Excavation):
-                            IMapper<ViewModelExcavation> mapper = new ExcavationMapper();
-                            ViewModelExcavation excavation = mapper.Map(form);
-                            if (AddExcavation != null)
-                                AddExcavation.Invoke(this, new AddExcavationEventArgs(FilePath, excavation));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                form.Close();
+                case nameof(Excavation):
+                    ExcavationCrud.Add(this, new ExcavationMapper());
+                    break;
+                case nameof(FindsClass):
+                    FindsClassCrud.Add(this, new FindsClassMapper());
+                    break;
+                default:
+                    break;
             }
         }
 
-        private void smiUpdate_Click(object sender, EventArgs e)
+        private void smiUpdate_Click(object sender, System.EventArgs e)
         {
-            ViewModelExcavation updatedExcavation = GetSelectedExcavation();
-            UpdateExcavationData(updatedExcavation);
+            switch (currentTableName)
+            {
+                case nameof(Excavation):
+                    ViewModelExcavation updatedExcavation = GetSelectedExcavation();
+                    IMapper<ViewModelExcavation> excavationMapper = new ExcavationMapper();
+                    UpdateData(updatedExcavation, excavationMapper);
+                    break;
+                case nameof(FindsClass):
+                    AddBrandDataUI.ViewModels.FindsClass updatedFindsClass = GetSelectedFindsClass();
+                    IMapper<AddBrandDataUI.ViewModels.FindsClass> findsClassMapper = new FindsClassMapper();
+                    UpdateData(updatedFindsClass,findsClassMapper);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void UpdateExcavationData(ViewModelExcavation sourceExcavation)
+        private void UpdateData<T>(T sourceBrandData, IMapper<T> mapper) where T : class
         {
-            if (sourceExcavation == null)
+            if (sourceBrandData == null)
                 return;
 
-            //TODO: переделать связывание через фреймворк.
-            using (AddBrandDataForm<ViewModelExcavation> form = new AddBrandDataForm<ViewModelExcavation>(sourceExcavation))
+            switch (currentTableName)
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    IMapper<ViewModelExcavation> mapper = new ExcavationMapper();
-                    ViewModelExcavation updatedExcavation = mapper.Map(form);
-                    if (UpdateExcavation != null)
-                        UpdateExcavation.Invoke(this, new UpdateExcavationEventArgs(FilePath, sourceExcavation, updatedExcavation));
-                }
-
-                form.Close();
+                case nameof(Excavation):
+                    ExcavationCrud.Update(this, (IMapper<ViewModelExcavation>)mapper, sourceBrandData as ViewModelExcavation);
+                    break;
+                case nameof(FindsClass):
+                    FindsClassCrud.Update(this, (IMapper<AddBrandDataUI.ViewModels.FindsClass>)mapper, sourceBrandData as AddBrandDataUI.ViewModels.FindsClass);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -211,7 +233,7 @@ namespace BrandDataProcessingUI
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    FillFindsClassList();
+                    FindsClassCrud.Fill();
                     currentTableName = nameof(FindsClass);
                     break;
                 default:

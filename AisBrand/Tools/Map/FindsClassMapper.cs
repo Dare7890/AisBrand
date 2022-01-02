@@ -1,7 +1,7 @@
 ﻿using AddBrandDataUI;
 using AddBrandDataUI.ViewModels;
 
-namespace BrandDataProcessingUI.Map
+namespace Tools.Map
 {
     public class FindsClassMapper : IMapper<FindsClass>
     {

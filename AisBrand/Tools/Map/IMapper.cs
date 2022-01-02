@@ -1,6 +1,6 @@
 ﻿using AddBrandDataUI;
 
-namespace BrandDataProcessingUI.Map
+namespace Tools.Map
 {
     public interface IMapper<T> where T : class
     {

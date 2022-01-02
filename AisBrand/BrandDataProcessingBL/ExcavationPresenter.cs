@@ -4,11 +4,12 @@ using System.Linq;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
-using BrandDataProcessingBL.EventArgs;
+using Tools;
+using Tools.EventArgs;
 
 namespace BrandDataProcessingBL
 {
-    public class ExcavationPresenter
+    public class ExcavationPresenter : IPresenter
     {
         private IRepository<Excavation> repository;
         private readonly ISearchView view;
@@ -18,41 +19,41 @@ namespace BrandDataProcessingBL
         public ExcavationPresenter(ISearchView view)
         {
             this.view = view;
-            this.view.FillExcavationsList += View_FillExcavationsList;
-            this.view.DeleteExcavation += View_DeleteExcavation;
-            this.view.AddExcavation += View_AddExcavation;
-            this.view.UpdateExcavation += View_UpdateExcavation;
+            this.view.ExcavationCrud.FillExcavationsList += View_FillExcavationsList;
+            this.view.ExcavationCrud.DeleteExcavation += View_DeleteExcavation;
+            this.view.ExcavationCrud.AddExcavation += View_AddExcavation;
+            this.view.ExcavationCrud.UpdateExcavation += View_UpdateExcavation;
         }
 
-        private void View_UpdateExcavation(object sender, UpdateExcavationEventArgs e)
+        private void View_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            Excavation updatedExcavation = GetExcavation(excavations, e.SourceExcavation.Name, e.SourceExcavation.Monument);
+            Excavation updatedExcavation = GetExcavation(excavations, e.SourceBrandData.Name, e.SourceBrandData.Monument);
 
             //  TODO: create mapper.
-            updatedExcavation.Name = e.UpdatedExcavation.Name;
-            updatedExcavation.Monument = e.UpdatedExcavation.Monument;
+            updatedExcavation.Name = e.UpdatedBrandData.Name;
+            updatedExcavation.Monument = e.UpdatedBrandData.Monument;
 
             repository.Update(updatedExcavation);
             RefreshExcavationsList();
         }
 
-        private void View_AddExcavation(object sender, AddExcavationEventArgs e)
+        private void View_AddExcavation(object sender, AddEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
         {
             repository = new ExcavationLocal(e.FilePath);
 
             Excavation excavation = new Excavation();
-            excavation.Name = e.Excavation.Name;
-            excavation.Monument = e.Excavation.Monument;
+            excavation.Name = e.BrandData.Name;
+            excavation.Monument = e.BrandData.Monument;
 
             repository.Add(excavation);
             RefreshExcavationsList();
         }
 
-        private void View_DeleteExcavation(object sender, DeleteExcavationEventArgs e)
+        private void View_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            int deletedId = GetExcavationId(excavations, e.DeletedExcavation.Name, e.DeletedExcavation.Monument);
+            int deletedId = GetExcavationId(excavations, e.DeletedBrandData.Name, e.DeletedBrandData.Monument);
             repository.Delete(deletedId);
             RefreshExcavationsList();
         }
