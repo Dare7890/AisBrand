@@ -9,6 +9,7 @@ namespace Tools
     {
         //  TODO: подумать над обобщением.
         IEnumerable BrandDataList { get; set; }
+        int? SelectedParentId { get; set; }
 
         string GetFilePath();
         BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; }

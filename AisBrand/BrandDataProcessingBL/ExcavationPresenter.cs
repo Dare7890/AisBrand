@@ -23,6 +23,13 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.DeleteExcavation += View_DeleteExcavation;
             this.view.ExcavationCrud.AddExcavation += View_AddExcavation;
             this.view.ExcavationCrud.UpdateExcavation += View_UpdateExcavation;
+            this.view.ExcavationCrud.GetIdExcavation += ExcavationCrud_GetIdExcavation; ;
+        }
+
+        private void ExcavationCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
+        {
+            repository = new ExcavationLocal(e.FilePath);
+            view.SelectedParentId = GetExcavationId(excavations, e.BrandData.Name, e.BrandData.Monument);
         }
 
         private void View_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.Excavation> e)

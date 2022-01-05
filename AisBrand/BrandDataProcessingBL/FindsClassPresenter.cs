@@ -62,7 +62,10 @@ namespace BrandDataProcessingBL
             FindsClass findsClass = new();
             findsClass.Class = e.BrandData.Class;
 
-            repository.Add(findsClass);
+            if (!view.SelectedParentId.HasValue)
+                throw new ArgumentNullException("Add error. Parent id is null");
+
+            repository.Add(findsClass, view.SelectedParentId.Value);
             RefreshExcavationsList();
         }
 

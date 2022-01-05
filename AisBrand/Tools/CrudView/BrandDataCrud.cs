@@ -1,4 +1,5 @@
 ﻿using AddBrandDataUI;
+using AddBrandDataUI.ViewModels;
 using System;
 using System.Windows.Forms;
 using Tools.EventArgs;
@@ -12,6 +13,7 @@ namespace Tools.CrudView
         public event EventHandler<DeleteEventArgs<T>> DeleteExcavation;
         public event EventHandler<AddEventArgs<T>> AddExcavation;
         public event EventHandler<UpdateEventArgs<T>> UpdateExcavation;
+        public event EventHandler<GetIdEventArgs<T>> GetIdExcavation;
 
         public string FilePath { get; set; }
 
@@ -69,6 +71,15 @@ namespace Tools.CrudView
 
             if (FillExcavationsList != null)
                 FillExcavationsList.Invoke(this, new FillEventArgs(FilePath));
+        }
+
+        public void GetId(T viewModelExcavation)
+        {
+            if (viewModelExcavation == null)
+                throw new ArgumentNullException(nameof(Excavation));
+
+            if (GetIdExcavation != null)
+                GetIdExcavation.Invoke(this, new GetIdEventArgs<T>(FilePath, viewModelExcavation));
         }
     }
 }

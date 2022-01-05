@@ -8,6 +8,8 @@ using System.Collections;
 using Tools;
 using Tools.CrudView;
 using Tools.Map;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BrandDataProcessingUI
 {
@@ -15,6 +17,8 @@ namespace BrandDataProcessingUI
     {
         private const int selectedRowIndex = 0;
         private string currentTableName = nameof(Excavation);
+
+        public int? SelectedParentId { get; set; }
 
         public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
         public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
@@ -195,6 +199,7 @@ namespace BrandDataProcessingUI
             }
         }
 
+        // TODO: убрать обобщенный метод, поместить код из обработчика.
         private void UpdateData<T>(T sourceBrandData, IMapper<T> mapper) where T : class
         {
             if (sourceBrandData == null)
@@ -218,6 +223,8 @@ namespace BrandDataProcessingUI
             switch (currentTableName)
             {
                 case nameof(Excavation):
+                    ViewModelExcavation viewModelExcavation = new ViewModelExcavation(dgvTable.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvTable.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    ExcavationCrud.GetId(viewModelExcavation);
                     FindsClassCrud.Fill();
                     currentTableName = nameof(FindsClass);
                     break;
