@@ -23,9 +23,9 @@ namespace BrandDataProcessing.DAL
             query.Delete(id);
         }
 
-        public IEnumerable<FindsClass> GetAll()
+        public IEnumerable<FindsClass> GetAll(int? elementId)
         {
-            IEnumerable<XElement> findsClassesElements = query.GetAll();
+            IEnumerable<XElement> findsClassesElements = query.GetAll(elementId);
             return Serializated<FindsClass>.XmlDeserialization(findsClassesElements);
         }
 

@@ -83,7 +83,7 @@ namespace BrandDataProcessingBL
 
         private void RefreshExcavationsList()
         {
-            excavations = repository.GetAll();
+            excavations = repository.GetAll(null);
 
             view.BrandDataList = excavations.Select(e => new { e.Name, e.Monument, e.FindsClasses.Count })
                                             .ToList();

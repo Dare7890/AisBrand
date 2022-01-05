@@ -30,7 +30,9 @@ namespace BrandDataProcessingBL
             repository = new FindsClassLocal(e.FilePath);
             int id = GetFindsClassId(findsClasses, e.DeletedBrandData.Class);
             repository.Delete(id);
-            RefreshExcavationsList();
+
+            int parentId = view.SelectedParentId.Value;
+            RefreshExcavationsList(parentId);
         }
 
         private void FindsClassCrud_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
@@ -40,9 +42,10 @@ namespace BrandDataProcessingBL
 
             //  TODO: create mapper.
             findsClass.Class = e.UpdatedBrandData.Class;
-
             repository.Update(findsClass);
-            RefreshExcavationsList();
+
+            int parentId = view.SelectedParentId.Value;
+            RefreshExcavationsList(parentId);
         }
 
         private FindsClass GetFindsClass(IEnumerable<FindsClass> findsClasses, string className)
@@ -65,19 +68,22 @@ namespace BrandDataProcessingBL
             if (!view.SelectedParentId.HasValue)
                 throw new ArgumentNullException("Add error. Parent id is null");
 
-            repository.Add(findsClass, view.SelectedParentId.Value);
-            RefreshExcavationsList();
+            int parentId = view.SelectedParentId.Value;
+            repository.Add(findsClass, parentId);
+            RefreshExcavationsList(parentId);
         }
 
         private void View_FillExcavationsList(object sender, FillEventArgs e)
         {
             repository = new FindsClassLocal(e.FilePath);
-            RefreshExcavationsList();
+
+            int parentId = view.SelectedParentId.Value;
+            RefreshExcavationsList(parentId);
         }
 
-        private void RefreshExcavationsList()
+        private void RefreshExcavationsList(int? id = null)
         {
-            findsClasses = repository.GetAll();
+            findsClasses = repository.GetAll(id);
 
             view.BrandDataList = findsClasses.Select(c => new { c.Class, c.Classifications.Count})
                                             .ToList();

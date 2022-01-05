@@ -7,6 +7,6 @@ namespace BrandDataProcessing
         void Add(T item, int? id = null);
         void Update(T item);
         void Delete(int id);
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(int? id);
     }
 }

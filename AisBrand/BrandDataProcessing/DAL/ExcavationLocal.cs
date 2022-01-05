@@ -43,15 +43,15 @@ namespace BrandDataProcessing.DAL
             query.Update(excavation, excavation.ID, ConstructorXML.Update);
         }
 
-        public IEnumerable<Excavation> GetAll()
+        public IEnumerable<Excavation> GetAll(int? id = null)
         {
-            IEnumerable<XElement> excavationsElements = query.GetAll();
+            IEnumerable<XElement> excavationsElements = query.GetAll(id);
             return Serializated<Excavation>.XmlDeserialization(excavationsElements);
         }
 
-        public IEnumerable<XElement> GetAllElements()
+        public IEnumerable<XElement> GetAllElements(int? id = null)
         {
-            return query.GetAll();
+            return query.GetAll(id);
         }
     }
 }
