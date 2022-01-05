@@ -119,7 +119,6 @@ namespace BrandDataProcessingUI
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvTable.RowHeadersVisible = false;
             this.dgvTable.RowTemplate.Height = 25;
             this.dgvTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTable.Size = new System.Drawing.Size(794, 344);
@@ -127,6 +126,7 @@ namespace BrandDataProcessingUI
             this.dgvTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTable_CellDoubleClick);
             this.dgvTable.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTable_CellMouseDown);
             this.dgvTable.RowContextMenuStripNeeded += new System.Windows.Forms.DataGridViewRowContextMenuStripNeededEventHandler(this.dgvTable_RowContextMenuStripNeeded);
+            this.dgvTable.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgvTable_RowStateChanged);
             // 
             // tlpControllers
             // 

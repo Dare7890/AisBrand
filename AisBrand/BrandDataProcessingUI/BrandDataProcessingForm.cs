@@ -225,5 +225,10 @@ namespace BrandDataProcessingUI
                     break;
             }
         }
+
+        private void dgvTable_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            e.Row.HeaderCell.Value = (e.Row.Index + 1).ToString();
+        }
     }
 }
