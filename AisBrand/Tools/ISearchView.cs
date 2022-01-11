@@ -14,5 +14,6 @@ namespace Tools
         string GetFilePath();
         BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; }
         BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; }
+        BrandDataCrud<AddBrandDataUI.ViewModels.Classification> ClassificationCrud { get; }
     }
 }

@@ -73,13 +73,13 @@ namespace Tools.CrudView
                 FillExcavationsList.Invoke(this, new FillEventArgs(FilePath));
         }
 
-        public void GetId(T viewModelExcavation)
+        public void GetId(T viewModel)
         {
-            if (viewModelExcavation == null)
+            if (viewModel == null)
                 throw new ArgumentNullException(nameof(Excavation));
 
             if (GetIdExcavation != null)
-                GetIdExcavation.Invoke(this, new GetIdEventArgs<T>(FilePath, viewModelExcavation));
+                GetIdExcavation.Invoke(this, new GetIdEventArgs<T>(FilePath, viewModel));
         }
     }
 }

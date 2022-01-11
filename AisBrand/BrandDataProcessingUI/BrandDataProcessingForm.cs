@@ -3,13 +3,12 @@ using System;
 using System.Windows.Forms;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using ViewModelFindsClass = AddBrandDataUI.ViewModels.FindsClass;
+using ViewModelClassification = AddBrandDataUI.ViewModels.Classification;
 using Excavation = BrandDataProcessing.Models.Excavation;
 using System.Collections;
 using Tools;
 using Tools.CrudView;
 using Tools.Map;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BrandDataProcessingUI
 {
@@ -22,6 +21,8 @@ namespace BrandDataProcessingUI
 
         public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
         public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
+        public BrandDataCrud<ViewModelClassification> ClassificationCrud { get; private set; }
+
         public string FilePath { get; private set; }
 
         public IEnumerable BrandDataList
@@ -33,9 +34,14 @@ namespace BrandDataProcessingUI
         public BrandDataProcessingForm()
         {
             InitializeComponent();
+            CreateModelsCrud();
+        }
 
+        private void CreateModelsCrud()
+        {
             ExcavationCrud = new();
             FindsClassCrud = new();
+            ClassificationCrud = new();
         }
 
         public string GetFilePath()
@@ -79,6 +85,7 @@ namespace BrandDataProcessingUI
         {
             ExcavationCrud.FilePath = FilePath;
             FindsClassCrud.FilePath = FilePath;
+            ClassificationCrud.FilePath = FilePath;
         }
 
         private void EnableAddButton()
@@ -190,9 +197,11 @@ namespace BrandDataProcessingUI
                     UpdateData(updatedExcavation, excavationMapper);
                     break;
                 case nameof(FindsClass):
-                    ViewModelFindsClass updatedFindsClass = RetrieverSelectedData.GetSelectedFindsClass(cells);
-                    IMapper<ViewModelFindsClass> findsClassMapper = new FindsClassMapper();
-                    UpdateData(updatedFindsClass,findsClassMapper);
+                    var a = dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(a);
+                    FindsClassCrud.GetId(viewModelFindsClass);
+                    ClassificationCrud.Fill();
+                    currentTableName = nameof(Classification);
                     break;
                 default:
                     break;

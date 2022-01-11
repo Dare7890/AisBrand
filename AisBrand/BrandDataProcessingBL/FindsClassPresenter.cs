@@ -23,6 +23,13 @@ namespace BrandDataProcessingBL
             this.view.FindsClassCrud.AddExcavation += FindsClassCrud_AddExcavation;
             this.view.FindsClassCrud.UpdateExcavation += FindsClassCrud_UpdateExcavation;
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
+            this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
+        }
+
+        private void FindsClassCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
+        {
+            repository = new FindsClassLocal(e.FilePath);
+            view.SelectedParentId = GetFindsClassId(findsClasses, e.BrandData.Class);
         }
 
         private void FindsClassCrud_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)

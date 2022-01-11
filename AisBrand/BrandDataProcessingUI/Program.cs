@@ -22,6 +22,7 @@ namespace BrandDataProcessingUI
             BrandDataProcessingForm form = new BrandDataProcessingForm();
             ExcavationPresenter excavationPresenter = new ExcavationPresenter(form);
             FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form);
+            ClassificationPresenter classificationPresenter = new ClassificationPresenter(form);
             Application.Run(form);
         }
     }
