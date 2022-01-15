@@ -21,7 +21,7 @@ namespace BrandDataProcessingUI
 
         public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
         public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
-        public BrandDataCrud<ViewModelClassification> ClassificationCrud { get; private set; }
+        public ClassificationCrud ClassificationCrud { get; private set; }
 
         public string FilePath { get; private set; }
 
@@ -52,7 +52,7 @@ namespace BrandDataProcessingUI
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    throw new InvalidOperationException("Cant opan file.");
+                    throw new InvalidOperationException("Can't open file.");
 
                 return openFileDialog.FileName;
             }
@@ -181,6 +181,9 @@ namespace BrandDataProcessingUI
                 case nameof(FindsClass):
                     FindsClassCrud.Add(this, new FindsClassMapper());
                     break;
+                case nameof(Classification):
+                    ClassificationCrud.Add(this, new ClassificationMapper());
+                    break;
                 default:
                     break;
             }
@@ -197,11 +200,15 @@ namespace BrandDataProcessingUI
                     UpdateData(updatedExcavation, excavationMapper);
                     break;
                 case nameof(FindsClass):
-                    var a = dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString();
-                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(a);
+                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString());
                     FindsClassCrud.GetId(viewModelFindsClass);
                     ClassificationCrud.Fill();
                     currentTableName = nameof(Classification);
+                    break;
+                case nameof(Classification):
+                    ViewModelClassification updatedClassification = RetrieverSelectedData.GetSelectedClassification(cells);
+                    IMapper<ViewModelClassification> classificationMapper = new ClassificationMapper();
+                    UpdateData(updatedClassification, classificationMapper);
                     break;
                 default:
                     break;
@@ -221,6 +228,10 @@ namespace BrandDataProcessingUI
                     break;
                 case nameof(FindsClass):
                     FindsClassCrud.Update(this, (IMapper<ViewModelFindsClass>)mapper, sourceBrandData as ViewModelFindsClass);
+                    break;
+                case nameof(Classification):
+                    //ClassificationCrud.Update(this, (IMapper<ViewModelClassification>)mapper, sourceBrandData as ViewModelClassification);
+                    ClassificationCrud.FillClassification(sourceBrandData as ViewModelClassification);
                     break;
                 default:
                     break;

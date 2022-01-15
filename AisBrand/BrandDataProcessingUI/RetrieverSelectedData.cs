@@ -22,5 +22,15 @@ namespace BrandDataProcessingUI
 
             return new FindsClass(findsClass);
         }
+
+        internal static Classification GetSelectedClassification(DataGridViewCellCollection cells)
+        {
+            const int typeIndex = 0;
+            const int variantIndex = 1;
+            string type = cells[typeIndex].Value.ToString();
+            string variant = cells[variantIndex].Value.ToString();
+
+            return new Classification(type, variant);
+        }
     }
 }

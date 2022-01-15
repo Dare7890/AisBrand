@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using BrandDataProcessing.Models;
 
@@ -35,7 +36,7 @@ namespace BrandDataProcessing
                 new XElement(nameof(classification.Type), classification.Type),
                 new XElement(nameof(classification.Variant), classification.Variant),
                 new XElement(nameof(classification.Description), classification.Description),
-                new XElement(nameof(classification.Image), classification.Image)
+                new XElement(nameof(classification.Image), Convert.ToBase64String(classification.Image))
                 );
         }
 

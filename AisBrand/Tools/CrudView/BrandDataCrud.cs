@@ -37,7 +37,7 @@ namespace Tools.CrudView
             }
         }
 
-        public void Update(Form owner, IMapper<T> mapper, T sourceData)
+        public virtual void Update(Form owner, IMapper<T> mapper, T sourceData)
         {
             if (FilePath == null)
                 return;
