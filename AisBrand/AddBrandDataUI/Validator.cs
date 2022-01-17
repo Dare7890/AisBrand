@@ -12,15 +12,34 @@ namespace AddBrandDataUI
         {
             public static bool ValidName(string name, out string errorMessage)
             {
-                errorMessage = "";
-                if (name.Length == 0)
-                {
-                    errorMessage = "Заполните поле";
+                if (IsEmpty(name, out errorMessage))
                     return false;
-                }
 
                 return true;
             }
+        }
+
+        public static class Classification
+        {
+            public static bool ValidType(string type, out string errorMessage)
+            {
+                if (IsEmpty(type, out errorMessage))
+                    return false;
+
+                return true;
+            }
+        }
+
+        private static bool IsEmpty(string field, out string errorMessage)
+        {
+            errorMessage = "";
+            if (field.Length == 0)
+            {
+                errorMessage = "Заполните поле";
+                return true;
+            }
+
+            return false;
         }
     }
 }

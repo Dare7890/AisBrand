@@ -29,6 +29,7 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtVariant = new System.Windows.Forms.TextBox();
             this.txtType = new System.Windows.Forms.TextBox();
             this.lblVariant = new System.Windows.Forms.Label();
@@ -39,7 +40,9 @@ namespace AddBrandDataUI
             this.lblPicture = new System.Windows.Forms.Label();
             this.picPicture = new System.Windows.Forms.PictureBox();
             this.btnDeleteImage = new System.Windows.Forms.Button();
+            this.errValidating = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errValidating)).BeginInit();
             this.SuspendLayout();
             // 
             // txtVariant
@@ -59,6 +62,7 @@ namespace AddBrandDataUI
             this.txtType.Name = "txtType";
             this.txtType.Size = new System.Drawing.Size(147, 23);
             this.txtType.TabIndex = 6;
+            this.txtType.Validating += new System.ComponentModel.CancelEventHandler(this.txtType_Validating);
             // 
             // lblVariant
             // 
@@ -143,6 +147,10 @@ namespace AddBrandDataUI
             this.btnDeleteImage.UseVisualStyleBackColor = true;
             this.btnDeleteImage.Click += new System.EventHandler(this.btnDeleteImage_Click);
             // 
+            // errValidating
+            // 
+            this.errValidating.ContainerControl = this;
+            // 
             // AddClassificationUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -160,6 +168,7 @@ namespace AddBrandDataUI
             this.Name = "AddClassificationUserControl";
             this.Size = new System.Drawing.Size(254, 321);
             ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errValidating)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,5 +186,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Label lblPicture;
         private System.Windows.Forms.PictureBox picPicture;
         private System.Windows.Forms.Button btnDeleteImage;
+        private System.Windows.Forms.ErrorProvider errValidating;
     }
 }

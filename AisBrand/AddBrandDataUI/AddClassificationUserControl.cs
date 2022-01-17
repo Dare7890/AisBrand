@@ -1,5 +1,6 @@
 ﻿using AddBrandDataUI.ViewModels;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -99,6 +100,27 @@ namespace AddBrandDataUI
                 Image = null;
 
             picPicture.Image = null;
+        }
+
+        private void txtType_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingType(e);
+        }
+
+        private void ValidatingType(CancelEventArgs e)
+        {
+            string type = txtType.Text.Trim();
+            if (!Validator.Classification.ValidType(type, out string errorMasage))
+            {
+                e.Cancel = true;
+                txtType.Select(0, txtType.Text.Length);
+
+                errValidating.SetError(txtType, errorMasage);
+            }
+            else
+            {
+                errValidating.SetError(txtType, string.Empty);
+            }
         }
     }
 }
