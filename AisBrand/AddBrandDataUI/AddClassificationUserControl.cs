@@ -1,5 +1,6 @@
 ﻿using AddBrandDataUI.ViewModels;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -77,12 +78,27 @@ namespace AddBrandDataUI
             }
         }
 
-        private void ShowPicture(byte[] image)
+        private void ShowPicture(byte[] imageBytes)
         {
-            using (Stream stream = new MemoryStream(image))
+            using (Stream stream = new MemoryStream(imageBytes))
             {
-                picPicture.Image = System.Drawing.Image.FromStream(stream);
+                Image image = System.Drawing.Image.FromStream(stream);
+                Bitmap bitmap = new Bitmap(image, picPicture.Size);
+                picPicture.Image = bitmap;
             }
+        }
+
+        private void btnDeleteImage_Click(object sender, EventArgs e)
+        {
+            ClearImage();
+        }
+
+        private void ClearImage()
+        {
+            if (Image != null)
+                Image = null;
+
+            picPicture.Image = null;
         }
     }
 }

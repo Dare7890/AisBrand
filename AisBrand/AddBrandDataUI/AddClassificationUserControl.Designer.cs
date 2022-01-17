@@ -38,6 +38,7 @@ namespace AddBrandDataUI
             this.btnAddPicture = new System.Windows.Forms.Button();
             this.lblPicture = new System.Windows.Forms.Label();
             this.picPicture = new System.Windows.Forms.PictureBox();
+            this.btnDeleteImage = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,16 +126,28 @@ namespace AddBrandDataUI
             // 
             // picPicture
             // 
+            this.picPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picPicture.Location = new System.Drawing.Point(88, 170);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(147, 127);
             this.picPicture.TabIndex = 12;
             this.picPicture.TabStop = false;
             // 
+            // btnDeleteImage
+            // 
+            this.btnDeleteImage.Location = new System.Drawing.Point(17, 247);
+            this.btnDeleteImage.Name = "btnDeleteImage";
+            this.btnDeleteImage.Size = new System.Drawing.Size(68, 27);
+            this.btnDeleteImage.TabIndex = 13;
+            this.btnDeleteImage.Text = "Удалить";
+            this.btnDeleteImage.UseVisualStyleBackColor = true;
+            this.btnDeleteImage.Click += new System.EventHandler(this.btnDeleteImage_Click);
+            // 
             // AddClassificationUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDeleteImage);
             this.Controls.Add(this.picPicture);
             this.Controls.Add(this.lblPicture);
             this.Controls.Add(this.btnAddPicture);
@@ -163,5 +176,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Button btnAddPicture;
         private System.Windows.Forms.Label lblPicture;
         private System.Windows.Forms.PictureBox picPicture;
+        private System.Windows.Forms.Button btnDeleteImage;
     }
 }

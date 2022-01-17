@@ -3,7 +3,6 @@ using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Tools;
 using Tools.EventArgs;
@@ -45,8 +44,10 @@ namespace BrandDataProcessingBL
             classification.Type = e.UpdatedBrandData.Type;
             classification.Variant = e.UpdatedBrandData.Variant;
             classification.Description = e.UpdatedBrandData.Description;
-            if (e.UpdatedBrandData.Image != null)
-                classification.Image = (byte[])e.UpdatedBrandData.Image.Clone();
+            classification.Image = (byte[])e.UpdatedBrandData.Image?.Clone() ?? null;
+
+            //if (e.UpdatedBrandData.Image != null)
+            //    classification.Image = (byte[])e.UpdatedBrandData.Image.Clone();
 
             repository.Update(classification);
 
@@ -69,21 +70,7 @@ namespace BrandDataProcessingBL
             classification.Description = e.BrandData.Description;
 
             if (e.BrandData.Image != null)
-            {
-                classification.Image = new byte[e.BrandData.Image.Length];
-                //classification.Image = new byte[e.BrandData.Image.Length];
-                for (int i = 0; i < e.BrandData.Image.Length; i++)
-                {
-                    var a = e.BrandData.Image[i];
-                    classification.Image[i] = a;
-                    Debug.WriteLine(a);
-                    Debug.WriteLine(classification.Image[i]);
-                }
-                //classification.Image = new byte[e.BrandData.Image.Length];
-                //e.BrandData.Image.CopyTo(classification.Image, 0);
-                //Array.Copy(e.BrandData.Image, classification.Image, e.BrandData.Image.Length);
-                //classification.Image = (byte[])e.BrandData.Image.Clone();
-            }
+                classification.Image = (byte[])e.BrandData.Image.Clone();
 
             if (!view.SelectedParentId.HasValue)
                 throw new ArgumentNullException("Add error. Parent id is null");

@@ -21,10 +21,6 @@ namespace BrandDataProcessing.Models
 
         [XmlElement(ElementName = "ImageAsString", DataType = "hexBinary")]
         public byte[] Image { get; set; }
-        //{
-        //    get { return Encoding.UTF8.GetBytes(ImageAsString ?? string.Empty); }
-        //    set { ImageAsString = Encoding.UTF8.GetString(value); }
-        //}
 
         public List<Find> Finds { get; set; }
     }

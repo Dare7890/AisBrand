@@ -88,7 +88,20 @@ namespace BrandDataProcessing
             updatedClassification.Element(nameof(classification.Type)).Value = classification.Type;
             updatedClassification.Element(nameof(classification.Variant)).Value = classification.Variant;
             updatedClassification.Element(nameof(classification.Description)).Value = classification.Description;
-            updatedClassification.Element(nameof(classification.Image)).Value = classification.ImageAsString;
+
+            string name = nameof(classification.Image);
+            if (classification.Image != null)
+            {
+                string image = Convert.ToBase64String(classification.Image);
+                if (updatedClassification.Element(name) == null)
+                    updatedClassification.Add(new XElement(name, image));
+                else
+                    updatedClassification.Element(name).Value = image;
+            }
+            else
+            {
+                updatedClassification.Element(name)?.Remove();
+            }
         }
 
         public static void Update(Find find, XElement updatedFind)

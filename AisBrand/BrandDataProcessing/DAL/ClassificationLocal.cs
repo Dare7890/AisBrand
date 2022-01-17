@@ -32,11 +32,14 @@ namespace BrandDataProcessing.DAL
             for (int i = 0; i < classifications.Count(); i++)
             {
                 classifications[i].Image = classificationElements.Where(c => int.Parse(c.Element("ID").Value) == classifications[i].ID)
-                                                                .Select(c => Convert.FromBase64String(c.Element("Image").Value))
-                                                                .FirstOrDefault();
+                                                                .Select(c =>
+                                                                {
+                                                                    string image = c.Element("Image")?.Value;
+                                                                    return image != null ? Convert.FromBase64String(image) : null;
+                                                                })
+                                                                ?.FirstOrDefault() ?? null;
             }
 
-            //var b = classifications.Join(classificationElements, c => c.ID, e => int.Parse(e.Element("ID").Value), (c, e) => new { c.ID, c.Type, c.Variant, c.Description, Image = Convert.FromBase64String(e.Element("Image").Value), c.Finds });
             return classifications;
         }
 
