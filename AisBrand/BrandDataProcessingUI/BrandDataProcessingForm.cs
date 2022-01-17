@@ -191,13 +191,16 @@ namespace BrandDataProcessingUI
 
         private void smiUpdate_Click(object sender, EventArgs e)
         {
+            UpdateData();
+        }
+
+        private void UpdateData()
+        {
             DataGridViewCellCollection cells = GetSelectedCells();
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ViewModelExcavation updatedExcavation = RetrieverSelectedData.GetSelectedExcavation(cells);
-                    IMapper<ViewModelExcavation> excavationMapper = new ExcavationMapper();
-                    UpdateData(updatedExcavation, excavationMapper);
+                    UpdateExcavation(cells);
                     break;
                 case nameof(FindsClass):
                     ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString());
@@ -206,16 +209,27 @@ namespace BrandDataProcessingUI
                     currentTableName = nameof(Classification);
                     break;
                 case nameof(Classification):
-                    ViewModelClassification updatedClassification = RetrieverSelectedData.GetSelectedClassification(cells);
-                    IMapper<ViewModelClassification> classificationMapper = new ClassificationMapper();
-                    UpdateData(updatedClassification, classificationMapper);
+                    UpdateClassification(cells);
                     break;
                 default:
                     break;
             }
         }
 
-        // TODO: убрать обобщенный метод, поместить код из обработчика.
+        private void UpdateClassification(DataGridViewCellCollection cells)
+        {
+            ViewModelClassification updatedClassification = RetrieverSelectedData.GetSelectedClassification(cells);
+            IMapper<ViewModelClassification> classificationMapper = new ClassificationMapper();
+            UpdateData(updatedClassification, classificationMapper);
+        }
+
+        private void UpdateExcavation(DataGridViewCellCollection cells)
+        {
+            ViewModelExcavation updatedExcavation = RetrieverSelectedData.GetSelectedExcavation(cells);
+            IMapper<ViewModelExcavation> excavationMapper = new ExcavationMapper();
+            UpdateData(updatedExcavation, excavationMapper);
+        }
+
         private void UpdateData<T>(T sourceBrandData, IMapper<T> mapper) where T : class
         {
             if (sourceBrandData == null)
@@ -247,6 +261,10 @@ namespace BrandDataProcessingUI
                     ExcavationCrud.GetId(viewModelExcavation);
                     FindsClassCrud.Fill();
                     currentTableName = nameof(FindsClass);
+                    break;
+                case nameof(Classification):
+                    DataGridViewCellCollection cells = GetSelectedCells();
+                    UpdateClassification(cells);
                     break;
                 default:
                     break;
