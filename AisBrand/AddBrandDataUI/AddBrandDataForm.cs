@@ -72,7 +72,8 @@ namespace AddBrandDataUI
         {
             BrandData = userControl.Add();
 
-            DialogResult = BrandData != null ? DialogResult.OK : DialogResult.None;
+            UserControl control = (UserControl)userControl;
+            DialogResult = BrandData != null && control.ValidateChildren() ? DialogResult.OK : DialogResult.None;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -29,10 +29,13 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblName = new System.Windows.Forms.Label();
             this.lblMonument = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtMonument = new System.Windows.Forms.TextBox();
+            this.errValidating = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errValidating)).BeginInit();
             this.SuspendLayout();
             // 
             // lblName
@@ -65,6 +68,7 @@ namespace AddBrandDataUI
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(175, 23);
             this.txtName.TabIndex = 2;
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // txtMonument
             // 
@@ -74,6 +78,10 @@ namespace AddBrandDataUI
             this.txtMonument.Name = "txtMonument";
             this.txtMonument.Size = new System.Drawing.Size(175, 23);
             this.txtMonument.TabIndex = 3;
+            // 
+            // errValidating
+            // 
+            this.errValidating.ContainerControl = this;
             // 
             // AddExcavationUserControl
             // 
@@ -85,6 +93,7 @@ namespace AddBrandDataUI
             this.Controls.Add(this.lblName);
             this.Name = "AddExcavationUserControl";
             this.Size = new System.Drawing.Size(270, 97);
+            ((System.ComponentModel.ISupportInitialize)(this.errValidating)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,5 +105,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Label lblMonument;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtMonument;
+        private System.Windows.Forms.ErrorProvider errValidating;
     }
 }
