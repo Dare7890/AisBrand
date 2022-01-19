@@ -83,5 +83,7 @@ namespace BrandDataProcessing.Models
         }
 
         public List<Brand> Brands { get; set; }
+
+        public List<AditionalBrand> AditionalBrands { get; set; }
     }
 }
