@@ -29,35 +29,35 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtClass = new System.Windows.Forms.TextBox();
             this.lblClass = new System.Windows.Forms.Label();
+            this.cboClass = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtClass
-            // 
-            this.txtClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtClass.Location = new System.Drawing.Point(106, 18);
-            this.txtClass.Name = "txtClass";
-            this.txtClass.Size = new System.Drawing.Size(175, 23);
-            this.txtClass.TabIndex = 4;
             // 
             // lblClass
             // 
             this.lblClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblClass.AutoSize = true;
-            this.lblClass.Location = new System.Drawing.Point(22, 21);
+            this.lblClass.Location = new System.Drawing.Point(13, 21);
             this.lblClass.Name = "lblClass";
-            this.lblClass.Size = new System.Drawing.Size(78, 15);
+            this.lblClass.Size = new System.Drawing.Size(90, 15);
             this.lblClass.TabIndex = 3;
-            this.lblClass.Text = "Тип находок:";
+            this.lblClass.Text = "Класс находок:";
+            // 
+            // cboClass
+            // 
+            this.cboClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClass.FormattingEnabled = true;
+            this.cboClass.Location = new System.Drawing.Point(109, 18);
+            this.cboClass.Name = "cboClass";
+            this.cboClass.Size = new System.Drawing.Size(175, 23);
+            this.cboClass.TabIndex = 5;
             // 
             // AddFindsClassUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.txtClass);
+            this.Controls.Add(this.cboClass);
             this.Controls.Add(this.lblClass);
             this.Name = "AddFindsClassUserControl";
             this.Size = new System.Drawing.Size(299, 77);
@@ -67,8 +67,7 @@ namespace AddBrandDataUI
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtClass;
         private System.Windows.Forms.Label lblClass;
+        private System.Windows.Forms.ComboBox cboClass;
     }
 }

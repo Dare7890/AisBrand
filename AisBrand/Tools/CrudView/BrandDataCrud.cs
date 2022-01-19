@@ -1,6 +1,7 @@
 ﻿using AddBrandDataUI;
 using AddBrandDataUI.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Tools.EventArgs;
 using Tools.Map;
@@ -19,12 +20,12 @@ namespace Tools.CrudView
 
         public BrandDataCrud() { }
 
-        public void Add(Form owner, IMapper<T> mapper)
+        public void Add(Form owner, IMapper<T> mapper, IEnumerable<string> types = null)
         {
             if (FilePath == null)
                 return;
 
-            using (AddBrandDataForm<T> form = new AddBrandDataForm<T>())
+            using (AddBrandDataForm<T> form = new AddBrandDataForm<T>(types: types))
             {
                 if (form.ShowDialog(owner) == DialogResult.OK)
                 {

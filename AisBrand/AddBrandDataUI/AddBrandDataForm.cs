@@ -1,6 +1,7 @@
-﻿using AddBrandDataUI.ViewModels;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using AddBrandDataUI.ViewModels;
 
 namespace AddBrandDataUI
 {
@@ -10,15 +11,15 @@ namespace AddBrandDataUI
 
         public T BrandData { get; set; }
 
-        public AddBrandDataForm(T brandData = null)
+        public AddBrandDataForm(T brandData = null, IEnumerable<string> types = null)
         {
             InitializeComponent();
 
             InitElementsName(brandData);
-            ShowExcavationAddFields(brandData);
+            ShowExcavationAddFields(brandData, types);
         }
 
-        private void InitUserControl(T brandData)
+        private void InitUserControl(T brandData, IEnumerable<string> types)
         {
             switch (typeof(T).Name)
             {
@@ -26,7 +27,7 @@ namespace AddBrandDataUI
                     userControl = (IUserControl<T>)new AddExcavationUserControl(brandData as Excavation);
                     break;
                 case nameof(FindsClass):
-                    userControl = (IUserControl<T>)new AddFindsClassUserControl(brandData as FindsClass);
+                    userControl = (IUserControl<T>)new AddFindsClassUserControl(types, brandData as FindsClass);
                     break;
                 case nameof(Classification):
                     userControl = (IUserControl<T>)new AddClassificationUserControl(brandData as Classification);
@@ -50,9 +51,9 @@ namespace AddBrandDataUI
             btnAdd.Text = buttonText;
         }
 
-        private void ShowExcavationAddFields(T brandData)
+        private void ShowExcavationAddFields(T brandData, IEnumerable<string> types)
         {
-            InitUserControl(brandData);
+            InitUserControl(brandData, types);
             ShowUserControl();
         }
 

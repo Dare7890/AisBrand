@@ -9,6 +9,8 @@ using System.Collections;
 using Tools;
 using Tools.CrudView;
 using Tools.Map;
+using BrandDataProcessing;
+using System.Collections.Generic;
 
 namespace BrandDataProcessingUI
 {
@@ -180,7 +182,9 @@ namespace BrandDataProcessingUI
                     ExcavationCrud.Add(this, new ExcavationMapper());
                     break;
                 case nameof(FindsClass):
-                    FindsClassCrud.Add(this, new FindsClassMapper());
+                    ITranslater translater = new EntitiyNameTranslater();
+                    IEnumerable<string> findTypes = ChildrenEntityRetriever.RetrieveTranslatedFindChildrenNames(translater);
+                    FindsClassCrud.Add(this, new FindsClassMapper(), findTypes);
                     break;
                 case nameof(Classification):
                     ClassificationCrud.Add(this, new ClassificationMapper());

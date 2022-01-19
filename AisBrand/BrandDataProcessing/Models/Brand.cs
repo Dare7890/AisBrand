@@ -2,11 +2,11 @@
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
     [Serializable]
+    [TranslatedName("Клеймо")]
     public class Brand : IIdentifier/*, IXmlSerializable*/
     {
         public int ID { get; set; }
