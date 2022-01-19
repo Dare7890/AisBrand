@@ -79,6 +79,7 @@ namespace BrandDataProcessingUI
             }
 
             ExcavationCrud.Fill();
+            TableHeaders.Excavation.SetExcavationTitles(dgvTable);
         }
 
         private void SetCrudsEntitiesFilePath()
@@ -206,6 +207,7 @@ namespace BrandDataProcessingUI
                     ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString());
                     FindsClassCrud.GetId(viewModelFindsClass);
                     ClassificationCrud.Fill();
+                    TableHeaders.Classification.SetClassificationTitles(dgvTable);
                     currentTableName = nameof(Classification);
                     break;
                 case nameof(Classification):
@@ -240,12 +242,12 @@ namespace BrandDataProcessingUI
                 case nameof(Excavation):
                     ExcavationCrud.Update(this, (IMapper<ViewModelExcavation>)mapper, sourceBrandData as ViewModelExcavation);
                     break;
-                case nameof(FindsClass):
-                    FindsClassCrud.Update(this, (IMapper<ViewModelFindsClass>)mapper, sourceBrandData as ViewModelFindsClass);
-                    break;
                 case nameof(Classification):
                     //ClassificationCrud.Update(this, (IMapper<ViewModelClassification>)mapper, sourceBrandData as ViewModelClassification);
-                    ClassificationCrud.FillClassification(sourceBrandData as ViewModelClassification);
+                    ClassificationCrud.Fill(sourceBrandData as ViewModelClassification);
+                    break;
+                case nameof(FindsClass):
+                    FindsClassCrud.Update(this, (IMapper<ViewModelFindsClass>)mapper, sourceBrandData as ViewModelFindsClass);
                     break;
                 default:
                     break;
@@ -254,12 +256,26 @@ namespace BrandDataProcessingUI
 
         private void dgvTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (IsHeaderRow(e.RowIndex))
+                return;
+
+            Fill(e);
+        }
+
+        private bool IsHeaderRow(int rowIndex)
+        {
+            return rowIndex < 0;
+        }
+
+        private void Fill(DataGridViewCellEventArgs e)
+        {
             switch (currentTableName)
             {
                 case nameof(Excavation):
                     ViewModelExcavation viewModelExcavation = new ViewModelExcavation(dgvTable.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvTable.Rows[e.RowIndex].Cells[1].Value.ToString());
                     ExcavationCrud.GetId(viewModelExcavation);
                     FindsClassCrud.Fill();
+                    TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
                     currentTableName = nameof(FindsClass);
                     break;
                 case nameof(Classification):

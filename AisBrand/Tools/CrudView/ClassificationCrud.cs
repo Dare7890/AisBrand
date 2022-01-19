@@ -10,7 +10,7 @@ namespace Tools.CrudView
     {
         public event EventHandler<FillClassificationEventArgs> FillClassificationInfo;
 
-        public void FillClassification(Classification classification)
+        public void Fill(Classification classification)
         {
             if (FilePath == null)
                 return;
