@@ -46,9 +46,6 @@ namespace BrandDataProcessingBL
             classification.Description = e.UpdatedBrandData.Description;
             classification.Image = (byte[])e.UpdatedBrandData.Image?.Clone() ?? null;
 
-            //if (e.UpdatedBrandData.Image != null)
-            //    classification.Image = (byte[])e.UpdatedBrandData.Image.Clone();
-
             repository.Update(classification);
 
             int parentId = view.SelectedParentId.Value;
