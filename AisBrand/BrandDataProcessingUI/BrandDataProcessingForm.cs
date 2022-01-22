@@ -20,6 +20,8 @@ namespace BrandDataProcessingUI
         private const int selectedRowIndex = 0;
         private string currentTableName = nameof(Excavation);
 
+        private Navigation navigation;
+
         public int? SelectedParentId { get; set; }
 
         public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
@@ -40,7 +42,13 @@ namespace BrandDataProcessingUI
             CreateModelsCrud();
             OpenDataFile();
 
+            InitNavigation();
             ClearTableSelection();
+        }
+
+        private void InitNavigation()
+        {
+            navigation = new Navigation();
         }
 
         private void CreateModelsCrud()
@@ -152,7 +160,7 @@ namespace BrandDataProcessingUI
             this.Close();
         }
 
-        private void btnAddExcavation_Click(object sender, EventArgs e)
+        private void tlsAdd_Click(object sender, EventArgs e)
         {
             AddData();
         }
@@ -196,6 +204,7 @@ namespace BrandDataProcessingUI
                     FindsClassCrud.GetId(viewModelFindsClass);
                     ClassificationCrud.Fill();
                     TableHeaders.Classification.SetClassificationTitles(dgvTable);
+                    navigation.Forward(currentTableName, SelectedParentId);
                     currentTableName = nameof(Classification);
                     break;
                 case nameof(Classification):
@@ -264,7 +273,9 @@ namespace BrandDataProcessingUI
                     ExcavationCrud.GetId(viewModelExcavation);
                     FindsClassCrud.Fill();
                     TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
+                    navigation.Forward(currentTableName, null);
                     currentTableName = nameof(FindsClass);
+                    EnableBackButton();
                     break;
                 case nameof(Classification):
                     DataGridViewCellCollection cells = GetSelectedCells();
@@ -278,6 +289,65 @@ namespace BrandDataProcessingUI
         private void dgvTable_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             e.Row.HeaderCell.Value = (e.Row.Index + 1).ToString();
+        }
+
+        private void tlsBack_Click(object sender, EventArgs e)
+        {
+            Back();
+        }
+
+        private void Back()
+        {
+            NavigationInfo pastValue = navigation.Back();
+
+            switch (pastValue.Page)
+            {
+                case nameof(Excavation):
+                    ExcavationCrud.Fill();
+                    TableHeaders.Excavation.SetExcavationTitles(dgvTable);
+                    currentTableName = nameof(Excavation);
+                    SelectedParentId = null;
+                    break;
+                case nameof(FindsClass):
+                    SelectedParentId = pastValue.Id;
+                    FindsClassCrud.Fill();
+                    TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
+                    currentTableName = nameof(FindsClass);
+                    break;
+            }
+
+            if (!navigation.IsExistsPages)
+                DisableBackButton();
+        }
+
+        private void DisableBackButton()
+        {
+            tlsBack.Enabled = false;
+        }
+
+        private void EnableBackButton()
+        {
+            tlsBack.Enabled = true;
+        }
+
+        private void DisableForwardButton()
+        {
+            tlsUp.Enabled = false;
+        }
+
+        private void EnableForwardButton()
+        {
+            tlsUp.Enabled = true;
+        }
+
+        private void tlsUp_Click(object sender, EventArgs e)
+        {
+            Forward();
+        }
+
+        private void Forward()
+        {
+
         }
     }
 }

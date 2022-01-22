@@ -37,24 +37,23 @@ namespace BrandDataProcessingUI
             this.dgvTable = new System.Windows.Forms.DataGridView();
             this.tlpControllers = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCrudOperations = new System.Windows.Forms.Panel();
-            this.btnMove = new System.Windows.Forms.Button();
-            this.btnAddExcavation = new System.Windows.Forms.Button();
-            this.lblExcavation = new System.Windows.Forms.Label();
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.cmbProperties = new System.Windows.Forms.ComboBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.lblFilter = new System.Windows.Forms.Label();
             this.txtValue = new System.Windows.Forms.TextBox();
             this.mnsMenu = new System.Windows.Forms.MenuStrip();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsAnalyse = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.smiUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpStructure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTable)).BeginInit();
             this.tlpControllers.SuspendLayout();
-            this.pnlCrudOperations.SuspendLayout();
             this.pnlFilter.SuspendLayout();
             this.mnsMenu.SuspendLayout();
             this.cmsContext.SuspendLayout();
@@ -145,45 +144,10 @@ namespace BrandDataProcessingUI
             // 
             this.pnlCrudOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlCrudOperations.Controls.Add(this.btnMove);
-            this.pnlCrudOperations.Controls.Add(this.btnAddExcavation);
-            this.pnlCrudOperations.Controls.Add(this.lblExcavation);
             this.pnlCrudOperations.Location = new System.Drawing.Point(3, 3);
             this.pnlCrudOperations.Name = "pnlCrudOperations";
             this.pnlCrudOperations.Size = new System.Drawing.Size(788, 29);
             this.pnlCrudOperations.TabIndex = 0;
-            // 
-            // btnMove
-            // 
-            this.btnMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMove.Enabled = false;
-            this.btnMove.Location = new System.Drawing.Point(679, 4);
-            this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(103, 22);
-            this.btnMove.TabIndex = 4;
-            this.btnMove.Text = "Классификация";
-            this.btnMove.UseVisualStyleBackColor = true;
-            // 
-            // btnAddExcavation
-            // 
-            this.btnAddExcavation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddExcavation.Location = new System.Drawing.Point(75, 4);
-            this.btnAddExcavation.Name = "btnAddExcavation";
-            this.btnAddExcavation.Size = new System.Drawing.Size(103, 22);
-            this.btnAddExcavation.TabIndex = 1;
-            this.btnAddExcavation.Text = "Добавить";
-            this.btnAddExcavation.UseVisualStyleBackColor = true;
-            this.btnAddExcavation.Click += new System.EventHandler(this.btnAddExcavation_Click);
-            // 
-            // lblExcavation
-            // 
-            this.lblExcavation.AutoSize = true;
-            this.lblExcavation.Location = new System.Drawing.Point(15, 8);
-            this.lblExcavation.Name = "lblExcavation";
-            this.lblExcavation.Size = new System.Drawing.Size(58, 15);
-            this.lblExcavation.TabIndex = 0;
-            this.lblExcavation.Text = "Раскопы:";
             // 
             // pnlFilter
             // 
@@ -241,19 +205,52 @@ namespace BrandDataProcessingUI
             // mnsMenu
             // 
             this.mnsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справкаToolStripMenuItem,
-            this.справкаToolStripMenuItem1});
+            this.tlsFile});
             this.mnsMenu.Location = new System.Drawing.Point(0, 0);
             this.mnsMenu.Name = "mnsMenu";
             this.mnsMenu.Size = new System.Drawing.Size(800, 20);
             this.mnsMenu.TabIndex = 2;
             this.mnsMenu.Text = "menuStrip1";
             // 
-            // справкаToolStripMenuItem
+            // tlsFile
             // 
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(48, 16);
-            this.справкаToolStripMenuItem.Text = "Файл";
+            this.tlsFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tlsUp,
+            this.tlsBack,
+            this.tlsAdd,
+            this.tlsAnalyse});
+            this.tlsFile.Name = "tlsFile";
+            this.tlsFile.Size = new System.Drawing.Size(48, 16);
+            this.tlsFile.Text = "Файл";
+            // 
+            // tlsUp
+            // 
+            this.tlsUp.Enabled = false;
+            this.tlsUp.Name = "tlsUp";
+            this.tlsUp.Size = new System.Drawing.Size(180, 22);
+            this.tlsUp.Text = "Вперед";
+            this.tlsUp.Click += new System.EventHandler(this.tlsUp_Click);
+            // 
+            // tlsBack
+            // 
+            this.tlsBack.Enabled = false;
+            this.tlsBack.Name = "tlsBack";
+            this.tlsBack.Size = new System.Drawing.Size(180, 22);
+            this.tlsBack.Text = "Назад";
+            this.tlsBack.Click += new System.EventHandler(this.tlsBack_Click);
+            // 
+            // tlsAdd
+            // 
+            this.tlsAdd.Name = "tlsAdd";
+            this.tlsAdd.Size = new System.Drawing.Size(180, 22);
+            this.tlsAdd.Text = "Добавить";
+            this.tlsAdd.Click += new System.EventHandler(this.tlsAdd_Click);
+            // 
+            // tlsAnalyse
+            // 
+            this.tlsAnalyse.Name = "tlsAnalyse";
+            this.tlsAnalyse.Size = new System.Drawing.Size(180, 22);
+            this.tlsAnalyse.Text = "Анализ";
             // 
             // cmsContext
             // 
@@ -261,27 +258,21 @@ namespace BrandDataProcessingUI
             this.smiUpdate,
             this.smiDelete});
             this.cmsContext.Name = "cmsContext";
-            this.cmsContext.Size = new System.Drawing.Size(155, 48);
+            this.cmsContext.Size = new System.Drawing.Size(146, 48);
             // 
             // smiUpdate
             // 
             this.smiUpdate.Name = "smiUpdate";
-            this.smiUpdate.Size = new System.Drawing.Size(154, 22);
-            this.smiUpdate.Text = "Редактировать";
+            this.smiUpdate.Size = new System.Drawing.Size(145, 22);
+            this.smiUpdate.Text = "Подробнее...";
             this.smiUpdate.Click += new System.EventHandler(this.smiUpdate_Click);
             // 
             // smiDelete
             // 
             this.smiDelete.Name = "smiDelete";
-            this.smiDelete.Size = new System.Drawing.Size(154, 22);
+            this.smiDelete.Size = new System.Drawing.Size(145, 22);
             this.smiDelete.Text = "Удалить";
             this.smiDelete.Click += new System.EventHandler(this.smiDelete_Click);
-            // 
-            // справкаToolStripMenuItem1
-            // 
-            this.справкаToolStripMenuItem1.Name = "справкаToolStripMenuItem1";
-            this.справкаToolStripMenuItem1.Size = new System.Drawing.Size(65, 16);
-            this.справкаToolStripMenuItem1.Text = "Справка";
             // 
             // BrandDataProcessingForm
             // 
@@ -297,8 +288,6 @@ namespace BrandDataProcessingUI
             this.tlpStructure.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTable)).EndInit();
             this.tlpControllers.ResumeLayout(false);
-            this.pnlCrudOperations.ResumeLayout(false);
-            this.pnlCrudOperations.PerformLayout();
             this.pnlFilter.ResumeLayout(false);
             this.pnlFilter.PerformLayout();
             this.mnsMenu.ResumeLayout(false);
@@ -313,21 +302,21 @@ namespace BrandDataProcessingUI
         private System.Windows.Forms.TableLayoutPanel tlpStructure;
         private System.Windows.Forms.TableLayoutPanel tlpControllers;
         private System.Windows.Forms.Panel pnlCrudOperations;
-        private System.Windows.Forms.Button btnAddExcavation;
-        private System.Windows.Forms.Label lblExcavation;
         private System.Windows.Forms.Panel pnlFilter;
         private System.Windows.Forms.ComboBox cmbProperties;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.TextBox txtValue;
-        private System.Windows.Forms.Button btnMove;
         private System.Windows.Forms.MenuStrip mnsMenu;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgvTable;
         private System.Windows.Forms.ContextMenuStrip cmsContext;
         private System.Windows.Forms.ToolStripMenuItem smiUpdate;
         private System.Windows.Forms.ToolStripMenuItem smiDelete;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tlsFile;
+        private System.Windows.Forms.ToolStripMenuItem tlsUp;
+        private System.Windows.Forms.ToolStripMenuItem tlsBack;
+        private System.Windows.Forms.ToolStripMenuItem tlsAdd;
+        private System.Windows.Forms.ToolStripMenuItem tlsAnalyse;
     }
 }
 
