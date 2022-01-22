@@ -11,7 +11,6 @@ namespace Tools
         IEnumerable BrandDataList { get; set; }
         int? SelectedParentId { get; set; }
 
-        string GetFilePath();
         BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; }
         BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; }
         ClassificationCrud ClassificationCrud { get; }

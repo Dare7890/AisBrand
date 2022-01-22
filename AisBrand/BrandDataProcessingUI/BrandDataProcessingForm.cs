@@ -11,6 +11,7 @@ using Tools.CrudView;
 using Tools.Map;
 using BrandDataProcessing;
 using System.Collections.Generic;
+using System.IO;
 
 namespace BrandDataProcessingUI
 {
@@ -37,6 +38,9 @@ namespace BrandDataProcessingUI
         {
             InitializeComponent();
             CreateModelsCrud();
+            OpenDataFile();
+
+            ClearTableSelection();
         }
 
         private void CreateModelsCrud()
@@ -46,42 +50,26 @@ namespace BrandDataProcessingUI
             ClassificationCrud = new();
         }
 
-        public string GetFilePath()
+        private void OpenDataFile()
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "xml files (*.xml)|*.xml";
-                openFileDialog.RestoreDirectory = true;
+            if (FilePath == null || !File.Exists(FilePath))
+                CreateDataFile();
 
-                if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    throw new InvalidOperationException("Can't open file.");
-
-                return openFileDialog.FileName;
-            }
+            SetCrudsEntitiesFilePath();
         }
 
-        // TODO: filePath as property, delete from eventArgs
-
-        private void mnsOpenFile_Click(object sender, EventArgs e)
+        private void CreateDataFile()
         {
-            FillList();
+            DataFileManager fileManager = new();
+            fileManager.Create();
 
-            ClearTableSelection();
-            EnableAddButton();
+            FilePath = fileManager.FilePath;
         }
 
-        private void FillList()
+        private bool IsDataFileEmpty()
         {
-            if (FilePath == null)
-            {
-                string filePath = GetFilePath();
-                // TODO: filePath as property, delete from eventArgs
-                FilePath = filePath;
-                SetCrudsEntitiesFilePath();
-            }
-
-            ExcavationCrud.Fill();
-            TableHeaders.Excavation.SetExcavationTitles(dgvTable);
+            DataFileManager fileManager = new();
+            return fileManager.IsEmpty();
         }
 
         private void SetCrudsEntitiesFilePath()
@@ -89,11 +77,6 @@ namespace BrandDataProcessingUI
             ExcavationCrud.FilePath = FilePath;
             FindsClassCrud.FilePath = FilePath;
             ClassificationCrud.FilePath = FilePath;
-        }
-
-        private void EnableAddButton()
-        {
-            btnAddExcavation.Enabled = true;
         }
 
         private void ClearTableSelection()
@@ -180,6 +163,7 @@ namespace BrandDataProcessingUI
             {
                 case nameof(Excavation):
                     ExcavationCrud.Add(this, new ExcavationMapper());
+                    TableHeaders.Excavation.SetExcavationTitles(dgvTable);
                     break;
                 case nameof(FindsClass):
                     ITranslater translater = new EntitiyNameTranslater();

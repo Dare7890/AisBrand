@@ -15,14 +15,18 @@ namespace BrandDataProcessing.DAL
         public ExcavationLocal(string fileName)
         {
             this.fileName = fileName;
-            if (!File.Exists(fileName))
+            if (IsEmptyFile())
             {
-                using (File.Create(fileName)) { }
                 XDocument newXml = new XDocument(new XElement(rootElementName));
                 newXml.Save(fileName);
             }
 
             query = new Query<Excavation>(fileName, rootElementName);
+        }
+
+        private bool IsEmptyFile()
+        {
+            return new FileInfo(fileName).Length == 0;
         }
 
         public void Add(Excavation excavation, int? id = null)
