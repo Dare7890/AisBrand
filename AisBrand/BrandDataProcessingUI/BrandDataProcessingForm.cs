@@ -329,25 +329,5 @@ namespace BrandDataProcessingUI
         {
             tlsBack.Enabled = true;
         }
-
-        private void DisableForwardButton()
-        {
-            tlsUp.Enabled = false;
-        }
-
-        private void EnableForwardButton()
-        {
-            tlsUp.Enabled = true;
-        }
-
-        private void tlsUp_Click(object sender, EventArgs e)
-        {
-            Forward();
-        }
-
-        private void Forward()
-        {
-
-        }
     }
 }

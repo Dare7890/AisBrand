@@ -44,7 +44,6 @@ namespace BrandDataProcessingUI
             this.txtValue = new System.Windows.Forms.TextBox();
             this.mnsMenu = new System.Windows.Forms.MenuStrip();
             this.tlsFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tlsUp = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsBack = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsAnalyse = new System.Windows.Forms.ToolStripMenuItem();
@@ -215,7 +214,6 @@ namespace BrandDataProcessingUI
             // tlsFile
             // 
             this.tlsFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tlsUp,
             this.tlsBack,
             this.tlsAdd,
             this.tlsAnalyse});
@@ -223,18 +221,11 @@ namespace BrandDataProcessingUI
             this.tlsFile.Size = new System.Drawing.Size(48, 16);
             this.tlsFile.Text = "Файл";
             // 
-            // tlsUp
-            // 
-            this.tlsUp.Enabled = false;
-            this.tlsUp.Name = "tlsUp";
-            this.tlsUp.Size = new System.Drawing.Size(180, 22);
-            this.tlsUp.Text = "Вперед";
-            this.tlsUp.Click += new System.EventHandler(this.tlsUp_Click);
-            // 
             // tlsBack
             // 
             this.tlsBack.Enabled = false;
             this.tlsBack.Name = "tlsBack";
+            this.tlsBack.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.tlsBack.Size = new System.Drawing.Size(180, 22);
             this.tlsBack.Text = "Назад";
             this.tlsBack.Click += new System.EventHandler(this.tlsBack_Click);
@@ -242,6 +233,7 @@ namespace BrandDataProcessingUI
             // tlsAdd
             // 
             this.tlsAdd.Name = "tlsAdd";
+            this.tlsAdd.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.tlsAdd.Size = new System.Drawing.Size(180, 22);
             this.tlsAdd.Text = "Добавить";
             this.tlsAdd.Click += new System.EventHandler(this.tlsAdd_Click);
@@ -313,7 +305,6 @@ namespace BrandDataProcessingUI
         private System.Windows.Forms.ToolStripMenuItem smiUpdate;
         private System.Windows.Forms.ToolStripMenuItem smiDelete;
         private System.Windows.Forms.ToolStripMenuItem tlsFile;
-        private System.Windows.Forms.ToolStripMenuItem tlsUp;
         private System.Windows.Forms.ToolStripMenuItem tlsBack;
         private System.Windows.Forms.ToolStripMenuItem tlsAdd;
         private System.Windows.Forms.ToolStripMenuItem tlsAnalyse;
