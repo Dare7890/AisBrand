@@ -12,6 +12,7 @@ using Tools.Map;
 using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
+using LoginUI;
 
 namespace BrandDataProcessingUI
 {
@@ -44,6 +45,11 @@ namespace BrandDataProcessingUI
 
             InitNavigation();
             ClearTableSelection();
+        }
+
+        private void BrandDataProcessingForm_Load(object sender, EventArgs e)
+        {
+            FillExcavationsData();
         }
 
         private void InitNavigation()
@@ -303,21 +309,31 @@ namespace BrandDataProcessingUI
             switch (pastValue.Page)
             {
                 case nameof(Excavation):
-                    ExcavationCrud.Fill();
-                    TableHeaders.Excavation.SetExcavationTitles(dgvTable);
-                    currentTableName = nameof(Excavation);
-                    SelectedParentId = null;
+                    FillExcavationsData();
                     break;
                 case nameof(FindsClass):
                     SelectedParentId = pastValue.Id;
-                    FindsClassCrud.Fill();
-                    TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
-                    currentTableName = nameof(FindsClass);
+                    FillFindsClassData();
                     break;
             }
 
             if (!navigation.IsExistsPages)
                 DisableBackButton();
+        }
+
+        private void FillFindsClassData()
+        {
+            FindsClassCrud.Fill();
+            TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
+            currentTableName = nameof(FindsClass);
+        }
+
+        private void FillExcavationsData()
+        {
+            ExcavationCrud.Fill();
+            TableHeaders.Excavation.SetExcavationTitles(dgvTable);
+            currentTableName = nameof(Excavation);
+            SelectedParentId = null;
         }
 
         private void DisableBackButton()

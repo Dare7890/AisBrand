@@ -10,6 +10,7 @@
     <ProjectReference Include="..\AddBrandDataUI\AddBrandDataUI.csproj" />
     <ProjectReference Include="..\BrandDataProcessingBL\BrandDataProcessingBL.csproj" />
     <ProjectReference Include="..\BrandDataProcessing\BrandDataProcessing.csproj" />
+    <ProjectReference Include="..\LoginUI\LoginUI.csproj" />
     <ProjectReference Include="..\Tools\Tools.csproj" />
   </ItemGroup>
 
