@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
+    [TranslatedName("Археологические объекты")]
     public class Excavation : IIdentifier
     {
         public int ID { get; set; }

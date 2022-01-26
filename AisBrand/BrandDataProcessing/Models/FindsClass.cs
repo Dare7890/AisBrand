@@ -2,6 +2,7 @@
 
 namespace BrandDataProcessing.Models
 {
+    [TranslatedName("Категории предметов")]
     public class FindsClass : IIdentifier
     {
         public int ID { get; set; }

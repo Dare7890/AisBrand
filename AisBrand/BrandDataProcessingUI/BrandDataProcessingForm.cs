@@ -12,17 +12,16 @@ using Tools.Map;
 using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
-using LoginUI;
-using System.Diagnostics;
 
 namespace BrandDataProcessingUI
 {
     public partial class BrandDataProcessingForm : Form, ISearchView
     {
         private int selectedRowIndex = 0;
-        private string currentTableName = nameof(Excavation);
+        private string currentTableName;
 
         private Navigation navigation;
+        private ITranslater translater;
 
         public int? SelectedParentId { get; set; }
 
@@ -38,14 +37,29 @@ namespace BrandDataProcessingUI
             set { dgvTable.DataSource = value; }
         }
 
-        public BrandDataProcessingForm()
+        public BrandDataProcessingForm(ITranslater translater)
         {
+            //TODO: create init method for Navigation and translater
             InitializeComponent();
             CreateModelsCrud();
             OpenDataFile();
 
             InitNavigation();
+            InitTranslater(translater);
             ClearTableSelection();
+            SetTableName(typeof(Excavation));
+        }
+
+        private void InitTranslater(ITranslater translater)
+        {
+            this.translater = translater;
+        }
+
+        private void SetTableName(Type modelType)
+        {
+            currentTableName = modelType.Name;
+
+            lblFilter.Text = TranslateModelName(modelType.FullName);
         }
 
         private void BrandDataProcessingForm_Load(object sender, EventArgs e)
@@ -223,7 +237,6 @@ namespace BrandDataProcessingUI
                     TableHeaders.Excavation.SetExcavationTitles(dgvTable);
                     break;
                 case nameof(FindsClass):
-                    ITranslater translater = new EntitiyNameTranslater();
                     IEnumerable<string> findTypes = ChildrenEntityRetriever.RetrieveTranslatedFindChildrenNames(translater);
                     FindsClassCrud.Add(this, new FindsClassMapper(), findTypes);
                     break;
@@ -252,10 +265,9 @@ namespace BrandDataProcessingUI
                 case nameof(FindsClass):
                     ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString());
                     FindsClassCrud.GetId(viewModelFindsClass);
-                    ClassificationCrud.Fill();
-                    TableHeaders.Classification.SetClassificationTitles(dgvTable);
+                    FillClassificationData();
                     navigation.Forward(currentTableName, SelectedParentId);
-                    currentTableName = nameof(Classification);
+                    SetTableName(typeof(Classification));
                     break;
                 case nameof(Classification):
                     UpdateClassification(cells);
@@ -321,10 +333,9 @@ namespace BrandDataProcessingUI
                 case nameof(Excavation):
                     ViewModelExcavation viewModelExcavation = new ViewModelExcavation(dgvTable.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvTable.Rows[e.RowIndex].Cells[1].Value.ToString());
                     ExcavationCrud.GetId(viewModelExcavation);
-                    FindsClassCrud.Fill();
-                    TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
+                    FillFindsClassData();
                     navigation.Forward(currentTableName, null);
-                    currentTableName = nameof(FindsClass);
+                    SetTableName(typeof(FindsClass));
                     EnableBackButton();
                     break;
                 case nameof(Classification):
@@ -355,10 +366,12 @@ namespace BrandDataProcessingUI
             {
                 case nameof(Excavation):
                     FillExcavationsData();
+                    SetTableName(typeof(Excavation));
                     break;
                 case nameof(FindsClass):
                     SelectedParentId = pastValue.Id;
                     FillFindsClassData();
+                    SetTableName(typeof(FindsClass));
                     break;
             }
 
@@ -366,19 +379,24 @@ namespace BrandDataProcessingUI
                 DisableBackButton();
         }
 
+        //TODO: one method for all fill
         private void FillFindsClassData()
         {
             FindsClassCrud.Fill();
             TableHeaders.FindsClass.SetFindsClassTitles(dgvTable);
-            currentTableName = nameof(FindsClass);
         }
 
         private void FillExcavationsData()
         {
             ExcavationCrud.Fill();
             TableHeaders.Excavation.SetExcavationTitles(dgvTable);
-            currentTableName = nameof(Excavation);
             SelectedParentId = null;
+        }
+
+        private void FillClassificationData()
+        {
+            ClassificationCrud.Fill();
+            TableHeaders.Classification.SetClassificationTitles(dgvTable);
         }
 
         private void DisableBackButton()
@@ -389,6 +407,11 @@ namespace BrandDataProcessingUI
         private void EnableBackButton()
         {
             tlsBack.Enabled = true;
+        }
+
+        private string TranslateModelName(string name)
+        {
+            return translater.Translate(name);
         }
     }
 }

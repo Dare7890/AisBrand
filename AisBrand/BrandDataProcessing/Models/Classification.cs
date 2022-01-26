@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
     [Serializable]
+    [TranslatedName("Классификация")]
     public class Classification : IIdentifier
     {
         public int ID { get; set; }
