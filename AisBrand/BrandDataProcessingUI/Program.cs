@@ -1,3 +1,4 @@
+using BrandDataProcessing;
 using BrandDataProcessingBL;
 using LoginUI;
 using System;
@@ -20,7 +21,8 @@ namespace BrandDataProcessingUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            BrandDataProcessingForm form = new BrandDataProcessingForm();
+            ITranslater translater = new EntitiyNameTranslater();
+            BrandDataProcessingForm form = new BrandDataProcessingForm(translater);
             ExcavationPresenter excavationPresenter = new ExcavationPresenter(form);
             FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form);
             ClassificationPresenter classificationPresenter = new ClassificationPresenter(form);

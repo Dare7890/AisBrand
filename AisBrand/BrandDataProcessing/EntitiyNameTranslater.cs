@@ -5,16 +5,16 @@ namespace BrandDataProcessing
 {
     public class EntitiyNameTranslater : ITranslater
     {
-        public IEnumerable<string> Translate(IEnumerable<string> entitiesNames)
+        public IEnumerable<string> Translate(IEnumerable<string> names)
         {
             List<string> translatedNames = new List<string>();
-            foreach (string name in entitiesNames)
+            foreach (string name in names)
                 translatedNames.Add(Translate(name));
 
             return translatedNames;
         }
 
-        private static string Translate(string name)
+        public string Translate(string name)
         {
             TranslatedNameAttribute translatedNameAttribute = (TranslatedNameAttribute)Attribute.GetCustomAttribute(Type.GetType(name), typeof(TranslatedNameAttribute));
             return translatedNameAttribute.Name;

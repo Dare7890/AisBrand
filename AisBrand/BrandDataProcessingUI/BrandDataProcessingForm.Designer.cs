@@ -82,6 +82,7 @@ namespace BrandDataProcessingUI
             this.dgvTable.AllowUserToResizeColumns = false;
             this.dgvTable.AllowUserToResizeRows = false;
             this.dgvTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTable.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -152,7 +153,7 @@ namespace BrandDataProcessingUI
             | System.Windows.Forms.AnchorStyles.Left)));
             this.cmbProperties.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProperties.FormattingEnabled = true;
-            this.cmbProperties.Location = new System.Drawing.Point(75, 6);
+            this.cmbProperties.Location = new System.Drawing.Point(189, 6);
             this.cmbProperties.Name = "cmbProperties";
             this.cmbProperties.Size = new System.Drawing.Size(103, 23);
             this.cmbProperties.TabIndex = 3;
@@ -170,20 +171,19 @@ namespace BrandDataProcessingUI
             // 
             // lblFilter
             // 
-            this.lblFilter.AutoSize = true;
             this.lblFilter.Location = new System.Drawing.Point(15, 10);
             this.lblFilter.Name = "lblFilter";
-            this.lblFilter.Size = new System.Drawing.Size(45, 15);
+            this.lblFilter.Size = new System.Drawing.Size(157, 15);
             this.lblFilter.TabIndex = 1;
-            this.lblFilter.Text = "Поиск:";
+            this.lblFilter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtValue
             // 
             this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtValue.Location = new System.Drawing.Point(184, 6);
+            this.txtValue.Location = new System.Drawing.Point(298, 6);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(489, 23);
+            this.txtValue.Size = new System.Drawing.Size(375, 23);
             this.txtValue.TabIndex = 0;
             // 
             // mnsMenu
