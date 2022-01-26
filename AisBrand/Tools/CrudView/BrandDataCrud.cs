@@ -65,6 +65,12 @@ namespace Tools.CrudView
                 DeleteExcavation.Invoke(this, new DeleteEventArgs<T>(FilePath, deletedData));
         }
 
+        public void DeleteRange(List<T> data)
+        {
+            foreach (T element in data)
+                Delete(element);
+        }
+
         public void Fill()
         {
             if (FilePath == null)

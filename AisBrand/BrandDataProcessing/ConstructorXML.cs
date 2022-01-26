@@ -31,13 +31,17 @@ namespace BrandDataProcessing
 
         public static XElement Create(Classification classification)
         {
-            return new XElement(nameof(Classification),
+            XElement classificationXml = new XElement(nameof(Classification),
                 new XElement(nameof(classification.ID), classification.ID),
                 new XElement(nameof(classification.Type), classification.Type),
                 new XElement(nameof(classification.Variant), classification.Variant),
-                new XElement(nameof(classification.Description), classification.Description),
-                new XElement(nameof(classification.Image), Convert.ToBase64String(classification.Image))
+                new XElement(nameof(classification.Description), classification.Description)
                 );
+
+            if (classification.Image != null)
+                classificationXml.Add(new XElement(nameof(classification.Image), Convert.ToBase64String(classification.Image)));
+
+            return classificationXml;
         }
 
         public static XElement Create(Find find)

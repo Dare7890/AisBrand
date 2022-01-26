@@ -13,12 +13,13 @@ using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
 using LoginUI;
+using System.Diagnostics;
 
 namespace BrandDataProcessingUI
 {
     public partial class BrandDataProcessingForm : Form, ISearchView
     {
-        private const int selectedRowIndex = 0;
+        private int selectedRowIndex = 0;
         private string currentTableName = nameof(Excavation);
 
         private Navigation navigation;
@@ -101,6 +102,7 @@ namespace BrandDataProcessingUI
         private void dgvTable_RowContextMenuStripNeeded(object sender, DataGridViewRowContextMenuStripNeededEventArgs e)
         {
             e.ContextMenuStrip = cmsContext;
+            selectedRowIndex = e.RowIndex;
         }
 
         private void dgvTable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -110,12 +112,33 @@ namespace BrandDataProcessingUI
 
         private void SelectRowByRightClick(DataGridViewCellMouseEventArgs e)
         {
+            DataGridViewRow selectedRow = dgvTable.Rows[e.RowIndex];
+            if (IsRowAlreadySelected(selectedRow))
+                return;
+
             const int headerIndex = -1;
             if (e.Button == MouseButtons.Right && e.RowIndex != headerIndex)
             {
-                dgvTable.ClearSelection();
-                dgvTable.Rows[e.RowIndex].Selected = true;
+                foreach (DataGridViewRow row in dgvTable.SelectedRows)
+                    DisableSelect(row);
+
+                SelectRow(selectedRow);
             }
+        }
+
+        private bool IsRowAlreadySelected(DataGridViewRow row)
+        {
+            return row.Selected;
+        }
+
+        private static void DisableSelect(DataGridViewRow row)
+        {
+            row.Selected = false;
+        }
+
+        private static void SelectRow(DataGridViewRow row)
+        {
+            row.Selected = true;
         }
 
         private void smiDelete_Click(object sender, EventArgs e)
@@ -130,25 +153,45 @@ namespace BrandDataProcessingUI
             if (isDelete == DialogResult.No)
                 return;
 
-            DataGridViewCellCollection cells = GetSelectedCells();
+            List<DataGridViewCellCollection> cells = GetSelectedRowsCells();
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ViewModelExcavation deletedExcavation = RetrieverSelectedData.GetSelectedExcavation(cells);
-                    ExcavationCrud.Delete(deletedExcavation);
+                    Delete(cells, RetrieverSelectedData.GetSelectedExcavation, ExcavationCrud);
                     break;
                 case nameof(FindsClass):
-                    ViewModelFindsClass deletedFindsClass = RetrieverSelectedData.GetSelectedFindsClass(cells);
-                    FindsClassCrud.Delete(deletedFindsClass);
+                    Delete(cells, RetrieverSelectedData.GetSelectedFindsClass, FindsClassCrud);
                     break;
                 default:
                     break;
             }
         }
 
-        private DataGridViewCellCollection GetSelectedCells()
+        private void Delete<T>(List<DataGridViewCellCollection> cells, Func<DataGridViewCellCollection, T> retrieverSelectedData, BrandDataCrud<T> dataCrud)
+            where T : class
         {
-            return dgvTable.SelectedRows[selectedRowIndex].Cells;
+            List<T> deletedModels = new();
+            foreach (DataGridViewCellCollection cell in cells)
+                deletedModels.Add(retrieverSelectedData(cell));
+
+            dataCrud.DeleteRange(deletedModels);
+        }
+
+        private List<DataGridViewCellCollection> GetSelectedRowsCells()
+        {
+            List<DataGridViewCellCollection> allCells = new();
+            foreach (DataGridViewRow row in dgvTable.SelectedRows)
+            {
+                DataGridViewCellCollection cells = GetSelectedRowCells(row);
+                allCells.Add(cells);
+            }
+
+            return allCells;
+        }
+
+        private DataGridViewCellCollection GetSelectedRowCells(DataGridViewRow row)
+        {
+            return row.Cells;
         }
 
         private static DialogResult ConfirmDeletion()
@@ -199,7 +242,8 @@ namespace BrandDataProcessingUI
 
         private void UpdateData()
         {
-            DataGridViewCellCollection cells = GetSelectedCells();
+            DataGridViewRow selectedRow = dgvTable.Rows[selectedRowIndex];
+            DataGridViewCellCollection cells = GetSelectedRowCells(selectedRow);
             switch (currentTableName)
             {
                 case nameof(Excavation):
@@ -284,7 +328,8 @@ namespace BrandDataProcessingUI
                     EnableBackButton();
                     break;
                 case nameof(Classification):
-                    DataGridViewCellCollection cells = GetSelectedCells();
+                    DataGridViewRow selectedRow = dgvTable.Rows[selectedRowIndex];
+                    DataGridViewCellCollection cells = GetSelectedRowCells(selectedRow);
                     UpdateClassification(cells);
                     break;
                 default:

@@ -36,7 +36,6 @@ namespace BrandDataProcessingUI
             this.tlpStructure = new System.Windows.Forms.TableLayoutPanel();
             this.dgvTable = new System.Windows.Forms.DataGridView();
             this.tlpControllers = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlCrudOperations = new System.Windows.Forms.Panel();
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.cmbProperties = new System.Windows.Forms.ComboBox();
             this.btnApply = new System.Windows.Forms.Button();
@@ -46,7 +45,8 @@ namespace BrandDataProcessingUI
             this.tlsFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsBack = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.tlsAnalyse = new System.Windows.Forms.ToolStripMenuItem();
+            this.анализToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.smiUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDelete = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +70,7 @@ namespace BrandDataProcessingUI
             this.tlpStructure.Name = "tlpStructure";
             this.tlpStructure.RowCount = 3;
             this.tlpStructure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpStructure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tlpStructure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpStructure.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpStructure.Size = new System.Drawing.Size(800, 450);
             this.tlpStructure.TabIndex = 0;
@@ -102,8 +102,7 @@ namespace BrandDataProcessingUI
             this.dgvTable.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvTable.Location = new System.Drawing.Point(3, 103);
-            this.dgvTable.MultiSelect = false;
+            this.dgvTable.Location = new System.Drawing.Point(3, 63);
             this.dgvTable.Name = "dgvTable";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -115,7 +114,7 @@ namespace BrandDataProcessingUI
             this.dgvTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvTable.RowTemplate.Height = 25;
             this.dgvTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTable.Size = new System.Drawing.Size(794, 344);
+            this.dgvTable.Size = new System.Drawing.Size(794, 384);
             this.dgvTable.TabIndex = 3;
             this.dgvTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTable_CellDoubleClick);
             this.dgvTable.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTable_CellMouseDown);
@@ -124,29 +123,15 @@ namespace BrandDataProcessingUI
             // 
             // tlpControllers
             // 
-            this.tlpControllers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tlpControllers.ColumnCount = 1;
             this.tlpControllers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpControllers.Controls.Add(this.pnlCrudOperations, 0, 0);
-            this.tlpControllers.Controls.Add(this.pnlFilter, 0, 1);
+            this.tlpControllers.Controls.Add(this.pnlFilter, 0, 0);
             this.tlpControllers.Location = new System.Drawing.Point(3, 23);
             this.tlpControllers.Name = "tlpControllers";
-            this.tlpControllers.RowCount = 2;
-            this.tlpControllers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tlpControllers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tlpControllers.Size = new System.Drawing.Size(794, 74);
+            this.tlpControllers.RowCount = 1;
+            this.tlpControllers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpControllers.Size = new System.Drawing.Size(794, 34);
             this.tlpControllers.TabIndex = 0;
-            // 
-            // pnlCrudOperations
-            // 
-            this.pnlCrudOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlCrudOperations.Location = new System.Drawing.Point(3, 3);
-            this.pnlCrudOperations.Name = "pnlCrudOperations";
-            this.pnlCrudOperations.Size = new System.Drawing.Size(788, 29);
-            this.pnlCrudOperations.TabIndex = 0;
             // 
             // pnlFilter
             // 
@@ -156,7 +141,7 @@ namespace BrandDataProcessingUI
             this.pnlFilter.Controls.Add(this.btnApply);
             this.pnlFilter.Controls.Add(this.lblFilter);
             this.pnlFilter.Controls.Add(this.txtValue);
-            this.pnlFilter.Location = new System.Drawing.Point(3, 38);
+            this.pnlFilter.Location = new System.Drawing.Point(3, 3);
             this.pnlFilter.Name = "pnlFilter";
             this.pnlFilter.Size = new System.Drawing.Size(788, 33);
             this.pnlFilter.TabIndex = 1;
@@ -178,7 +163,7 @@ namespace BrandDataProcessingUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Location = new System.Drawing.Point(679, 6);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(103, 23);
+            this.btnApply.Size = new System.Drawing.Size(103, 26);
             this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Искать";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -204,7 +189,9 @@ namespace BrandDataProcessingUI
             // mnsMenu
             // 
             this.mnsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tlsFile});
+            this.tlsFile,
+            this.анализToolStripMenuItem,
+            this.справкаToolStripMenuItem});
             this.mnsMenu.Location = new System.Drawing.Point(0, 0);
             this.mnsMenu.Name = "mnsMenu";
             this.mnsMenu.Size = new System.Drawing.Size(800, 20);
@@ -215,11 +202,10 @@ namespace BrandDataProcessingUI
             // 
             this.tlsFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tlsBack,
-            this.tlsAdd,
-            this.tlsAnalyse});
+            this.tlsAdd});
             this.tlsFile.Name = "tlsFile";
-            this.tlsFile.Size = new System.Drawing.Size(48, 16);
-            this.tlsFile.Text = "Файл";
+            this.tlsFile.Size = new System.Drawing.Size(68, 16);
+            this.tlsFile.Text = "Функции";
             // 
             // tlsBack
             // 
@@ -238,11 +224,17 @@ namespace BrandDataProcessingUI
             this.tlsAdd.Text = "Добавить";
             this.tlsAdd.Click += new System.EventHandler(this.tlsAdd_Click);
             // 
-            // tlsAnalyse
+            // анализToolStripMenuItem
             // 
-            this.tlsAnalyse.Name = "tlsAnalyse";
-            this.tlsAnalyse.Size = new System.Drawing.Size(168, 22);
-            this.tlsAnalyse.Text = "Анализ";
+            this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
+            this.анализToolStripMenuItem.Size = new System.Drawing.Size(59, 16);
+            this.анализToolStripMenuItem.Text = "Анализ";
+            // 
+            // справкаToolStripMenuItem
+            // 
+            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 16);
+            this.справкаToolStripMenuItem.Text = "Справка";
             // 
             // cmsContext
             // 
@@ -293,22 +285,22 @@ namespace BrandDataProcessingUI
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpStructure;
-        private System.Windows.Forms.TableLayoutPanel tlpControllers;
-        private System.Windows.Forms.Panel pnlCrudOperations;
-        private System.Windows.Forms.Panel pnlFilter;
-        private System.Windows.Forms.ComboBox cmbProperties;
-        private System.Windows.Forms.Button btnApply;
-        private System.Windows.Forms.Label lblFilter;
-        private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.MenuStrip mnsMenu;
-        private System.Windows.Forms.DataGridView dgvTable;
         private System.Windows.Forms.ContextMenuStrip cmsContext;
         private System.Windows.Forms.ToolStripMenuItem smiUpdate;
         private System.Windows.Forms.ToolStripMenuItem smiDelete;
         private System.Windows.Forms.ToolStripMenuItem tlsFile;
         private System.Windows.Forms.ToolStripMenuItem tlsBack;
         private System.Windows.Forms.ToolStripMenuItem tlsAdd;
-        private System.Windows.Forms.ToolStripMenuItem tlsAnalyse;
+        private System.Windows.Forms.DataGridView dgvTable;
+        private System.Windows.Forms.TableLayoutPanel tlpControllers;
+        private System.Windows.Forms.Panel pnlFilter;
+        private System.Windows.Forms.ComboBox cmbProperties;
+        private System.Windows.Forms.Button btnApply;
+        private System.Windows.Forms.Label lblFilter;
+        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.ToolStripMenuItem анализToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
     }
 }
 
