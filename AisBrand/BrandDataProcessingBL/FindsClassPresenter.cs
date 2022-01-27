@@ -75,9 +75,23 @@ namespace BrandDataProcessingBL
             if (!view.SelectedParentId.HasValue)
                 throw new ArgumentNullException("Add error. Parent id is null");
 
+            CheckOnSameFindsClass(findsClass);
+
             int parentId = view.SelectedParentId.Value;
             repository.Add(findsClass, parentId);
             RefreshExcavationsList(parentId);
+        }
+
+        private void CheckOnSameFindsClass(FindsClass findsClass)
+        {
+            if (HasSameFindsClass(findsClasses, findsClass))
+                throw new InvalidOperationException("This class already exists");
+        }
+
+        private bool HasSameFindsClass(IEnumerable<FindsClass> findsClasses, FindsClass searchedFindsClass)
+        {
+            FindsClass sameFindsClass = findsClasses.FirstOrDefault(e => e.Class == searchedFindsClass.Class);
+            return sameFindsClass != null;
         }
 
         private void View_FillExcavationsList(object sender, FillEventArgs e)
