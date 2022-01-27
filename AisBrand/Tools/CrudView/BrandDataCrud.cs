@@ -20,7 +20,7 @@ namespace Tools.CrudView
 
         public BrandDataCrud() { }
 
-        public void Add(Form owner, IMapper<T> mapper, IEnumerable<string> types = null)
+        public virtual void Add(Form owner, IMapper<T> mapper, IEnumerable<string> types = null)
         {
             if (FilePath == null)
                 return;
@@ -52,24 +52,27 @@ namespace Tools.CrudView
                 return;
             //TODO: переделать связывание через фреймворк.
             using (AddBrandDataForm<T> form = new AddBrandDataForm<T>(sourceData))
-            {
-                if (form.ShowDialog(owner) == DialogResult.OK)
-                {
-                    try
-                    {
-                        T updatedData = mapper.Map(form);
-                        if (UpdateExcavation != null)
-                            UpdateExcavation.Invoke(this, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        NotifyAboutExistsSameExcavation();
-                        Update(owner, mapper, sourceData);
-                    }
-                }
+                Update(owner, mapper, sourceData, form);
+        }
 
-                form.Close();
+        protected void Update(Form owner, IMapper<T> mapper, T sourceData, AddBrandDataForm<T> form)
+        {
+            if (form.ShowDialog(owner) == DialogResult.OK)
+            {
+                try
+                {
+                    T updatedData = mapper.Map(form);
+                    if (UpdateExcavation != null)
+                        UpdateExcavation.Invoke(this, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
+                }
+                catch (InvalidOperationException)
+                {
+                    NotifyAboutExistsSameExcavation();
+                    Update(owner, mapper, sourceData);
+                }
             }
+
+            form.Close();
         }
 
         private static void NotifyAboutExistsSameExcavation()

@@ -11,7 +11,7 @@ namespace Tools
         IEnumerable BrandDataList { get; set; }
         int? SelectedParentId { get; set; }
 
-        BrandDataCrud<AddBrandDataUI.ViewModels.Excavation> ExcavationCrud { get; }
+        ExcavationCrud ExcavationCrud { get; }
         BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; }
         ClassificationCrud ClassificationCrud { get; }
     }

@@ -23,5 +23,13 @@ namespace BrandDataProcessing.Models
             Name = name;
             Monument = monument;
         }
+
+        public Excavation(Excavation excavation)
+        {
+            ID = excavation.ID;
+            Name = excavation.Name;
+            Monument = excavation.Monument;
+            FindsClasses = new List<FindsClass>(excavation.FindsClasses);
+        }
     }
 }

@@ -24,6 +24,16 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.AddExcavation += View_AddExcavation;
             this.view.ExcavationCrud.UpdateExcavation += View_UpdateExcavation;
             this.view.ExcavationCrud.GetIdExcavation += ExcavationCrud_GetIdExcavation;
+            this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
+        }
+
+        private void ExcavationCrud_GetMonuments(object sender, EventArgs e)
+        {
+            List<string> monuments = excavations?.Select(e => e.Monument)
+                                                .Distinct()
+                                                .ToList();
+
+            this.view.ExcavationCrud.ExistingMonuments = monuments == null ? Enumerable.Empty<string>().ToList() : new List<string>(monuments);
         }
 
         private void ExcavationCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
@@ -35,7 +45,7 @@ namespace BrandDataProcessingBL
         private void View_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
         {
             repository = new ExcavationLocal(e.FilePath);
-            Excavation updatedExcavation = GetExcavation(excavations, e.SourceBrandData.Name, e.SourceBrandData.Monument);
+            Excavation updatedExcavation = new Excavation(GetExcavation(excavations, e.SourceBrandData.Name, e.SourceBrandData.Monument));
 
             //  TODO: create mapper.
             updatedExcavation.Name = e.UpdatedBrandData.Name;

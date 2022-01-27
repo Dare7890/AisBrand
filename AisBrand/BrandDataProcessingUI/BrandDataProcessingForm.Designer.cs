@@ -124,6 +124,8 @@ namespace BrandDataProcessingUI
             // 
             // tlpControllers
             // 
+            this.tlpControllers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tlpControllers.ColumnCount = 1;
             this.tlpControllers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControllers.Controls.Add(this.pnlFilter, 0, 0);

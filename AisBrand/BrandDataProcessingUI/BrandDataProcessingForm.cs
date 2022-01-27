@@ -1,5 +1,6 @@
 ﻿using BrandDataProcessing.Models;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using ViewModelFindsClass = AddBrandDataUI.ViewModels.FindsClass;
@@ -25,7 +26,7 @@ namespace BrandDataProcessingUI
 
         public int? SelectedParentId { get; set; }
 
-        public BrandDataCrud<ViewModelExcavation> ExcavationCrud { get; private set; }
+        public ExcavationCrud ExcavationCrud { get; private set; }
         public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
         public ClassificationCrud ClassificationCrud { get; private set; }
 

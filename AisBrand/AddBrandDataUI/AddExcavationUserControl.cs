@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AddBrandDataUI.ViewModels;
@@ -7,24 +8,40 @@ namespace AddBrandDataUI
 {
     public partial class AddExcavationUserControl : UserControl, IUserControl<Excavation>
     {
-        public AddExcavationUserControl(Excavation excavation = null)
+        public AddExcavationUserControl(IEnumerable<string> monuments, Excavation excavation = null)
         {
             InitializeComponent();
 
             if (excavation != null)
                 FillTextFields(excavation);
+
+            InitMonuments(monuments);
         }
 
         private void FillTextFields(Excavation excavation)
         {
             txtName.Text = excavation.Name.Trim();
-            txtMonument.Text = excavation.Monument.Trim();
+            cboMonument.SelectedItem = excavation.Monument.Trim();
+        }
+
+        private void InitMonuments(IEnumerable<string> monuments)
+        {
+            foreach (string monument in monuments)
+                cboMonument.Items.Add(monument);
+
+            SelectFirstItem(cboMonument);
+        }
+
+        private void SelectFirstItem(ComboBox cboClass)
+        {
+            if (cboClass.Items.Count > 0)
+                cboClass.SelectedIndex = 0;
         }
 
         public Excavation Add()
         {
             string name = txtName.Text.Trim();
-            string monument = txtMonument.Text.Trim();
+            string monument = cboMonument.SelectedItem?.ToString().Trim() ?? cboMonument.Text.Trim();
 
             return new Excavation(name, monument);
         }

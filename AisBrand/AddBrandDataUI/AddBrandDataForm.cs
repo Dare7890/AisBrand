@@ -24,7 +24,7 @@ namespace AddBrandDataUI
             switch (typeof(T).Name)
             {
                 case nameof(Excavation):
-                    userControl = (IUserControl<T>)new AddExcavationUserControl(brandData as Excavation);
+                    userControl = (IUserControl<T>)new AddExcavationUserControl(types, brandData as Excavation);
                     break;
                 case nameof(FindsClass):
                     userControl = (IUserControl<T>)new AddFindsClassUserControl(types, brandData as FindsClass);
