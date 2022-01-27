@@ -45,11 +45,24 @@ namespace BrandDataProcessingBL
             classification.Variant = e.UpdatedBrandData.Variant;
             classification.Description = e.UpdatedBrandData.Description;
             classification.Image = (byte[])e.UpdatedBrandData.Image?.Clone() ?? null;
+            CheckOnSameClassification(classification);
 
             repository.Update(classification);
 
             int parentId = view.SelectedParentId.Value;
             RefreshExcavationsList(parentId);
+        }
+
+        private void CheckOnSameClassification(Classification classification)
+        {
+            if (HasSameClassification(classifications, classification))
+                throw new InvalidOperationException("This classification already exists");
+        }
+
+        private bool HasSameClassification(IEnumerable<Classification> classifications, Classification searchedClassification)
+        {
+            Classification sameClassification = classifications.FirstOrDefault(c => c.Type == searchedClassification.Type && c.Variant == searchedClassification.Variant);
+            return sameClassification != null;
         }
 
         private Classification GetClassification(IEnumerable<Classification> classifications, string type, string variant)
@@ -71,6 +84,8 @@ namespace BrandDataProcessingBL
 
             if (!view.SelectedParentId.HasValue)
                 throw new ArgumentNullException("Add error. Parent id is null");
+
+            CheckOnSameClassification(classification);
 
             int parentId = view.SelectedParentId.Value;
             repository.Add(classification, parentId);
