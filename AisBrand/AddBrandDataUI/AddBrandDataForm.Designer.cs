@@ -50,7 +50,7 @@ namespace AddBrandDataUI
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(639, 7);
+            this.btnCancel.Location = new System.Drawing.Point(44, 7);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(125, 32);
             this.btnCancel.TabIndex = 1;
@@ -61,7 +61,7 @@ namespace AddBrandDataUI
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAdd.Location = new System.Drawing.Point(50, 7);
+            this.btnAdd.Location = new System.Drawing.Point(632, 7);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(125, 32);
             this.btnAdd.TabIndex = 0;

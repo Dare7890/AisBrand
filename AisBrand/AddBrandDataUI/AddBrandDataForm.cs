@@ -40,15 +40,14 @@ namespace AddBrandDataUI
         private void InitElementsName(T excavation)
         {
             if (excavation == null)
-                SetElementsName("Добавить", "Добавить");
+                SetElementsName("Добавить");
             else
-                SetElementsName("Обновить", "Обновить");
+                SetElementsName("Обновить");
         }
 
-        private void SetElementsName(string formName, string buttonText)
+        private void SetElementsName(string formName)
         {
             Text = formName;
-            btnAdd.Text = buttonText;
         }
 
         private void ShowExcavationAddFields(T brandData, IEnumerable<string> types)
