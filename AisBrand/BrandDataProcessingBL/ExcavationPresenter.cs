@@ -40,6 +40,7 @@ namespace BrandDataProcessingBL
             //  TODO: create mapper.
             updatedExcavation.Name = e.UpdatedBrandData.Name;
             updatedExcavation.Monument = e.UpdatedBrandData.Monument;
+            CheckOnSameExcavation(updatedExcavation);
 
             repository.Update(updatedExcavation);
             RefreshExcavationsList();
@@ -52,9 +53,22 @@ namespace BrandDataProcessingBL
             Excavation excavation = new Excavation();
             excavation.Name = e.BrandData.Name;
             excavation.Monument = e.BrandData.Monument;
+            CheckOnSameExcavation(excavation);
 
             repository.Add(excavation);
             RefreshExcavationsList();
+        }
+
+        private void CheckOnSameExcavation(Excavation excavation)
+        {
+            if (HasSameExcavation(excavations, excavation))
+                throw new InvalidOperationException("This excavation already exists");
+        }
+
+        private bool HasSameExcavation(IEnumerable<Excavation> excavations, Excavation searchedExcavation)
+        {
+            Excavation sameExcavation = excavations.FirstOrDefault(e => e.Name == searchedExcavation.Name && e.Monument == searchedExcavation.Monument);
+            return sameExcavation != null;
         }
 
         private void View_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.Excavation> e)

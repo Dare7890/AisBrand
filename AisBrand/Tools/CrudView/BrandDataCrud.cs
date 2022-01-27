@@ -29,9 +29,17 @@ namespace Tools.CrudView
             {
                 if (form.ShowDialog(owner) == DialogResult.OK)
                 {
-                    T brandData = mapper.Map(form);
-                    if (AddExcavation != null)
-                        AddExcavation.Invoke(this, new AddEventArgs<T>(FilePath, brandData));
+                    try
+                    {
+                        T brandData = mapper.Map(form);
+                        if (AddExcavation != null)
+                            AddExcavation.Invoke(this, new AddEventArgs<T>(FilePath, brandData));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        NotifyAboutExistsSameExcavation();
+                        Add(owner, mapper, types);
+                    }
                 }
 
                 form.Close();
@@ -47,13 +55,26 @@ namespace Tools.CrudView
             {
                 if (form.ShowDialog(owner) == DialogResult.OK)
                 {
-                    T updatedData = mapper.Map(form);
-                    if (UpdateExcavation != null)
-                        UpdateExcavation.Invoke(this, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
+                    try
+                    {
+                        T updatedData = mapper.Map(form);
+                        if (UpdateExcavation != null)
+                            UpdateExcavation.Invoke(this, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        NotifyAboutExistsSameExcavation();
+                        Update(owner, mapper, sourceData);
+                    }
                 }
 
                 form.Close();
             }
+        }
+
+        private static void NotifyAboutExistsSameExcavation()
+        {
+            MessageBox.Show("Такая запись уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public void Delete(T deletedData)
