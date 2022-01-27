@@ -44,13 +44,13 @@ namespace AddBrandDataUI
             this.pnlAddButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlAddButtons.Location = new System.Drawing.Point(3, 403);
             this.pnlAddButtons.Name = "pnlAddButtons";
-            this.pnlAddButtons.Size = new System.Drawing.Size(794, 44);
+            this.pnlAddButtons.Size = new System.Drawing.Size(478, 44);
             this.pnlAddButtons.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(44, 7);
+            this.btnCancel.Location = new System.Drawing.Point(-272, 7);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(125, 32);
             this.btnCancel.TabIndex = 1;
@@ -65,7 +65,7 @@ namespace AddBrandDataUI
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(125, 32);
             this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Text = "ОК";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -80,16 +80,17 @@ namespace AddBrandDataUI
             this.tlpAddPanel.RowCount = 2;
             this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpAddPanel.Size = new System.Drawing.Size(800, 450);
+            this.tlpAddPanel.Size = new System.Drawing.Size(484, 450);
             this.tlpAddPanel.TabIndex = 0;
             // 
             // AddBrandDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(484, 450);
             this.Controls.Add(this.tlpAddPanel);
-            this.MinimumSize = new System.Drawing.Size(816, 489);
+            this.MaximumSize = new System.Drawing.Size(500, 489);
+            this.MinimumSize = new System.Drawing.Size(500, 489);
             this.Name = "AddBrandDataForm";
             this.Text = "Form1";
             this.pnlAddButtons.ResumeLayout(false);
