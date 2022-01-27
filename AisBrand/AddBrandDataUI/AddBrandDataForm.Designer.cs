@@ -30,7 +30,6 @@ namespace AddBrandDataUI
         private void InitializeComponent()
         {
             this.pnlAddButtons = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.tlpAddPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pnlAddButtons.SuspendLayout();
@@ -39,7 +38,6 @@ namespace AddBrandDataUI
             // 
             // pnlAddButtons
             // 
-            this.pnlAddButtons.Controls.Add(this.btnCancel);
             this.pnlAddButtons.Controls.Add(this.btnAdd);
             this.pnlAddButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlAddButtons.Location = new System.Drawing.Point(3, 403);
@@ -47,23 +45,12 @@ namespace AddBrandDataUI
             this.pnlAddButtons.Size = new System.Drawing.Size(478, 44);
             this.pnlAddButtons.TabIndex = 0;
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(26, 9);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(125, 32);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Отмена";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAdd.Location = new System.Drawing.Point(335, 9);
+            this.btnAdd.Location = new System.Drawing.Point(183, 9);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(125, 32);
+            this.btnAdd.Size = new System.Drawing.Size(120, 32);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "ОК";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -104,7 +91,6 @@ namespace AddBrandDataUI
         #endregion
         private AddExcavationUserControl excAdd;
         private System.Windows.Forms.Panel pnlAddButtons;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TableLayoutPanel tlpAddPanel;
     }

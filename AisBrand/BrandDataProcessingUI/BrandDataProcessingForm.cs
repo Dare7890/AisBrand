@@ -127,12 +127,14 @@ namespace BrandDataProcessingUI
 
         private void SelectRowByRightClick(DataGridViewCellMouseEventArgs e)
         {
+            if (IsHeaderRow(e.RowIndex))
+                return;
+
             DataGridViewRow selectedRow = dgvTable.Rows[e.RowIndex];
             if (IsRowAlreadySelected(selectedRow))
                 return;
 
-            const int headerIndex = -1;
-            if (e.Button == MouseButtons.Right && e.RowIndex != headerIndex)
+            if (e.Button == MouseButtons.Right)
             {
                 foreach (DataGridViewRow row in dgvTable.SelectedRows)
                     DisableSelect(row);

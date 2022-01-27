@@ -168,7 +168,7 @@ namespace BrandDataProcessingUI
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(103, 26);
             this.btnApply.TabIndex = 2;
-            this.btnApply.Text = "Искать";
+            this.btnApply.Text = "Поиск";
             this.btnApply.UseVisualStyleBackColor = true;
             // 
             // lblFilter
