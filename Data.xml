@@ -2,28 +2,117 @@
 <ArrayOfExcavation>
   <Excavation>
     <ID>1</ID>
-    <Name>1</Name>
-    <Monument>1</Monument>
-    <ArrayOfFindsClass>
-      <FindsClass>
+    <Name>as</Name>
+    <Monument>as</Monument>
+    <FindsClass>
+      <ID>1</ID>
+      <Class>Клеймо</Class>
+      <Classification>
         <ID>1</ID>
-        <Class>Клеймо</Class>
-      </FindsClass>
-      <FindsClass>
+        <Type>a</Type>
+        <Variant>a</Variant>
+        <Description>a</Description>
+      </Classification>
+      <Classification>
         <ID>2</ID>
-        <Class>В разработке</Class>
-      </FindsClass>
-    </ArrayOfFindsClass>
+        <Type>a</Type>
+        <Variant>b</Variant>
+        <Description>a</Description>
+        <Image>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</Image>
+      </Classification>
+    </FindsClass>
   </Excavation>
   <Excavation>
     <ID>2</ID>
+    <Name>ф</Name>
+    <Monument>ф</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>3</ID>
+    <Name>dd</Name>
+    <Monument>dd</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>5</ID>
+    <Name>s</Name>
+    <Monument>g</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>6</ID>
+    <Name>1</Name>
+    <Monument>1</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>7</ID>
     <Name>2</Name>
     <Monument>2</Monument>
-    <ArrayOfFindsClass>
-      <FindsClass>
-        <ID>3</ID>
-        <Class>Клеймо</Class>
-      </FindsClass>
-    </ArrayOfFindsClass>
+  </Excavation>
+  <Excavation>
+    <ID>8</ID>
+    <Name>3</Name>
+    <Monument>3</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>9</ID>
+    <Name>4</Name>
+    <Monument>4</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>10</ID>
+    <Name>5</Name>
+    <Monument>5</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>11</ID>
+    <Name>6</Name>
+    <Monument>6</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>12</ID>
+    <Name>7</Name>
+    <Monument>7</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>13</ID>
+    <Name>8</Name>
+    <Monument>8</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>14</ID>
+    <Name>9</Name>
+    <Monument>9</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>15</ID>
+    <Name>10</Name>
+    <Monument>10</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>17</ID>
+    <Name>12</Name>
+    <Monument>12</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>18</ID>
+    <Name>1</Name>
+    <Monument>2</Monument>
+  </Excavation>
+  <Excavation>
+    <ID>19</ID>
+    <Name>1</Name>
+    <Monument>as</Monument>
+    <FindsClass>
+      <ID>2</ID>
+      <Class>В разработке</Class>
+    </FindsClass>
+    <FindsClass>
+      <ID>3</ID>
+      <Class>Клеймо</Class>
+    </FindsClass>
+  </Excavation>
+  <Excavation>
+    <ID>20</ID>
+    <Name>1</Name>
+    <Monument>assa</Monument>
   </Excavation>
 </ArrayOfExcavation>
