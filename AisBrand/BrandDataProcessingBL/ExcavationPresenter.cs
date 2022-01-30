@@ -65,6 +65,17 @@ namespace BrandDataProcessingBL
             excavation.Monument = e.BrandData.Monument;
             CheckOnSameExcavation(excavation);
 
+            //var allClasses = excavations.Where(m => m.Monument == excavation.Monument)
+            //                            .Select(f => f.FindsClasses.Select(s => s.Class))
+            //                            .Distinct();
+
+            var allClasses = excavations.Where(m => m.Monument == excavation.Monument)
+                                        .SelectMany(f => f.FindsClasses);
+
+            var a = new FindsClassLocal(e.FilePath);
+            foreach (var c in allClasses)
+                a.Add(c, excavation.ID);
+
             repository.Add(excavation);
             RefreshExcavationsList();
         }

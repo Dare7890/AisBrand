@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfExcavation>
+  <Excavation>
+    <ID>1</ID>
+    <Name>1</Name>
+    <Monument>1</Monument>
+    <ArrayOfFindsClass>
+      <FindsClass>
+        <ID>1</ID>
+        <Class>Клеймо</Class>
+      </FindsClass>
+      <FindsClass>
+        <ID>2</ID>
+        <Class>В разработке</Class>
+      </FindsClass>
+    </ArrayOfFindsClass>
+  </Excavation>
+  <Excavation>
+    <ID>2</ID>
+    <Name>2</Name>
+    <Monument>2</Monument>
+    <ArrayOfFindsClass>
+      <FindsClass>
+        <ID>3</ID>
+        <Class>Клеймо</Class>
+      </FindsClass>
+    </ArrayOfFindsClass>
+  </Excavation>
+</ArrayOfExcavation>

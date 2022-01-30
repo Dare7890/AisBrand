@@ -39,7 +39,14 @@ namespace BrandDataProcessing
             obj.ID = GetNextElementID(parentElements);
             XElement constructXmlElement = constructor(obj);
             XElement parentElement = id.HasValue ? parentElements.FirstOrDefault(e => int.Parse(e.Element("ID").Value) == id) : parentElements.First();
-            parentElement?.Add(constructXmlElement);
+            XElement parentElementWithRoot = parentElement.Element(string.Format($"ArrayOf{typeof(T).Name}")) ?? parentElement;
+
+            //string rootElement = string.Format($"ArrayOf{nameof(T)}");
+            //if (parentElement.Element(rootElement) == null)
+            //{
+            //    XElement xmlElementWithRoot = new XElement()
+            //}
+            parentElementWithRoot?.Add(constructXmlElement);
             xmlDocument.Save(filePath);
         }
 

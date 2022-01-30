@@ -13,6 +13,7 @@ namespace BrandDataProcessing.Models
 
         public string Monument { get; set; }
 
+        [System.Xml.Serialization.XmlElementAttribute("ArrayOfFindsClass")]
         public List<FindsClass> FindsClasses { get; set; }
 
         public Excavation() { }
