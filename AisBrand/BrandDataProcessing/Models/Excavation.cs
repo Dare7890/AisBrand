@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
@@ -13,6 +14,7 @@ namespace BrandDataProcessing.Models
 
         public string Monument { get; set; }
 
+        [XmlElement("FindsClass")]
         public List<FindsClass> FindsClasses { get; set; }
 
         public Excavation() { }

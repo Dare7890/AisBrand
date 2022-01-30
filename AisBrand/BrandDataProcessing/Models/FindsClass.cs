@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace BrandDataProcessing.Models
 {
@@ -9,6 +10,7 @@ namespace BrandDataProcessing.Models
 
         public string Class { get; set; }
 
+        [XmlElement("Classification")]
         public List<Classification> Classifications { get; set; }
     }
 }
