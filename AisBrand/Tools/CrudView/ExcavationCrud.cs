@@ -1,8 +1,10 @@
-﻿using AddBrandDataUI;
-using AddBrandDataUI.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using AddBrandDataUI;
+using AddBrandDataUI.ViewModels;
+using Tools.EventArgs;
 using Tools.Map;
 
 namespace Tools.CrudView
@@ -10,8 +12,11 @@ namespace Tools.CrudView
     public class ExcavationCrud : BrandDataCrud<Excavation>
     {
         public List<string> ExistingMonuments { get; set; }
+        public List<string> Classes { get; set; }
+        public int ExcavationId { get; set; }
 
         public event EventHandler<System.EventArgs> GetMonuments;
+        public event EventHandler<AddFindsClassEventArgs> AddFindsClass;
 
         public ExcavationCrud()
         {
@@ -31,6 +36,15 @@ namespace Tools.CrudView
         {
             OnGetMonuments();
             base.Add(owner, mapper, ExistingMonuments);
+
+            if (Classes.Any())
+                OnAddFindsClass(FilePath, Classes, ExcavationId);
+        }
+
+        private void OnAddFindsClass(string filePath, IEnumerable<string> classes, int parentId)
+        {
+            if (AddFindsClass != null)
+                AddFindsClass.Invoke(this, new AddFindsClassEventArgs(filePath, classes, parentId));
         }
 
         public override void Update(Form owner, IMapper<Excavation> mapper, Excavation sourceData)

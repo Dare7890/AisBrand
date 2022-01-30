@@ -1,8 +1,6 @@
 ﻿using BrandDataProcessing.Models;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Linq;
-using System;
 
 namespace BrandDataProcessing.DAL
 {
@@ -17,10 +15,7 @@ namespace BrandDataProcessing.DAL
 
         public void Add(FindsClass findsClass, int? elementID = null)
         {
-            int existingFindsClassesAmount = query.GetAll(elementID).Count();
-            Func<FindsClass, XElement> constructor = existingFindsClassesAmount == 0 ? ConstructorXML.CreateWithRoot : ConstructorXML.Create;
-
-            query.Add(findsClass, constructor, elementID);
+            query.Add(findsClass, ConstructorXML.Create, elementID);
         }
 
         public void Delete(int id)
