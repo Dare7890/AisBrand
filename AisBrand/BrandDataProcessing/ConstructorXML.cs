@@ -71,6 +71,11 @@ namespace BrandDataProcessing
                 );
         }
 
+        public static XElement CreateWithRoot(FindsClass findsClass)
+        {
+            return new XElement(string.Format($"ArrayOf{nameof(FindsClass)}"), Create(findsClass));
+        }
+
         public static void Update(Excavation excavation, XElement updatedExcavation)
         {
             updatedExcavation.Element(nameof(excavation.Name)).Value = excavation.Name;
