@@ -24,15 +24,6 @@ namespace BrandDataProcessingBL
             this.view.FindsClassCrud.UpdateExcavation += FindsClassCrud_UpdateExcavation;
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
             this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
-
-            this.view.ExcavationCrud.AddFindsClass += ExcavationCrud_AddFindsClass;
-        }
-
-        private void ExcavationCrud_AddFindsClass(object sender, AddFindsClassEventArgs e)
-        {
-            int parentId = e.ParentId;
-            AddRangeFindsClass(e.FilePath, e.Classes, parentId);
-            RefreshExcavationsList(parentId);
         }
 
         private void FindsClassCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
@@ -89,18 +80,6 @@ namespace BrandDataProcessingBL
             int parentId = view.SelectedParentId.Value;
             repository.Add(findsClass, parentId);
             RefreshExcavationsList(parentId);
-        }
-
-        private void AddRangeFindsClass(string filePath, IEnumerable<string> classes, int parentId)
-        {
-            repository = new FindsClassLocal(filePath);
-            foreach (string c in classes)
-            {
-                FindsClass findsClass = new FindsClass();
-                findsClass.Class = c;
-
-                repository.Add(findsClass, parentId);
-            }
         }
 
         private void CheckOnSameFindsClass(FindsClass findsClass)

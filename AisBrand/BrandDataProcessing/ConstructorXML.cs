@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using BrandDataProcessing.Models;
@@ -9,11 +10,19 @@ namespace BrandDataProcessing
     {
         public static XElement Create(Excavation excavation)
         {
-            return new XElement(nameof(Excavation),
-                new XElement(nameof(excavation.ID), excavation.ID),
-                new XElement(nameof(excavation.Name), excavation.Name),
-                new XElement(nameof(excavation.Monument), excavation.Monument)
-                );
+            XElement excavationElement = new XElement(nameof(Excavation),
+                                    new XElement(nameof(excavation.ID), excavation.ID),
+                                    new XElement(nameof(excavation.Name), excavation.Name),
+                                    new XElement(nameof(excavation.Monument), excavation.Monument)
+                                    );
+
+            foreach (FindsClass findsClass in excavation.FindsClasses)
+            {
+                XElement findsClassesElement = Create(findsClass);
+                excavationElement.Add(findsClassesElement);
+            }
+
+            return excavationElement;
         }
 
         public static XElement Create(Brand brand)
@@ -65,10 +74,18 @@ namespace BrandDataProcessing
 
         public static XElement Create(FindsClass findsClass)
         {
-            return new XElement(nameof(FindsClass),
-                new XElement(nameof(findsClass.ID), findsClass.ID),
-                new XElement(nameof(findsClass.Class), findsClass.Class)
-                );
+            XElement findsClassElement = new XElement(nameof(FindsClass),
+                                        new XElement(nameof(findsClass.ID), findsClass.ID),
+                                        new XElement(nameof(findsClass.Class), findsClass.Class)
+                                        );
+
+            foreach (Classification classification in findsClass.Classifications)
+            {
+                XElement classificationElement = Create(classification);
+                findsClassElement.Add(classificationElement);
+            }
+
+            return findsClassElement;
         }
 
         public static void Update(Excavation excavation, XElement updatedExcavation)
