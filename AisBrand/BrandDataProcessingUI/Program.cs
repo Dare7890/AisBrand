@@ -22,9 +22,10 @@ namespace BrandDataProcessingUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             ITranslater translater = new EntitiyNameTranslater();
+            IClassificationsRetriever classificationsRetriever = new ClassificationsRetriever();
             BrandDataProcessingForm form = new BrandDataProcessingForm(translater);
-            ExcavationPresenter excavationPresenter = new ExcavationPresenter(form);
-            FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form);
+            ExcavationPresenter excavationPresenter = new ExcavationPresenter(form, classificationsRetriever);
+            FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form, classificationsRetriever);
             ClassificationPresenter classificationPresenter = new ClassificationPresenter(form);
             Application.Run(form);
         }

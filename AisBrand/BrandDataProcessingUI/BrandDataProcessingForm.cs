@@ -38,6 +38,8 @@ namespace BrandDataProcessingUI
             set { dgvTable.DataSource = value; }
         }
 
+        public IEnumerable<Excavation> AllExcavations { get; set; }
+
         public BrandDataProcessingForm(ITranslater translater)
         {
             //TODO: create init method for Navigation and translater
@@ -340,6 +342,7 @@ namespace BrandDataProcessingUI
                     navigation.Forward(currentTableName, null);
                     SetTableName(typeof(FindsClass));
                     EnableBackButton();
+                    ExcavationCrud.OnGetAllExcavations();
                     break;
                 case nameof(Classification):
                     DataGridViewRow selectedRow = dgvTable.Rows[selectedRowIndex];

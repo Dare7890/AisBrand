@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AddBrandDataUI\AddBrandDataUI.csproj" />
+    <ProjectReference Include="..\BrandDataProcessing\BrandDataProcessing.csproj" />
   </ItemGroup>
 
 </Project>

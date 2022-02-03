@@ -16,7 +16,9 @@ namespace BrandDataProcessingBL
 
         private IEnumerable<FindsClass> findsClasses;
 
-        public FindsClassPresenter(ISearchView view)
+        private IClassificationsRetriever classificationsRetriever;
+
+        public FindsClassPresenter(ISearchView view, IClassificationsRetriever classificationsRetriever)
         {
             this.view = view;
             this.view.FindsClassCrud.FillExcavationsList += View_FillExcavationsList;
@@ -24,6 +26,8 @@ namespace BrandDataProcessingBL
             this.view.FindsClassCrud.UpdateExcavation += FindsClassCrud_UpdateExcavation;
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
             this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
+
+            this.classificationsRetriever = classificationsRetriever;
         }
 
         private void FindsClassCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
@@ -77,9 +81,35 @@ namespace BrandDataProcessingBL
 
             CheckOnSameFindsClass(findsClass);
 
+            string monument = GetExcavationMonument(view.AllExcavations, view.SelectedParentId.Value);
+            int id = GetEnableClassificationId();
+            classificationsRetriever.RetrieveFindsClassClassifications(view.AllExcavations, monument, id, findsClass);
+
             int parentId = view.SelectedParentId.Value;
             repository.Add(findsClass, parentId);
             RefreshExcavationsList(parentId);
+        }
+
+        private Excavation GetSelectedExcavation(IEnumerable<Excavation> excavations, int id)
+        {
+            return excavations.SingleOrDefault(e => e.ID == id);
+        }
+
+        private string GetExcavationMonument(IEnumerable<Excavation> excavations, int id)
+        {
+            Excavation selectedExcavation = GetSelectedExcavation(excavations, id);
+            return selectedExcavation.Monument;
+        }
+
+        private int GetEnableClassificationId()
+        {
+            IEnumerable<Classification> classifications = classificationsRetriever.GetClassifications(findsClasses);
+            return GetEnableId(classifications);
+        }
+
+        private static int GetEnableId(IEnumerable<IIdentifier> collection)
+        {
+            return collection.Max(c => c.ID) + 1;
         }
 
         private void CheckOnSameFindsClass(FindsClass findsClass)
@@ -106,7 +136,7 @@ namespace BrandDataProcessingBL
         {
             findsClasses = repository.GetAll(id);
 
-            view.BrandDataList = findsClasses.Select(c => new { c.Class, c.Classifications.Count})
+            view.BrandDataList = findsClasses.Select(c => new { c.Class, c.Classifications.Count })
                                             .ToList();
         }
     }

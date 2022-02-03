@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using BrandDataProcessing.Models;
 using Tools.CrudView;
 
 namespace Tools
@@ -10,6 +10,7 @@ namespace Tools
         //  TODO: подумать над обобщением.
         IEnumerable BrandDataList { get; set; }
         int? SelectedParentId { get; set; }
+        IEnumerable<Excavation> AllExcavations { get; set; }
 
         ExcavationCrud ExcavationCrud { get; }
         BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; }
