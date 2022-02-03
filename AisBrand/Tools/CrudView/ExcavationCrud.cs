@@ -12,6 +12,7 @@ namespace Tools.CrudView
         public List<string> ExistingMonuments { get; set; }
 
         public event EventHandler<System.EventArgs> GetMonuments;
+        public event EventHandler<System.EventArgs> GetAllExcavations;
 
         public ExcavationCrud()
         {
@@ -25,6 +26,15 @@ namespace Tools.CrudView
 
             if (GetMonuments != null)
                 GetMonuments.Invoke(this, new System.EventArgs());
+        }
+
+        public void OnGetAllExcavations()
+        {
+            if (FilePath == null)
+                return;
+
+            if (GetAllExcavations != null)
+                GetAllExcavations.Invoke(this, new System.EventArgs());
         }
 
         public override void Add(Form owner, IMapper<Excavation> mapper, IEnumerable<string> types = null)

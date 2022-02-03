@@ -16,7 +16,9 @@ namespace BrandDataProcessingBL
 
         private IEnumerable<Excavation> excavations;
 
-        public ExcavationPresenter(ISearchView view)
+        private IClassificationsRetriever classificationsRetriever;
+
+        public ExcavationPresenter(ISearchView view, IClassificationsRetriever classificationsRetriever)
         {
             this.view = view;
             this.view.ExcavationCrud.FillExcavationsList += View_FillExcavationsList;
@@ -25,6 +27,14 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.UpdateExcavation += View_UpdateExcavation;
             this.view.ExcavationCrud.GetIdExcavation += ExcavationCrud_GetIdExcavation;
             this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
+            this.view.ExcavationCrud.GetAllExcavations += ExcavationCrud_GetAllExcavations;
+
+            this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void ExcavationCrud_GetAllExcavations(object sender, EventArgs e)
+        {
+            view.AllExcavations = repository.GetAll(null);
         }
 
         private void ExcavationCrud_GetMonuments(object sender, EventArgs e)
@@ -77,28 +87,8 @@ namespace BrandDataProcessingBL
             int id = GetEnableClassificationId(excavations);
             foreach (FindsClass findsClass in findsClasses)
             {
-                classifications = GetClassificationsByMonuments(excavations, findsClass.Class, monument);
-                findsClass.Classifications = new List<Classification>();
-                foreach (Classification classification in classifications)
-                {
-                    Classification newClassification = new Classification();
-                    newClassification.ID = id;
-                    newClassification.Type = classification.Type;
-                    newClassification.Variant = classification.Variant;
-                    newClassification.Description = classification.Description;
-
-                    newClassification.Image = null;
-                    if (classification.Image != null)
-                    {
-                        int pictuteLength = classification.Image.Length;
-                        int startIndex = 0;
-                        newClassification.Image = new byte[pictuteLength];
-                        classification.Image.CopyTo(newClassification.Image, startIndex);
-                    }
-
-                    findsClass.Classifications.Add(newClassification);
-                    id++;
-                }
+                classifications = classificationsRetriever.RetrieveFindsClassClassifications(excavations, monument, id, findsClass);
+                id++;
             }
         }
 
@@ -126,10 +116,10 @@ namespace BrandDataProcessingBL
             return GetEnableId(findsClasses);
         }
 
-        private static int GetEnableClassificationId(IEnumerable<Excavation> excavations)
+        private int GetEnableClassificationId(IEnumerable<Excavation> excavations)
         {
             IEnumerable<FindsClass> findsClasses = GetFindsClasses(excavations);
-            IEnumerable<Classification> classifications = GetClassifications(findsClasses);
+            IEnumerable<Classification> classifications = classificationsRetriever.GetClassifications(findsClasses);
             return GetEnableId(classifications);
         }
 
@@ -143,26 +133,12 @@ namespace BrandDataProcessingBL
             return excavations.SelectMany(e => e.FindsClasses);
         }
 
-        private static IEnumerable<Classification> GetClassifications(IEnumerable<FindsClass> findsClasses)
-        {
-            return findsClasses.SelectMany(c => c.Classifications);
-        }
-
         private IEnumerable<string> GetClassesByMonuments(IEnumerable<Excavation> excavations, string monument)
         {
             return excavations.Where(m => m.Monument == monument)
                             .SelectMany(f => f.FindsClasses)
                             .Select(f => f.Class)
                             .Distinct();
-        }
-
-        private static IEnumerable<Classification> GetClassificationsByMonuments(IEnumerable<Excavation> excavations, string className, string monument)
-        {
-            return excavations.Where(m => m.Monument == monument)
-                               .SelectMany(f => f.FindsClasses)
-                               .Where(c => c.Class == className)
-                               .SelectMany(f => f.Classifications)
-                               .Distinct();
         }
 
         private void CheckOnSameExcavation(Excavation excavation)
