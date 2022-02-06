@@ -7,6 +7,7 @@ namespace BrandDataProcessing.Models
 {
     [Serializable]
     [TranslatedName("Клеймо")]
+    [Category("Керамика")]
     public class Brand : IIdentifier/*, IXmlSerializable*/
     {
         public int ID { get; set; }

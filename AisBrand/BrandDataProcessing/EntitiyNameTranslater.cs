@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace BrandDataProcessing
 {
@@ -18,6 +20,11 @@ namespace BrandDataProcessing
         {
             TranslatedNameAttribute translatedNameAttribute = (TranslatedNameAttribute)Attribute.GetCustomAttribute(Type.GetType(name), typeof(TranslatedNameAttribute));
             return translatedNameAttribute.Name;
+        }
+
+        public static Type GetTypeByTranslatedNameValue(IEnumerable<Type> types, string className)
+        {
+            return types.SingleOrDefault(t => (t.GetCustomAttribute(typeof(TranslatedNameAttribute)) as TranslatedNameAttribute).Name == className);
         }
     }
 }

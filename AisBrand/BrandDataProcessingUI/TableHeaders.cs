@@ -6,33 +6,36 @@ namespace BrandDataProcessingUI
     {
         public static class Excavation
         {
-            private const string nameTitle = "Раскоп";
             private const string monumentTitle = "Памятник";
+            private const string nameTitle = "Раскоп";
             private const string findsAmountTitle = "Кол-во предметов";
 
-            private const int nameIndex = 0;
-            private const int monumentIndex = 1;
+            private const int monumentIndex = 0;
+            private const int nameIndex = 1;
             private const int findsAmountIndex = 2;
 
             public static void SetExcavationTitles(DataGridView dataGrid)
             {
-                dataGrid.Columns[nameIndex].HeaderText = nameTitle;
                 dataGrid.Columns[monumentIndex].HeaderText = monumentTitle;
+                dataGrid.Columns[nameIndex].HeaderText = nameTitle;
                 dataGrid.Columns[findsAmountIndex].HeaderText = findsAmountTitle;
             }
         }
 
         public static class FindsClass
         {
-            private const string classTitle = "Класс предметов";
+            private const string classCategory = "Категория";
+            private const string classSubcategory = "Подкатегория";
             private const string classificationAmountTitle = "Кол-во предметов";
 
-            private const int classIndex = 0;
-            private const int classificationAmountIndex = 1;
+            private const int classCategoryIndex = 0;
+            private const int classSubcategoryIndex = 1;
+            private const int classificationAmountIndex = 2;
 
             public static void SetFindsClassTitles(DataGridView dataGrid)
             {
-                dataGrid.Columns[classIndex].HeaderText = classTitle;
+                dataGrid.Columns[classCategoryIndex].HeaderText = classCategory;
+                dataGrid.Columns[classSubcategoryIndex].HeaderText = classSubcategory;
                 dataGrid.Columns[classificationAmountIndex].HeaderText = classificationAmountTitle;
             }
         }

@@ -336,7 +336,7 @@ namespace BrandDataProcessingUI
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ViewModelExcavation viewModelExcavation = new ViewModelExcavation(dgvTable.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvTable.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    ViewModelExcavation viewModelExcavation = new ViewModelExcavation(dgvTable.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvTable.Rows[e.RowIndex].Cells[0].Value.ToString());
                     ExcavationCrud.GetId(viewModelExcavation);
                     FillFindsClassData();
                     navigation.Forward(currentTableName, null);
