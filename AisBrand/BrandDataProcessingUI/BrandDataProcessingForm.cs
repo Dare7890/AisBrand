@@ -268,7 +268,7 @@ namespace BrandDataProcessingUI
                     UpdateExcavation(cells);
                     break;
                 case nameof(FindsClass):
-                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[1].Value.ToString());
                     FindsClassCrud.GetId(viewModelFindsClass);
                     FillClassificationData();
                     navigation.Forward(currentTableName, SelectedParentId);

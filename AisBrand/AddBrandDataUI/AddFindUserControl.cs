@@ -1,0 +1,221 @@
+﻿using AddBrandDataUI.ViewModels;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
+namespace AddBrandDataUI
+{
+    public partial class AddFindUserControl : UserControl, IUserControl<Find>
+    {
+        public byte[] Image { get; private set; }
+        public byte[] Photo { get; private set; }
+
+        public AddFindUserControl(Find find = null)
+        {
+            InitializeComponent();
+
+            if (find != null)
+                FillTextFields(find);
+        }
+
+        public Find Add()
+        {
+            string formation = txtFormation.Text.Trim();
+            string square = txtSquare.Text.Trim();
+            string depth = txtDepth.Text.Trim();
+            string fieldNumber = txtFieldNumber.Text.Trim();
+            string collectorsNumber = txtCollectorsNumber.Text.Trim();
+            string datingLowerBound = txtDatingLowerBound.Text.Trim();
+            string datingUpperBound = txtDatingUpperBound.Text.Trim();
+            string description = txtDescription.Text.Trim();
+            string analogy = txtAnalogy.Text.Trim();
+            string note = txtNote.Text.Trim();
+
+            return new Find(fieldNumber, formation, int.Parse(square), int.Parse(depth), collectorsNumber, int.Parse(datingLowerBound), int.Parse(datingUpperBound),
+                description, analogy, note,Image, Photo);
+        }
+
+        private void FillTextFields(Find find)
+        {
+            txtFormation.Text = find.Formation;
+            txtSquare.Text = find.Square.ToString();
+            txtDepth.Text = find.Depth.ToString();
+            txtFieldNumber.Text = find.FieldNumber;
+            txtCollectorsNumber.Text = find.CollectorsNumber;
+            txtDatingLowerBound.Text = find.DatingLowerBound.ToString();
+            txtDatingUpperBound.Text = find.DatingUpperBound.ToString();
+            txtDescription.Text = find.Description;
+            txtAnalogy.Text = find.Analogy;
+            txtNote.Text = find.Note;
+
+            LoadImage(find.Image);
+            ShowImage();
+
+            LoadPhoto(find.Photo);
+            ShowPhoto();
+        }
+
+        private void LoadPhoto(byte[] image)
+        {
+            LoadPicture(image, Photo);
+        }
+
+        private void LoadPicture(byte[] image, byte[] targetImage)
+        {
+            if (image != null)
+            {
+                int pictuteLength = image.Length;
+                int startIndex = 0;
+                targetImage = new byte[pictuteLength];
+                image.CopyTo(targetImage, startIndex);
+            }
+        }
+
+        private void LoadImage(byte[] image)
+        {
+            LoadPicture(image, Image);
+        }
+
+        private void ShowImage()
+        {
+            if (Image != null)
+                ShowPicture(Image, pctImage.Size, pctImage.Image);
+        }
+
+        private void ShowPhoto()
+        {
+            if (Photo != null)
+                ShowPicture(Photo, pctPhoto.Size, pctPhoto.Image);
+        }
+
+        private void ShowPicture(byte[] imageBytes, Size imageSize, Image targetImage)
+        {
+            using (Stream stream = new MemoryStream(imageBytes))
+            {
+                Image image = System.Drawing.Image.FromStream(stream);
+                Bitmap bitmap = new Bitmap(image, imageSize);
+                targetImage = bitmap;
+            }
+        }
+
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+            AddImage();
+        }
+
+        private void AddImage()
+        {
+            Image = RetrievePictureAsByte();
+            ShowImage();
+        }
+
+        //TODO: вынести в отдельный класс.
+        private byte[] RetrievePictureAsByte()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
+                    throw new InvalidOperationException("Can't open file.");
+
+                string filePath = openFileDialog.FileName;
+                using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        stream.CopyTo(memoryStream);
+                        return memoryStream.ToArray();
+                    }
+                }
+            }
+        }
+
+        private void btnAddPhoto_Click(object sender, EventArgs e)
+        {
+            Photo = RetrievePictureAsByte();
+            ShowPhoto();
+        }
+
+        private void btnDeleteImage_Click(object sender, EventArgs e)
+        {
+            ClearImage();
+        }
+
+        private void ClearImage()
+        {
+            if (Image != null)
+                Image = null;
+
+            pctImage.Image = null;
+        }
+
+        private void btnDeletePhoto_Click(object sender, EventArgs e)
+        {
+            ClearPhoto();
+        }
+
+        private void ClearPhoto()
+        {
+            if (Photo != null)
+                Photo = null;
+
+            pctPhoto.Image = null;
+        }
+
+        private void txtFormation_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingSquare(e);
+        }
+
+        private void ValidatingSquare(CancelEventArgs e)
+        {
+            string square = txtSquare.Text.Trim();
+            bool isValid = Validator.Find.ValidSquare(square, out string errorMessage);
+            ValidatingProperty(isValid, txtSquare, e, errorMessage);
+        }
+
+        private void txtDepth_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingDepth(e);
+        }
+
+        private void ValidatingDepth(CancelEventArgs e)
+        {
+            string depth = txtDepth.Text.Trim();
+            bool isValid = Validator.Find.ValidDepth(depth, out string errorMessage);
+            ValidatingProperty(isValid, txtDepth, e, errorMessage);
+        }
+
+        private void txtFieldNumber_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingFieldNumber(e);
+        }
+
+        private void ValidatingFieldNumber(CancelEventArgs e)
+        {
+            string fieldNumber = txtFieldNumber.Text.Trim();
+            bool isValid = Validator.Find.ValidFieldNumber(fieldNumber, out string errorMessage);
+            ValidatingProperty(isValid, txtFieldNumber, e, errorMessage);
+        }
+
+        //TODO: в отдельный класс.
+        private void ValidatingProperty(bool isValid, TextBox textBox, CancelEventArgs e, string errorMessage)
+        {
+            if (!isValid)
+            {
+                e.Cancel = true;
+                textBox.Select(0, textBox.Text.Length);
+
+                errValidating.SetError(textBox, errorMessage);
+            }
+            else
+            {
+                errValidating.SetError(textBox, string.Empty);
+            }
+        }
+    }
+}

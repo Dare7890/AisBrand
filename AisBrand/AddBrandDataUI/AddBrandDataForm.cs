@@ -32,6 +32,9 @@ namespace AddBrandDataUI
                 case nameof(Classification):
                     userControl = (IUserControl<T>)new AddClassificationUserControl(brandData as Classification);
                     break;
+                case nameof(Find):
+                    userControl = (IUserControl<T>)new AddFindUserControl(brandData as Find);
+                    break;
                 default:
                     break;
             }
