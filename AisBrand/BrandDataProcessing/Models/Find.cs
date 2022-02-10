@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
+    [TranslatedName("Клеймы")]
     public class Find : IIdentifier
     {
         public int ID { get; set; }
@@ -69,18 +70,10 @@ namespace BrandDataProcessing.Models
         public string Note { get; set; }
 
         [XmlElement(ElementName = "ImageAsString", DataType = "hexBinary")]
-        public byte[] Image
-        {
-            get { return Encoding.UTF8.GetBytes(ImageAsString ?? string.Empty); }
-            set { ImageAsString = Encoding.UTF8.GetString(value); }
-        }
+        public byte[] Image { get; set; }
 
         [XmlElement(ElementName = "PhotoAsString", DataType = "hexBinary")]
-        public byte[] Photo
-        {
-            get { return Encoding.UTF8.GetBytes(PhotoAsString ?? string.Empty); }
-            set { PhotoAsString = Encoding.UTF8.GetString(value); }
-        }
+        public byte[] Photo { get; set; }
 
         public List<Brand> Brands { get; set; }
 

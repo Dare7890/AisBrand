@@ -6,6 +6,6 @@ namespace BrandDataProcessingBL
     public interface IClassificationsRetriever
     {
         IEnumerable<Classification> GetClassifications(IEnumerable<FindsClass> findsClasses);
-        IEnumerable<Classification> RetrieveFindsClassClassifications(IEnumerable<Excavation> excavations, string monument, int id, FindsClass findsClass);
+        IEnumerable<Classification> RetrieveFindsClassClassifications(IEnumerable<Excavation> excavations, string monument, ref int nextClassificationId, FindsClass findsClass);
     }
 }

@@ -41,6 +41,6 @@
             Note = note;
             Image = image;
             Photo = photo;
-    }
+        }
     }
 }

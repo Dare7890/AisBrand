@@ -50,8 +50,11 @@ namespace BrandDataProcessing
             xmlDocument.Save(filePath);
         }
 
-        public IEnumerable<XElement> GetAll(int? elementId)
+        public IEnumerable<XElement> GetAll(int? elementId, string parentTypeName = null)
         {
+            IEnumerable<XElement> parentElements;
+            parentElements = parentTypeName != null ? InitElements(xmlDocument, parentTypeName) : this.parentElements;
+
             if (!elementId.HasValue)
                 return GetDescendants(parentElements, typeof(T));
 

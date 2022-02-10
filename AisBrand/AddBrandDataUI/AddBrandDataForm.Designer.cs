@@ -74,10 +74,10 @@ namespace AddBrandDataUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(484, 450);
             this.Controls.Add(this.tlpAddPanel);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(500, 489);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 489);
             this.Name = "AddBrandDataForm";

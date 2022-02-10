@@ -13,7 +13,8 @@ namespace Tools
         IEnumerable<Excavation> AllExcavations { get; set; }
 
         ExcavationCrud ExcavationCrud { get; }
-        BrandDataCrud<AddBrandDataUI.ViewModels.FindsClass> FindsClassCrud { get; }
+        FindsClassCrud FindsClassCrud { get; }
         ClassificationCrud ClassificationCrud { get; }
+        BrandDataCrud<AddBrandDataUI.ViewModels.Find> FindCrud { get; }
     }
 }

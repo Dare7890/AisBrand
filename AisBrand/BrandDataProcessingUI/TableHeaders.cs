@@ -54,5 +54,26 @@ namespace BrandDataProcessingUI
                 dataGrid.Columns[variantIndex].HeaderText = variantTitle;
             }
         }
+
+        public static class Find
+        {
+            private const string fieldNumberTitle = "Полевой №";
+            private const string collectorsNumberTitle = "Коллекционный №";
+            private const string formationTitle = "Пласт";
+            private const string squareTitle = "Квадрат";
+
+            private const int fieldNumberIndex = 0;
+            private const int collectorsNumberIndex = 1;
+            private const int formationIndex = 2;
+            private const int squareIndex = 3;
+
+            public static void SetFindTitles(DataGridView dataGrid)
+            {
+                dataGrid.Columns[fieldNumberIndex].HeaderText = fieldNumberTitle;
+                dataGrid.Columns[collectorsNumberIndex].HeaderText = collectorsNumberTitle;
+                dataGrid.Columns[formationIndex].HeaderText = formationTitle;
+                dataGrid.Columns[squareIndex].HeaderText = squareTitle;
+            }
+        }
     }
 }

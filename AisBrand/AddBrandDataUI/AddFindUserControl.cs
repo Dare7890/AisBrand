@@ -1,23 +1,63 @@
 ﻿using AddBrandDataUI.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using FindsClassModel = BrandDataProcessing.Models.FindsClass;
 
 namespace AddBrandDataUI
 {
     public partial class AddFindUserControl : UserControl, IUserControl<Find>
     {
+        private FindsClassModel parentFindClass;
+
         public byte[] Image { get; private set; }
         public byte[] Photo { get; private set; }
 
-        public AddFindUserControl(Find find = null)
+        public Classification ParentClassification { get; private set; }
+
+        public AddFindUserControl(FindsClassModel findsClass, Find find = null)
         {
             InitializeComponent();
 
             if (find != null)
                 FillTextFields(find);
+
+            InitTypes(findsClass);
+        }
+
+        private void InitTypes(FindsClassModel findsClass)
+        {
+            this.parentFindClass = findsClass;
+            IEnumerable<string> types = findsClass.Classifications.Select(c => c.Type)
+                                                                    .Distinct()
+                                                                    .OrderBy(t => t);
+            InitTypes(types);
+        }
+
+        private void InitTypes(IEnumerable<string> types)
+        {
+            foreach (string type in types)
+                cboType.Items.Add(type);
+
+            SelectFirstItem(cboType);
+        }
+
+        private void InitVariantsCb(IEnumerable<string> variants)
+        {
+            foreach (string variant in variants)
+                cboVariant.Items.Add(variant);
+
+            SelectFirstItem(cboVariant);
+        }
+
+        private void SelectFirstItem(ComboBox cbo)
+        {
+            if (cbo.Items.Count > 0)
+                cbo.SelectedIndex = 0;
         }
 
         public Find Add()
@@ -33,8 +73,17 @@ namespace AddBrandDataUI
             string analogy = txtAnalogy.Text.Trim();
             string note = txtNote.Text.Trim();
 
-            return new Find(fieldNumber, formation, int.Parse(square), int.Parse(depth), collectorsNumber, int.Parse(datingLowerBound), int.Parse(datingUpperBound),
-                description, analogy, note,Image, Photo);
+            string type = cboType.SelectedItem?.ToString().Trim() ?? cboType.Text.Trim();
+            string variant = cboVariant.SelectedItem?.ToString().Trim() ?? cboVariant.Text.Trim();
+            ParentClassification = new(type, variant);
+
+            int? parsedSquare = square == string.Empty ? null : int.Parse(square);
+            int? parsedDepth = depth == string.Empty ? null : int.Parse(depth);
+            int? parsedDatingLowerBound = datingLowerBound == string.Empty ? null : int.Parse(datingLowerBound);
+            int? parsedDatingUpperBound = datingUpperBound == string.Empty ? null : int.Parse(datingUpperBound);
+
+            return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, parsedDatingLowerBound, parsedDatingUpperBound, description, analogy,
+                note, Image, Photo);
         }
 
         private void FillTextFields(Find find)
@@ -81,22 +130,22 @@ namespace AddBrandDataUI
         private void ShowImage()
         {
             if (Image != null)
-                ShowPicture(Image, pctImage.Size, pctImage.Image);
+                ShowPicture(Image, pctImage.Size, pctImage);
         }
 
         private void ShowPhoto()
         {
             if (Photo != null)
-                ShowPicture(Photo, pctPhoto.Size, pctPhoto.Image);
+                ShowPicture(Photo, pctPhoto.Size, pctPhoto);
         }
 
-        private void ShowPicture(byte[] imageBytes, Size imageSize, Image targetImage)
+        private void ShowPicture(byte[] imageBytes, Size imageSize, PictureBox pictureBox)
         {
             using (Stream stream = new MemoryStream(imageBytes))
             {
                 Image image = System.Drawing.Image.FromStream(stream);
                 Bitmap bitmap = new Bitmap(image, imageSize);
-                targetImage = bitmap;
+                pictureBox.Image = bitmap;
             }
         }
 
@@ -166,7 +215,7 @@ namespace AddBrandDataUI
             pctPhoto.Image = null;
         }
 
-        private void txtFormation_Validating(object sender, CancelEventArgs e)
+        private void txtSquare_Validating(object sender, CancelEventArgs e)
         {
             ValidatingSquare(e);
         }
@@ -216,6 +265,36 @@ namespace AddBrandDataUI
             {
                 errValidating.SetError(textBox, string.Empty);
             }
+        }
+
+        private void cboType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearVariants();
+            FillVariants();
+        }
+
+        private void ClearVariants()
+        {
+            ClearComboBox(cboVariant);
+        }
+
+        private void ClearComboBox(ComboBox cboVariant)
+        {
+            cboVariant.Items.Clear();
+        }
+
+        private void FillVariants()
+        {
+            string selectedType = cboType.SelectedItem?.ToString().Trim() ?? cboType.Text.Trim();
+            IEnumerable<string> variants = GetVatiantsByType(selectedType);
+            InitVariantsCb(variants);
+        }
+
+        private IEnumerable<string> GetVatiantsByType(string type)
+        {
+            return parentFindClass.Classifications.Where(c => c.Type == type)
+                                                    .Select(c => c.Variant)
+                                                    .Distinct();
         }
     }
 }

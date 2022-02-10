@@ -48,14 +48,14 @@ namespace BrandDataProcessing
                 );
 
             if (classification.Image != null)
-                classificationXml.Add(new XElement(nameof(classification.Image), Convert.ToBase64String(classification.Image)));
+                classificationXml.Add(CreatePictureElement(nameof(classification.Image), classification.Image));
 
             return classificationXml;
         }
 
         public static XElement Create(Find find)
         {
-            return new XElement(nameof(Find),
+            XElement findXml = new XElement(nameof(Find),
                 new XElement(nameof(find.ID), find.ID),
                 new XElement(nameof(find.Formation), find.Formation),
                 new XElement(nameof(find.Square), find.Square),
@@ -65,11 +65,22 @@ namespace BrandDataProcessing
                 new XElement(nameof(find.DatingLowerBound), find.DatingLowerBound),
                 new XElement(nameof(find.DatingUpperBound), find.DatingUpperBound),
                 new XElement(nameof(find.Description), find.Description),
-                new XElement(nameof(find.Image), find.Image),
-                new XElement(nameof(find.Photo), find.Photo),
                 new XElement(nameof(find.Analogy), find.Analogy),
                 new XElement(nameof(find.Note), find.Note)
                 );
+
+            if (find.Image != null)
+                findXml.Add(CreatePictureElement(nameof(find.Image), find.Image));
+
+            if (find.Photo != null)
+                findXml.Add(CreatePictureElement(nameof(find.Photo), find.Photo));
+
+            return findXml;
+        }
+
+        private static XElement CreatePictureElement(string name, byte[] image)
+        {
+            return new XElement(name, Convert.ToBase64String(image));
         }
 
         public static XElement Create(FindsClass findsClass)
@@ -110,19 +121,8 @@ namespace BrandDataProcessing
             updatedClassification.Element(nameof(classification.Variant)).Value = classification.Variant;
             updatedClassification.Element(nameof(classification.Description)).Value = classification.Description;
 
-            string name = nameof(classification.Image);
-            if (classification.Image != null)
-            {
-                string image = Convert.ToBase64String(classification.Image);
-                if (updatedClassification.Element(name) == null)
-                    updatedClassification.Add(new XElement(name, image));
-                else
-                    updatedClassification.Element(name).Value = image;
-            }
-            else
-            {
-                updatedClassification.Element(name)?.Remove();
-            }
+            string imageName = nameof(classification.Image);
+            UpdatePicture(imageName, classification.Image, updatedClassification);
         }
 
         public static void Update(Find find, XElement updatedFind)
@@ -135,10 +135,30 @@ namespace BrandDataProcessing
             updatedFind.Element(nameof(find.DatingLowerBound)).Value = find.DatingLowerBound.ToString();
             updatedFind.Element(nameof(find.DatingUpperBound)).Value = find.DatingUpperBound.ToString();
             updatedFind.Element(nameof(find.Description)).Value = find.Description;
-            updatedFind.Element(nameof(find.Image)).Value = Encoding.Default.GetString(find.Image);
-            updatedFind.Element(nameof(find.Photo)).Value = Encoding.Default.GetString(find.Photo);
             updatedFind.Element(nameof(find.Analogy)).Value = find.Analogy;
             updatedFind.Element(nameof(find.Note)).Value = find.Note;
+
+            string imageName = nameof(find.Image);
+            UpdatePicture(imageName, find.Image, updatedFind);
+
+            string photoName = nameof(find.Image);
+            UpdatePicture(photoName, find.Image, updatedFind);
+        }
+
+        private static void UpdatePicture(string name, byte[] picture, XElement updatedEntity)
+        {
+            if (picture != null)
+            {
+                string image = Convert.ToBase64String(picture);
+                if (updatedEntity.Element(name) == null)
+                    updatedEntity.Add(new XElement(name, image));
+                else
+                    updatedEntity.Element(name).Value = image;
+            }
+            else
+            {
+                updatedEntity.Element(name)?.Remove();
+            }
         }
 
         public static void Update(FindsClass findsClass, XElement updatedClass)

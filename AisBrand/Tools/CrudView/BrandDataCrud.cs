@@ -20,12 +20,12 @@ namespace Tools.CrudView
 
         public BrandDataCrud() { }
 
-        public virtual void Add(Form owner, IMapper<T> mapper, IEnumerable<string> types = null)
+        public virtual void Add(Form owner, IMapper<T> mapper, IEnumerable<string> types = null, BrandDataProcessing.Models.FindsClass findsClass = null)
         {
             if (FilePath == null)
                 return;
 
-            using (AddBrandDataForm<T> form = new AddBrandDataForm<T>(types: types))
+            using (AddBrandDataForm<T> form = new AddBrandDataForm<T>(types: types, parent: findsClass))
             {
                 if (form.ShowDialog(owner) == DialogResult.OK)
                 {

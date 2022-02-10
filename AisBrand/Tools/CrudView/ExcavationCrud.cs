@@ -37,7 +37,7 @@ namespace Tools.CrudView
                 GetAllExcavations.Invoke(this, new System.EventArgs());
         }
 
-        public override void Add(Form owner, IMapper<Excavation> mapper, IEnumerable<string> types = null)
+        public override void Add(Form owner, IMapper<Excavation> mapper, IEnumerable<string> types = null, BrandDataProcessing.Models.FindsClass findsClass = null)
         {
             OnGetMonuments();
             base.Add(owner, mapper, ExistingMonuments);

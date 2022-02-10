@@ -32,6 +32,14 @@ namespace AddBrandDataUI
             this.components = new System.ComponentModel.Container();
             this.tlpMenu = new System.Windows.Forms.TableLayoutPanel();
             this.pnlFind = new System.Windows.Forms.Panel();
+            this.lblVariant = new System.Windows.Forms.Label();
+            this.lblType = new System.Windows.Forms.Label();
+            this.cboVariant = new System.Windows.Forms.ComboBox();
+            this.cboType = new System.Windows.Forms.ComboBox();
+            this.btnDeletePhoto = new System.Windows.Forms.Button();
+            this.btnAddPhoto = new System.Windows.Forms.Button();
+            this.btnDeleteImage = new System.Windows.Forms.Button();
+            this.btnAddImage = new System.Windows.Forms.Button();
             this.pctPhoto = new System.Windows.Forms.PictureBox();
             this.pctImage = new System.Windows.Forms.PictureBox();
             this.txtNote = new System.Windows.Forms.TextBox();
@@ -56,10 +64,6 @@ namespace AddBrandDataUI
             this.lblDepth = new System.Windows.Forms.Label();
             this.lblSquare = new System.Windows.Forms.Label();
             this.lblFormation = new System.Windows.Forms.Label();
-            this.btnAddImage = new System.Windows.Forms.Button();
-            this.btnDeleteImage = new System.Windows.Forms.Button();
-            this.btnAddPhoto = new System.Windows.Forms.Button();
-            this.btnDeletePhoto = new System.Windows.Forms.Button();
             this.errValidating = new System.Windows.Forms.ErrorProvider(this.components);
             this.tlpMenu.SuspendLayout();
             this.pnlFind.SuspendLayout();
@@ -78,14 +82,18 @@ namespace AddBrandDataUI
             this.tlpMenu.Location = new System.Drawing.Point(0, 0);
             this.tlpMenu.Name = "tlpMenu";
             this.tlpMenu.RowCount = 2;
-            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.93549F));
-            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.06452F));
+            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.76537F));
+            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.23462F));
             this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMenu.Size = new System.Drawing.Size(706, 439);
             this.tlpMenu.TabIndex = 0;
             // 
             // pnlFind
             // 
+            this.pnlFind.Controls.Add(this.lblVariant);
+            this.pnlFind.Controls.Add(this.lblType);
+            this.pnlFind.Controls.Add(this.cboVariant);
+            this.pnlFind.Controls.Add(this.cboType);
             this.pnlFind.Controls.Add(this.btnDeletePhoto);
             this.pnlFind.Controls.Add(this.btnAddPhoto);
             this.pnlFind.Controls.Add(this.btnDeleteImage);
@@ -117,8 +125,85 @@ namespace AddBrandDataUI
             this.pnlFind.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFind.Location = new System.Drawing.Point(3, 3);
             this.pnlFind.Name = "pnlFind";
-            this.pnlFind.Size = new System.Drawing.Size(700, 287);
+            this.pnlFind.Size = new System.Drawing.Size(700, 331);
             this.pnlFind.TabIndex = 0;
+            // 
+            // lblVariant
+            // 
+            this.lblVariant.AutoSize = true;
+            this.lblVariant.Location = new System.Drawing.Point(310, 82);
+            this.lblVariant.Name = "lblVariant";
+            this.lblVariant.Size = new System.Drawing.Size(55, 15);
+            this.lblVariant.TabIndex = 31;
+            this.lblVariant.Text = "Вариант:";
+            // 
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Location = new System.Drawing.Point(310, 18);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(30, 15);
+            this.lblType.TabIndex = 30;
+            this.lblType.Text = "Тип:";
+            // 
+            // cboVariant
+            // 
+            this.cboVariant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVariant.FormattingEnabled = true;
+            this.cboVariant.Location = new System.Drawing.Point(310, 111);
+            this.cboVariant.Name = "cboVariant";
+            this.cboVariant.Size = new System.Drawing.Size(92, 23);
+            this.cboVariant.TabIndex = 29;
+            // 
+            // cboType
+            // 
+            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboType.FormattingEnabled = true;
+            this.cboType.Location = new System.Drawing.Point(310, 46);
+            this.cboType.Name = "cboType";
+            this.cboType.Size = new System.Drawing.Size(92, 23);
+            this.cboType.TabIndex = 28;
+            this.cboType.SelectedIndexChanged += new System.EventHandler(this.cboType_SelectedIndexChanged);
+            // 
+            // btnDeletePhoto
+            // 
+            this.btnDeletePhoto.Location = new System.Drawing.Point(220, 239);
+            this.btnDeletePhoto.Name = "btnDeletePhoto";
+            this.btnDeletePhoto.Size = new System.Drawing.Size(75, 23);
+            this.btnDeletePhoto.TabIndex = 27;
+            this.btnDeletePhoto.Text = "Удалить";
+            this.btnDeletePhoto.UseVisualStyleBackColor = true;
+            this.btnDeletePhoto.Click += new System.EventHandler(this.btnDeletePhoto_Click);
+            // 
+            // btnAddPhoto
+            // 
+            this.btnAddPhoto.Location = new System.Drawing.Point(220, 210);
+            this.btnAddPhoto.Name = "btnAddPhoto";
+            this.btnAddPhoto.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPhoto.TabIndex = 26;
+            this.btnAddPhoto.Text = "Добавить";
+            this.btnAddPhoto.UseVisualStyleBackColor = true;
+            this.btnAddPhoto.Click += new System.EventHandler(this.btnAddPhoto_Click);
+            // 
+            // btnDeleteImage
+            // 
+            this.btnDeleteImage.Location = new System.Drawing.Point(19, 239);
+            this.btnDeleteImage.Name = "btnDeleteImage";
+            this.btnDeleteImage.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteImage.TabIndex = 25;
+            this.btnDeleteImage.Text = "Удалить";
+            this.btnDeleteImage.UseVisualStyleBackColor = true;
+            this.btnDeleteImage.Click += new System.EventHandler(this.btnDeleteImage_Click);
+            // 
+            // btnAddImage
+            // 
+            this.btnAddImage.Location = new System.Drawing.Point(19, 210);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(75, 23);
+            this.btnAddImage.TabIndex = 24;
+            this.btnAddImage.Text = "Добавить";
+            this.btnAddImage.UseVisualStyleBackColor = true;
+            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
             // 
             // pctPhoto
             // 
@@ -202,6 +287,7 @@ namespace AddBrandDataUI
             this.txtSquare.Name = "txtSquare";
             this.txtSquare.Size = new System.Drawing.Size(153, 23);
             this.txtSquare.TabIndex = 13;
+            this.txtSquare.Validating += new System.ComponentModel.CancelEventHandler(this.txtSquare_Validating);
             // 
             // txtFormation
             // 
@@ -209,7 +295,6 @@ namespace AddBrandDataUI
             this.txtFormation.Name = "txtFormation";
             this.txtFormation.Size = new System.Drawing.Size(153, 23);
             this.txtFormation.TabIndex = 12;
-            this.txtFormation.Validating += new System.ComponentModel.CancelEventHandler(this.txtFormation_Validating);
             // 
             // lblPhoto
             // 
@@ -319,46 +404,6 @@ namespace AddBrandDataUI
             this.lblFormation.TabIndex = 0;
             this.lblFormation.Text = "Пласт:";
             // 
-            // btnAddImage
-            // 
-            this.btnAddImage.Location = new System.Drawing.Point(19, 210);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(75, 23);
-            this.btnAddImage.TabIndex = 24;
-            this.btnAddImage.Text = "Добавить";
-            this.btnAddImage.UseVisualStyleBackColor = true;
-            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
-            // 
-            // btnDeleteImage
-            // 
-            this.btnDeleteImage.Location = new System.Drawing.Point(19, 239);
-            this.btnDeleteImage.Name = "btnDeleteImage";
-            this.btnDeleteImage.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteImage.TabIndex = 25;
-            this.btnDeleteImage.Text = "Удалить";
-            this.btnDeleteImage.UseVisualStyleBackColor = true;
-            this.btnDeleteImage.Click += new System.EventHandler(this.btnDeleteImage_Click);
-            // 
-            // btnAddPhoto
-            // 
-            this.btnAddPhoto.Location = new System.Drawing.Point(220, 210);
-            this.btnAddPhoto.Name = "btnAddPhoto";
-            this.btnAddPhoto.Size = new System.Drawing.Size(75, 23);
-            this.btnAddPhoto.TabIndex = 26;
-            this.btnAddPhoto.Text = "Добавить";
-            this.btnAddPhoto.UseVisualStyleBackColor = true;
-            this.btnAddPhoto.Click += new System.EventHandler(this.btnAddPhoto_Click);
-            // 
-            // btnDeletePhoto
-            // 
-            this.btnDeletePhoto.Location = new System.Drawing.Point(220, 239);
-            this.btnDeletePhoto.Name = "btnDeletePhoto";
-            this.btnDeletePhoto.Size = new System.Drawing.Size(75, 23);
-            this.btnDeletePhoto.TabIndex = 27;
-            this.btnDeletePhoto.Text = "Удалить";
-            this.btnDeletePhoto.UseVisualStyleBackColor = true;
-            this.btnDeletePhoto.Click += new System.EventHandler(this.btnDeletePhoto_Click);
-            // 
             // errValidating
             // 
             this.errValidating.ContainerControl = this;
@@ -413,5 +458,9 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Button btnDeletePhoto;
         private System.Windows.Forms.Button btnAddPhoto;
         private System.Windows.Forms.ErrorProvider errValidating;
+        private System.Windows.Forms.Label lblVariant;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.ComboBox cboVariant;
+        private System.Windows.Forms.ComboBox cboType;
     }
 }

@@ -26,8 +26,20 @@ namespace BrandDataProcessingBL
             this.view.FindsClassCrud.UpdateExcavation += FindsClassCrud_UpdateExcavation;
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
             this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
+            this.view.FindsClassCrud.GetFindClass += FindsClassCrud_GetFindClass;
 
             this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void FindsClassCrud_GetFindClass(object sender, GetFindClassEventArgs e)
+        {
+            FindsClass findsClass = GetFindsClassById(e.FindsClassId);
+            view.FindsClassCrud.FindsClass = findsClass;
+        }
+
+        private FindsClass GetFindsClassById(int findsClassId)
+        {
+            return findsClasses.SingleOrDefault(f => f.ID == findsClassId);
         }
 
         private void FindsClassCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
@@ -83,7 +95,7 @@ namespace BrandDataProcessingBL
 
             string monument = GetExcavationMonument(view.AllExcavations, view.SelectedParentId.Value);
             int id = GetEnableClassificationId();
-            classificationsRetriever.RetrieveFindsClassClassifications(view.AllExcavations, monument, id, findsClass);
+            classificationsRetriever.RetrieveFindsClassClassifications(view.AllExcavations, monument, ref id, findsClass);
 
             int parentId = view.SelectedParentId.Value;
             repository.Add(findsClass, parentId);

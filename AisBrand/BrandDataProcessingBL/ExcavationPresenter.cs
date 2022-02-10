@@ -86,10 +86,7 @@ namespace BrandDataProcessingBL
             IEnumerable<Classification> classifications;
             int id = GetEnableClassificationId(excavations);
             foreach (FindsClass findsClass in findsClasses)
-            {
-                classifications = classificationsRetriever.RetrieveFindsClassClassifications(excavations, monument, id, findsClass);
-                id++;
-            }
+                classifications = classificationsRetriever.RetrieveFindsClassClassifications(excavations, monument, ref id, findsClass);
         }
 
         private List<FindsClass> RetrieveFindClassesByMonuments(string monument)

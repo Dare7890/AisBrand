@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using AddBrandDataUI.ViewModels;
+using FindsClassModel = BrandDataProcessing.Models.FindsClass;
 
 namespace AddBrandDataUI
 {
@@ -11,12 +12,21 @@ namespace AddBrandDataUI
 
         public T BrandData { get; set; }
 
-        public AddBrandDataForm(T brandData = null, IEnumerable<string> types = null)
+        public AddBrandDataForm(T brandData = null, IEnumerable<string> types = null, FindsClassModel parent = null)
         {
             InitializeComponent();
 
             InitElementsName(brandData);
-            ShowExcavationAddFields(brandData, types);
+            InitUserControl(brandData, types, parent);
+            ShowUserControl();
+        }
+
+        private void InitUserControl(T brandData = null, IEnumerable<string> types = null, FindsClassModel parent = null)
+        {
+            if (parent != null)
+                InitUserControl(brandData, parent);
+            else
+                InitUserControl(brandData, types);
         }
 
         private void InitUserControl(T brandData, IEnumerable<string> types)
@@ -32,12 +42,14 @@ namespace AddBrandDataUI
                 case nameof(Classification):
                     userControl = (IUserControl<T>)new AddClassificationUserControl(brandData as Classification);
                     break;
-                case nameof(Find):
-                    userControl = (IUserControl<T>)new AddFindUserControl(brandData as Find);
-                    break;
                 default:
                     break;
             }
+        }
+
+        private void InitUserControl(T brandData, FindsClassModel parent)
+        {
+            userControl = (IUserControl<T>)new AddFindUserControl(parent, brandData as Find);
         }
 
         private void InitElementsName(T excavation)
@@ -51,12 +63,6 @@ namespace AddBrandDataUI
         private void SetElementsName(string formName)
         {
             Text = formName;
-        }
-
-        private void ShowExcavationAddFields(T brandData, IEnumerable<string> types)
-        {
-            InitUserControl(brandData, types);
-            ShowUserControl();
         }
 
         private void ShowUserControl()

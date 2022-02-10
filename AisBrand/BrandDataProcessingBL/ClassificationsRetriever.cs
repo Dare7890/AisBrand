@@ -6,14 +6,14 @@ namespace BrandDataProcessingBL
 {
     public class ClassificationsRetriever : IClassificationsRetriever
     {
-        public IEnumerable<Classification> RetrieveFindsClassClassifications(IEnumerable<Excavation> excavations, string monument, int id, FindsClass findsClass)
+        public IEnumerable<Classification> RetrieveFindsClassClassifications(IEnumerable<Excavation> excavations, string monument, ref int nextClassificationId, FindsClass findsClass)
         {
             IEnumerable<Classification> classifications = GetClassificationsByMonuments(excavations, findsClass.Class, monument);
             findsClass.Classifications = new List<Classification>();
             foreach (Classification classification in classifications)
             {
                 Classification newClassification = new Classification();
-                newClassification.ID = id;
+                newClassification.ID = nextClassificationId;
                 newClassification.Type = classification.Type;
                 newClassification.Variant = classification.Variant;
                 newClassification.Description = classification.Description;
@@ -28,6 +28,7 @@ namespace BrandDataProcessingBL
                 }
 
                 findsClass.Classifications.Add(newClassification);
+                nextClassificationId++;
             }
 
             return classifications;

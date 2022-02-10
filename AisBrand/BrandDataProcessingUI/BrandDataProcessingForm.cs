@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ViewModelExcavation = AddBrandDataUI.ViewModels.Excavation;
 using ViewModelFindsClass = AddBrandDataUI.ViewModels.FindsClass;
 using ViewModelClassification = AddBrandDataUI.ViewModels.Classification;
+using ViewModelFind = AddBrandDataUI.ViewModels.Find;
 using Excavation = BrandDataProcessing.Models.Excavation;
 using System.Collections;
 using Tools;
@@ -27,8 +28,9 @@ namespace BrandDataProcessingUI
         public int? SelectedParentId { get; set; }
 
         public ExcavationCrud ExcavationCrud { get; private set; }
-        public BrandDataCrud<ViewModelFindsClass> FindsClassCrud { get; private set; }
+        public FindsClassCrud FindsClassCrud { get; private set; }
         public ClassificationCrud ClassificationCrud { get; private set; }
+        public BrandDataCrud<ViewModelFind> FindCrud { get; private set; }
 
         public string FilePath { get; private set; }
 
@@ -80,6 +82,7 @@ namespace BrandDataProcessingUI
             ExcavationCrud = new();
             FindsClassCrud = new();
             ClassificationCrud = new();
+            FindCrud = new();
         }
 
         private void OpenDataFile()
@@ -109,6 +112,7 @@ namespace BrandDataProcessingUI
             ExcavationCrud.FilePath = FilePath;
             FindsClassCrud.FilePath = FilePath;
             ClassificationCrud.FilePath = FilePath;
+            FindCrud.FilePath = FilePath;
         }
 
         private void ClearTableSelection()
@@ -248,9 +252,18 @@ namespace BrandDataProcessingUI
                 case nameof(Classification):
                     ClassificationCrud.Add(this, new ClassificationMapper());
                     break;
+                case nameof(Find):
+                    FindsClass parentFindsClass = GetParentFindsClass(SelectedParentId);
+                    FindCrud.Add(this, new FindMapper(), findsClass: parentFindsClass);
+                    break;
                 default:
                     break;
             }
+        }
+
+        private FindsClass GetParentFindsClass(int? parentId)
+        {
+            return FindsClassCrud.GetFindClassById(parentId.Value);
         }
 
         private void smiUpdate_Click(object sender, EventArgs e)
@@ -349,9 +362,22 @@ namespace BrandDataProcessingUI
                     DataGridViewCellCollection cells = GetSelectedRowCells(selectedRow);
                     UpdateClassification(cells);
                     break;
+                case nameof(FindsClass):
+                    navigation.Forward(currentTableName, SelectedParentId);
+                    ViewModelFindsClass viewModelFindsClass = new ViewModelFindsClass(dgvTable.Rows[dgvTable.CurrentCell.RowIndex].Cells[1].Value.ToString());
+                    FindsClassCrud.GetId(viewModelFindsClass);
+                    FillFindData();
+                    SetTableName(typeof(Find));
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void FillFindData()
+        {
+            FindCrud.Fill();
+            TableHeaders.Find.SetFindTitles(dgvTable);
         }
 
         private void dgvTable_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
