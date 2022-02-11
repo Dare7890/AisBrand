@@ -15,6 +15,6 @@ namespace Tools
         ExcavationCrud ExcavationCrud { get; }
         FindsClassCrud FindsClassCrud { get; }
         ClassificationCrud ClassificationCrud { get; }
-        BrandDataCrud<AddBrandDataUI.ViewModels.Find> FindCrud { get; }
+        FindCrud FindCrud { get; }
     }
 }

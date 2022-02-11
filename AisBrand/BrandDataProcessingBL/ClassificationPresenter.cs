@@ -24,6 +24,20 @@ namespace BrandDataProcessingBL
             this.view.ClassificationCrud.AddExcavation += ClassificationCrud_AddExcavation;
             this.view.ClassificationCrud.UpdateExcavation += ClassificationCrud_UpdateExcavation;
             this.view.ClassificationCrud.FillClassificationInfo += ClassificationCrud_FillClassificationInfo;
+            this.view.ClassificationCrud.GetIdExcavation += ClassificationCrud_GetIdExcavation;
+        }
+
+        private void ClassificationCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
+        {
+            repository = new ClassificationLocal(e.FilePath);
+            classifications = repository.GetAll(view.SelectedParentId);
+
+            this.view.FindCrud.ClassificationId = GetClassificationId(classifications, e.BrandData.Type, e.BrandData.Variant);
+        }
+
+        private int GetClassificationId(IEnumerable<Classification> classifications, string type, string variant)
+        {
+            return GetClassification(classifications, type, variant).ID;
         }
 
         private void ClassificationCrud_FillClassificationInfo(object sender, FillClassificationEventArgs e)

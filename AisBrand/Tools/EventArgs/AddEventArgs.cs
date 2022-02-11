@@ -6,10 +6,13 @@
 
         public T BrandData { get; }
 
-        public AddEventArgs(string filePath, T brandData)
+        public int? ParentId { get; set; }
+
+        public AddEventArgs(string filePath, T brandData, int? parentId = null)
         {
             FilePath = filePath;
             BrandData = brandData;
+            ParentId = parentId;
         }
     }
 }

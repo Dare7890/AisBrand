@@ -20,6 +20,12 @@ namespace BrandDataProcessingBL
             this.view = view;
             this.view.FindCrud.FillExcavationsList += FindCrud_FillExcavationsList;
             this.view.FindCrud.AddExcavation += FindCrud_AddExcavation;
+            this.view.FindCrud.GetClassificationId += FindCrud_GetClassificationId; ;
+        }
+
+        private void FindCrud_GetClassificationId(object sender, Tools.EventArgs.GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
+        {
+            this.view.ClassificationCrud.GetId(e.BrandData);
         }
 
         private void FindCrud_AddExcavation(object sender, Tools.EventArgs.AddEventArgs<AddBrandDataUI.ViewModels.Find> e)
@@ -49,9 +55,10 @@ namespace BrandDataProcessingBL
 
             CheckOnSameFind(find);
 
-            int parentId = view.SelectedParentId.Value;
+            int parentId = e.ParentId.Value;
             repository.Add(find, parentId);
-            RefreshFinds(parentId);
+            int parentFindClassId = view.SelectedParentId.Value;
+            RefreshFinds(parentFindClassId);
         }
 
         private void CheckOnSameFind(Find find)

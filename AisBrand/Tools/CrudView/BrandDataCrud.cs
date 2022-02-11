@@ -32,8 +32,7 @@ namespace Tools.CrudView
                     try
                     {
                         T brandData = mapper.Map(form);
-                        if (AddExcavation != null)
-                            AddExcavation.Invoke(this, new AddEventArgs<T>(FilePath, brandData));
+                        OnAdd(brandData);
                     }
                     catch (InvalidOperationException)
                     {
@@ -44,6 +43,12 @@ namespace Tools.CrudView
 
                 form.Close();
             }
+        }
+
+        protected virtual void OnAdd(T data, int? parentId = null)
+        {
+            if (AddExcavation != null)
+                AddExcavation.Invoke(this, new AddEventArgs<T>(FilePath, data, parentId));
         }
 
         public virtual void Update(Form owner, IMapper<T> mapper, T sourceData)
@@ -75,7 +80,7 @@ namespace Tools.CrudView
             form.Close();
         }
 
-        private static void NotifyAboutExistsSameExcavation()
+        protected static void NotifyAboutExistsSameExcavation()
         {
             MessageBox.Show("Такая запись уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

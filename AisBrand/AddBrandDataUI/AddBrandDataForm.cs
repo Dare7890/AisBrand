@@ -84,5 +84,16 @@ namespace AddBrandDataUI
             UserControl control = (UserControl)userControl;
             DialogResult = BrandData != null && control.ValidateChildren() ? DialogResult.OK : DialogResult.None;
         }
+
+        public Classification GetParentClassification()
+        {
+            if (userControl is AddFindUserControl)
+            {
+                AddFindUserControl findUserControl = (AddFindUserControl)userControl;
+                return findUserControl.ParentClassification;
+            }
+
+            return null;
+        }
     }
 }

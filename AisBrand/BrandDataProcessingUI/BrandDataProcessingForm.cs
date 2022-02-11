@@ -30,7 +30,7 @@ namespace BrandDataProcessingUI
         public ExcavationCrud ExcavationCrud { get; private set; }
         public FindsClassCrud FindsClassCrud { get; private set; }
         public ClassificationCrud ClassificationCrud { get; private set; }
-        public BrandDataCrud<ViewModelFind> FindCrud { get; private set; }
+        public FindCrud FindCrud { get; private set; }
 
         public string FilePath { get; private set; }
 
