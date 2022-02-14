@@ -1,8 +1,7 @@
-﻿using System;
+﻿using AddBrandDataUI.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using AddBrandDataUI.ViewModels;
 
 namespace AddBrandDataUI
 {

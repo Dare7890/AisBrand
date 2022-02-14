@@ -20,5 +20,17 @@ namespace BrandDataProcessing.Models
         public string Relief { get; set; }
 
         public string ReconstructionReliability { get; set; }
+
+        public Brand() { }
+
+        public Brand(string clay, string admixtute, string sprinkling, string safety, string relief, string reliability)
+        {
+            Clay = clay;
+            Admixture = admixtute;
+            Sprinkling = sprinkling;
+            Safety = safety;
+            Relief = relief;
+            ReconstructionReliability = reliability;
+        }
     }
 }

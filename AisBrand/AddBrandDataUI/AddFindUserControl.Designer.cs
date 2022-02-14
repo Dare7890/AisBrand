@@ -74,17 +74,16 @@ namespace AddBrandDataUI
             // 
             // tlpMenu
             // 
+            this.tlpMenu.AutoScroll = true;
             this.tlpMenu.ColumnCount = 1;
             this.tlpMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMenu.Controls.Add(this.pnlFind, 0, 0);
             this.tlpMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMenu.Location = new System.Drawing.Point(0, 0);
             this.tlpMenu.Name = "tlpMenu";
             this.tlpMenu.RowCount = 2;
-            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.76537F));
-            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.23462F));
-            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 131F));
             this.tlpMenu.Size = new System.Drawing.Size(706, 439);
             this.tlpMenu.TabIndex = 0;
             // 
@@ -125,7 +124,7 @@ namespace AddBrandDataUI
             this.pnlFind.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFind.Location = new System.Drawing.Point(3, 3);
             this.pnlFind.Name = "pnlFind";
-            this.pnlFind.Size = new System.Drawing.Size(700, 331);
+            this.pnlFind.Size = new System.Drawing.Size(700, 302);
             this.pnlFind.TabIndex = 0;
             // 
             // lblVariant

@@ -32,15 +32,15 @@ namespace AddBrandDataUI
             this.txtReliability = new System.Windows.Forms.TextBox();
             this.txtSafety = new System.Windows.Forms.TextBox();
             this.txtRelief = new System.Windows.Forms.TextBox();
-            this.txtSprinkling = new System.Windows.Forms.TextBox();
-            this.txtAdmixture = new System.Windows.Forms.TextBox();
-            this.txtClay = new System.Windows.Forms.TextBox();
             this.lblReliability = new System.Windows.Forms.Label();
             this.lblRelief = new System.Windows.Forms.Label();
             this.lblSafety = new System.Windows.Forms.Label();
             this.lblSprinkling = new System.Windows.Forms.Label();
             this.lblAdmixture = new System.Windows.Forms.Label();
             this.lblClay = new System.Windows.Forms.Label();
+            this.cboAdmixture = new System.Windows.Forms.ComboBox();
+            this.cboClay = new System.Windows.Forms.ComboBox();
+            this.cboSprinkling = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtReliability
@@ -63,27 +63,6 @@ namespace AddBrandDataUI
             this.txtRelief.Name = "txtRelief";
             this.txtRelief.Size = new System.Drawing.Size(153, 23);
             this.txtRelief.TabIndex = 29;
-            // 
-            // txtSprinkling
-            // 
-            this.txtSprinkling.Location = new System.Drawing.Point(86, 76);
-            this.txtSprinkling.Name = "txtSprinkling";
-            this.txtSprinkling.Size = new System.Drawing.Size(153, 23);
-            this.txtSprinkling.TabIndex = 28;
-            // 
-            // txtAdmixture
-            // 
-            this.txtAdmixture.Location = new System.Drawing.Point(86, 43);
-            this.txtAdmixture.Name = "txtAdmixture";
-            this.txtAdmixture.Size = new System.Drawing.Size(153, 23);
-            this.txtAdmixture.TabIndex = 27;
-            // 
-            // txtClay
-            // 
-            this.txtClay.Location = new System.Drawing.Point(86, 12);
-            this.txtClay.Name = "txtClay";
-            this.txtClay.Size = new System.Drawing.Size(153, 23);
-            this.txtClay.TabIndex = 26;
             // 
             // lblReliability
             // 
@@ -139,16 +118,40 @@ namespace AddBrandDataUI
             this.lblClay.TabIndex = 20;
             this.lblClay.Text = "Глина:";
             // 
+            // cboAdmixture
+            // 
+            this.cboAdmixture.FormattingEnabled = true;
+            this.cboAdmixture.Location = new System.Drawing.Point(86, 43);
+            this.cboAdmixture.Name = "cboAdmixture";
+            this.cboAdmixture.Size = new System.Drawing.Size(153, 23);
+            this.cboAdmixture.TabIndex = 32;
+            // 
+            // cboClay
+            // 
+            this.cboClay.FormattingEnabled = true;
+            this.cboClay.Location = new System.Drawing.Point(86, 12);
+            this.cboClay.Name = "cboClay";
+            this.cboClay.Size = new System.Drawing.Size(153, 23);
+            this.cboClay.TabIndex = 33;
+            // 
+            // cboSprinkling
+            // 
+            this.cboSprinkling.FormattingEnabled = true;
+            this.cboSprinkling.Location = new System.Drawing.Point(87, 76);
+            this.cboSprinkling.Name = "cboSprinkling";
+            this.cboSprinkling.Size = new System.Drawing.Size(152, 23);
+            this.cboSprinkling.TabIndex = 34;
+            // 
             // AddBrandUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboSprinkling);
+            this.Controls.Add(this.cboClay);
+            this.Controls.Add(this.cboAdmixture);
             this.Controls.Add(this.txtReliability);
             this.Controls.Add(this.txtSafety);
             this.Controls.Add(this.txtRelief);
-            this.Controls.Add(this.txtSprinkling);
-            this.Controls.Add(this.txtAdmixture);
-            this.Controls.Add(this.txtClay);
             this.Controls.Add(this.lblReliability);
             this.Controls.Add(this.lblRelief);
             this.Controls.Add(this.lblSafety);
@@ -167,14 +170,14 @@ namespace AddBrandDataUI
         private System.Windows.Forms.TextBox txtReliability;
         private System.Windows.Forms.TextBox txtSafety;
         private System.Windows.Forms.TextBox txtRelief;
-        private System.Windows.Forms.TextBox txtSprinkling;
-        private System.Windows.Forms.TextBox txtAdmixture;
-        private System.Windows.Forms.TextBox txtClay;
         private System.Windows.Forms.Label lblReliability;
         private System.Windows.Forms.Label lblRelief;
         private System.Windows.Forms.Label lblSafety;
         private System.Windows.Forms.Label lblSprinkling;
         private System.Windows.Forms.Label lblAdmixture;
         private System.Windows.Forms.Label lblClay;
+        private System.Windows.Forms.ComboBox cboAdmixture;
+        private System.Windows.Forms.ComboBox cboClay;
+        private System.Windows.Forms.ComboBox cboSprinkling;
     }
 }

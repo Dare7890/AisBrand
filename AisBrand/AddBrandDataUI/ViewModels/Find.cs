@@ -26,8 +26,12 @@
 
         public byte[] Photo { get; set; }
 
-        public Find(string fieldNumber, string formation = null, int? square = null, int? depth = null, string collectorsNumber = null, int? datingLowerBound = null,
-            int? datingUpperBound = null, string description = null, string analogy = null, string note = null, byte[] image = null, byte[] photo = null)
+        public Brand Brand { get; set; }
+
+        public AdditionalBrand AdditionalBrand { get; set; }
+
+        public Find(string fieldNumber, string formation = null, int? square = null, int? depth = null, string collectorsNumber = null, int? datingLowerBound = null, int? datingUpperBound = null,
+            string description = null, string analogy = null, string note = null, byte[] image = null, byte[] photo = null, Brand brand = null, AdditionalBrand additionalBrand = null)
         {
             FieldNumber = fieldNumber;
             Formation = formation;
@@ -41,6 +45,8 @@
             Note = note;
             Image = image;
             Photo = photo;
+            Brand = brand;
+            AdditionalBrand = additionalBrand;
         }
     }
 }

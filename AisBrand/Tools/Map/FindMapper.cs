@@ -18,18 +18,18 @@ namespace Tools.Map
             string analogy = form.BrandData.Analogy;
             string note = form.BrandData.Note;
 
-            byte[] image = null;
-            CopyPicture(form.BrandData.Image, image);
+            byte[] image = CopyPicture(form.BrandData.Image);
+            byte[] photo = CopyPicture(form.BrandData.Photo);
 
-            byte[] photo = null;
-            CopyPicture(form.BrandData.Photo, photo);
+            Brand brand = form.BrandData.Brand;
 
-            return new Find(fieldNumber, formation, square, depth, collectorsNumber, datingLowerBound, datingUpperBound, description, analogy, note, image, photo);
+            return new Find(fieldNumber, formation, square, depth, collectorsNumber, datingLowerBound, datingUpperBound, description, analogy, note, image, photo, brand);
         }
 
         // TODO : вынести в отдельный класс.
-        private static void CopyPicture(byte[] source, byte[] target)
+        private static byte[] CopyPicture(byte[] source)
         {
+            byte[] target = null;
             if (source != null)
             {
                 int pictuteLength = source.Length;
@@ -37,6 +37,8 @@ namespace Tools.Map
                 target = new byte[pictuteLength];
                 source.CopyTo(target, startIndex);
             }
+
+            return target;
         }
     }
 }

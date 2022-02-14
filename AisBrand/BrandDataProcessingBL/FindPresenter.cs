@@ -50,6 +50,9 @@ namespace BrandDataProcessingBL
             if (e.BrandData.Photo != null)
                 find.Photo = (byte[])e.BrandData.Photo.Clone();
 
+            if (e.BrandData.Brand != null)
+                find.Brand = new Brand(e.BrandData.Brand.Clay, e.BrandData.Brand.Admixture, e.BrandData.Brand.Sprinkling, e.BrandData.Brand.Safety, e.BrandData.Brand.Relief, e.BrandData.Brand.ReconstructionReliability);
+
             if (!view.SelectedParentId.HasValue)
                 throw new ArgumentNullException("Add error. Parent id is null");
 

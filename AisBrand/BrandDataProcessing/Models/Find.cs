@@ -75,8 +75,8 @@ namespace BrandDataProcessing.Models
         [XmlElement(ElementName = "PhotoAsString", DataType = "hexBinary")]
         public byte[] Photo { get; set; }
 
-        public List<Brand> Brands { get; set; }
+        public Brand Brand { get; set; }
 
-        public List<AditionalBrand> AditionalBrands { get; set; }
+        public AditionalBrand AditionalBrand { get; set; }
     }
 }

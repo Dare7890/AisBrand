@@ -1,20 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AddBrandDataUI.ViewModels;
 using System.Windows.Forms;
 
 namespace AddBrandDataUI
 {
-    public partial class AddBrandUserControl : UserControl
+    public partial class AddBrandUserControl : UserControl, IUserControl<Brand>
     {
-        public AddBrandUserControl()
+        public AddBrandUserControl(Brand brand = null)
         {
             InitializeComponent();
+
+            if (brand != null)
+                FillTextFields(brand);
+        }
+
+        public Brand Add()
+        {
+            string clay = cboClay.SelectedItem?.ToString().Trim() ?? cboClay.Text.Trim();
+            string admixture = cboAdmixture.SelectedItem?.ToString().Trim() ?? cboAdmixture.Text.Trim();
+            string sprinkling = cboSprinkling.SelectedItem?.ToString().Trim() ?? cboSprinkling.Text.Trim();
+            string safety = txtSafety.Text.Trim();
+            string relief = txtRelief.Text.Trim();
+            string reliability = txtReliability.Text.Trim();
+
+            return new Brand(clay, admixture, sprinkling, safety, relief, reliability);
+        }
+
+        private void FillTextFields(Brand brand)
+        {
+            cboClay.SelectedItem = brand.Clay;
+            cboSprinkling.SelectedItem = brand.Sprinkling;
+            cboAdmixture.SelectedItem = brand.Admixture;
+
+            txtReliability.Text = brand.ReconstructionReliability;
+            txtRelief.Text = brand.Relief;
+            txtSafety.Text = brand.Safety;
         }
     }
 }

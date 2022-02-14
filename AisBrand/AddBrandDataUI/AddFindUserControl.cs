@@ -13,6 +13,7 @@ namespace AddBrandDataUI
     public partial class AddFindUserControl : UserControl, IUserControl<Find>
     {
         private FindsClassModel parentFindClass;
+        private UserControl userControl;
 
         public byte[] Image { get; private set; }
         public byte[] Photo { get; private set; }
@@ -27,6 +28,29 @@ namespace AddBrandDataUI
                 FillTextFields(find);
 
             InitTypes(findsClass);
+            InitUserControl(findsClass.Class);
+            ShowUserControl(userControl);
+        }
+
+        private void InitUserControl(string subclass)
+        {
+            switch (subclass)
+            {
+                case "Клеймо":
+                    userControl = new AddBrandUserControl();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ShowUserControl(Control userControl)
+        {
+            if (userControl != null)
+            {
+                tlpMenu.Controls.Add(userControl, 0, 1);
+                userControl.Dock = DockStyle.Fill;
+            }
         }
 
         private void InitTypes(FindsClassModel findsClass)
@@ -81,6 +105,16 @@ namespace AddBrandDataUI
             int? parsedDepth = depth == string.Empty ? null : int.Parse(depth);
             int? parsedDatingLowerBound = datingLowerBound == string.Empty ? null : int.Parse(datingLowerBound);
             int? parsedDatingUpperBound = datingUpperBound == string.Empty ? null : int.Parse(datingUpperBound);
+
+            switch (parentFindClass.Class)
+            {
+                case "Клеймо":
+                    IUserControl<Brand> brandUserControl = (IUserControl<Brand>)userControl;
+                    Brand brand = brandUserControl.Add();
+                    return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, parsedDatingLowerBound, parsedDatingUpperBound, description, analogy,
+                 note, Image, Photo, brand);
+            }
+
 
             return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, parsedDatingLowerBound, parsedDatingUpperBound, description, analogy,
                 note, Image, Photo);

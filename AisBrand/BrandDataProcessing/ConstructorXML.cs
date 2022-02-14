@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BrandDataProcessing.Models;
+using System;
 using System.Xml.Linq;
-using BrandDataProcessing.Models;
 
 namespace BrandDataProcessing
 {
@@ -74,6 +72,9 @@ namespace BrandDataProcessing
 
             if (find.Photo != null)
                 findXml.Add(CreatePictureElement(nameof(find.Photo), find.Photo));
+
+            if (find.Brand != null)
+                findXml.Add(Create(find.Brand));
 
             return findXml;
         }
