@@ -118,7 +118,7 @@ namespace BrandDataProcessingBL
         {
             classifications = repository.GetAll(id);
 
-            view.BrandDataList = classifications.Select(c => new { c.Type, c.Variant })
+            view.BrandDataList = classifications.Select(c => new { c.Type, c.Variant, findsAmount = c.Finds.Count()})
                                                 .OrderBy(c => c.Type)
                                                 .ThenBy(c => c.Variant)
                                                 .ToList();
