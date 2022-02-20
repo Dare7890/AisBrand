@@ -165,7 +165,8 @@ namespace BrandDataProcessingBL
         {
             GetAll(id.Value);
 
-            view.BrandDataList = findsClasses.Select(c => new { ClassName = CategoryRetriever.Retrieve(c.Class), Subclass = c.Class, c.Classifications.Count })
+            view.BrandDataList = findsClasses.Select(c => new { ClassName = CategoryRetriever.Retrieve(c.Class), Subclass = c.Class, findsAmount = c.Classifications?.SelectMany(c => c?.Finds)?
+                                                                                                                                                                        .Count() ?? 0})
                                             .OrderBy(c => c.ClassName)
                                             .ThenBy(c => c.Subclass)
                                             .ToList();

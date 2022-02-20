@@ -178,7 +178,9 @@ namespace BrandDataProcessingBL
         {
             excavations = repository.GetAll(null);
 
-            view.BrandDataList = excavations.Select(e => new { e.Monument, e.Name, e.FindsClasses.Count })
+            view.BrandDataList = excavations.Select(e => new { e.Monument, e.Name, findsAmount = e.FindsClasses?.SelectMany(f => f?.Classifications)
+                                                                                                                .SelectMany(c => c?.Finds)?
+                                                                                                                .Count() ?? 0 })
                                             .OrderBy(e => e.Monument)
                                             .ThenBy(e => e.Name)
                                             .ToList();
