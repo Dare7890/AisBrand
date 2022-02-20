@@ -38,17 +38,19 @@ namespace AddBrandDataUI
             // 
             // pnlAddButtons
             // 
+            this.pnlAddButtons.AutoSize = true;
+            this.pnlAddButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlAddButtons.Controls.Add(this.btnAdd);
             this.pnlAddButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlAddButtons.Location = new System.Drawing.Point(3, 419);
+            this.pnlAddButtons.Location = new System.Drawing.Point(3, 3);
             this.pnlAddButtons.Name = "pnlAddButtons";
-            this.pnlAddButtons.Size = new System.Drawing.Size(693, 44);
+            this.pnlAddButtons.Size = new System.Drawing.Size(693, 460);
             this.pnlAddButtons.TabIndex = 0;
             // 
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAdd.Location = new System.Drawing.Point(287, 9);
+            this.btnAdd.Location = new System.Drawing.Point(287, 425);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(120, 32);
             this.btnAdd.TabIndex = 0;
@@ -58,6 +60,8 @@ namespace AddBrandDataUI
             // 
             // tlpAddPanel
             // 
+            this.tlpAddPanel.AutoSize = true;
+            this.tlpAddPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tlpAddPanel.ColumnCount = 1;
             this.tlpAddPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpAddPanel.Controls.Add(this.pnlAddButtons, 0, 1);
@@ -65,7 +69,7 @@ namespace AddBrandDataUI
             this.tlpAddPanel.Location = new System.Drawing.Point(0, 0);
             this.tlpAddPanel.Name = "tlpAddPanel";
             this.tlpAddPanel.RowCount = 2;
-            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpAddPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpAddPanel.Size = new System.Drawing.Size(699, 466);
             this.tlpAddPanel.TabIndex = 0;
@@ -75,17 +79,18 @@ namespace AddBrandDataUI
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(699, 466);
             this.Controls.Add(this.tlpAddPanel);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(715, 505);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(715, 505);
             this.Name = "AddBrandDataForm";
             this.Text = "Form1";
             this.pnlAddButtons.ResumeLayout(false);
             this.tlpAddPanel.ResumeLayout(false);
+            this.tlpAddPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

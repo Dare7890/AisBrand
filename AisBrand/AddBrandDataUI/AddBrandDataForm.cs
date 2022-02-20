@@ -19,6 +19,13 @@ namespace AddBrandDataUI
             InitElementsName(brandData);
             InitUserControl(brandData, types, parent);
             ShowUserControl();
+
+
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.Size = new System.Drawing.Size(this.tlpAddPanel.Size.Width, this.tlpAddPanel.Size.Height);
         }
 
         private void InitUserControl(T brandData = null, IEnumerable<string> types = null, FindsClassModel parent = null)
