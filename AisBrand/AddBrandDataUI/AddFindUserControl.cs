@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using FindsClassModel = BrandDataProcessing.Models.FindsClass;
+using ClassificationModel = BrandDataProcessing.Models.Classification;
 
 namespace AddBrandDataUI
 {
@@ -23,21 +24,60 @@ namespace AddBrandDataUI
         public AddFindUserControl(FindsClassModel findsClass, Find find = null)
         {
             InitializeComponent();
+            InitTypes(findsClass);
 
             if (find != null)
+            {
                 FillTextFields(find);
+                InitClassificationInfo(findsClass, find);
+            }
 
-            InitTypes(findsClass);
-            InitUserControl(findsClass.Class);
+            InitUserControl(findsClass.Class, find?.Brand);
             ShowUserControl(userControl);
         }
 
-        private void InitUserControl(string subclass)
+        private void InitClassificationInfo(FindsClassModel findsClass, Find find)
+        {
+            string fieldNumber = find.FieldNumber;
+            string type = GetFindType(findsClass, fieldNumber);
+            string variant = GetFindVariant(findsClass, fieldNumber);
+            InitType(type);
+            InitVariant(variant);
+        }
+
+        private string GetFindType(FindsClassModel findsClass, string fieldNumber)
+        {
+            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
+            return classification?.Type;
+        }
+
+        private string GetFindVariant(FindsClassModel findsClass, string fieldNumber)
+        {
+            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
+            return classification?.Variant;
+        }
+
+        private ClassificationModel GetClassificationByFieldNumber(FindsClassModel findsClass, string fieldNumber)
+        {
+            return findsClass.Classifications.FirstOrDefault(c => c.Finds.Select(f => f.FieldNumber).Contains(fieldNumber));
+        }
+
+        private void InitType(string type)
+        {
+            cboType.Text = type;
+        }
+
+        private void InitVariant(string variant)
+        {
+            cboVariant.Text = variant;
+        }
+
+        private void InitUserControl(string subclass, Brand brand = null)
         {
             switch (subclass)
             {
                 case "Клеймо":
-                    userControl = new AddBrandUserControl();
+                    userControl = brand == null ? new AddBrandUserControl() : new AddBrandUserControl(brand);
                     break;
                 default:
                     break;

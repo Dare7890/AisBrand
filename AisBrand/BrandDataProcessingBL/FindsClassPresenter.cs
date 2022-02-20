@@ -39,7 +39,24 @@ namespace BrandDataProcessingBL
 
         private FindsClass GetFindsClassById(int findsClassId)
         {
+            UpdateFindClasses(findsClassId);
+
             return findsClasses.SingleOrDefault(f => f.ID == findsClassId);
+        }
+
+        private void UpdateFindClasses(int findsClassId)
+        {
+            repository = new FindsClassLocal(view.FindsClassCrud.FilePath);
+            view.ExcavationCrud.OnGetAllExcavations();
+            int parentExcavationId = view.AllExcavations.SingleOrDefault(a => a.FindsClasses.Contains(view.AllExcavations.SelectMany(ex => ex.FindsClasses)
+                                                                                                                        .SingleOrDefault(f => f.ID == findsClassId)))
+                                        .ID;
+            GetAll(parentExcavationId);
+        }
+
+        private void GetAll(int excavationId)
+        {
+            findsClasses = repository.GetAll(excavationId);
         }
 
         private void FindsClassCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
@@ -146,7 +163,7 @@ namespace BrandDataProcessingBL
 
         private void RefreshExcavationsList(int? id = null)
         {
-            findsClasses = repository.GetAll(id);
+            GetAll(id.Value);
 
             view.BrandDataList = findsClasses.Select(c => new { ClassName = CategoryRetriever.Retrieve(c.Class), Subclass = c.Class, c.Classifications.Count })
                                             .OrderBy(c => c.ClassName)

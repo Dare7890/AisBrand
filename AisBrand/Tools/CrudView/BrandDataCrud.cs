@@ -68,7 +68,7 @@ namespace Tools.CrudView
                 {
                     T updatedData = mapper.Map(form);
                     if (UpdateExcavation != null)
-                        UpdateExcavation.Invoke(this, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
+                        UpdateExcavation.Invoke(form, new UpdateEventArgs<T>(FilePath, sourceData, updatedData));
                 }
                 catch (InvalidOperationException)
                 {

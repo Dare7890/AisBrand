@@ -1,4 +1,5 @@
 ﻿using AddBrandDataUI.ViewModels;
+using System;
 using System.Windows.Forms;
 
 namespace BrandDataProcessingUI
@@ -31,6 +32,20 @@ namespace BrandDataProcessingUI
             string variant = cells[variantIndex].Value.ToString();
 
             return new Classification(type, variant);
+        }
+
+        internal static Find GetSelectedFind(DataGridViewCellCollection cells)
+        {
+            const int fieldNumberIndex = 0;
+            const int collectorsNumberIndex = 1;
+            const int formationIndex = 2;
+            const int squareIndex = 3;
+            string fieldNumber = cells[fieldNumberIndex].Value.ToString();
+            string collectorsNumber = cells[collectorsNumberIndex].Value.ToString();
+            string formation = cells[formationIndex].Value.ToString();
+            int? square = int.Parse(cells[squareIndex].Value.ToString());
+
+            return new Find(fieldNumber, formation, collectorsNumber: collectorsNumber, square: square);
         }
     }
 }

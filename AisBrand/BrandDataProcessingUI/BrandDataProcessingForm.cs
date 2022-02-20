@@ -185,6 +185,9 @@ namespace BrandDataProcessingUI
                 case nameof(FindsClass):
                     Delete(cells, RetrieverSelectedData.GetSelectedFindsClass, FindsClassCrud);
                     break;
+                case nameof(Find):
+                    Delete(cells, RetrieverSelectedData.GetSelectedFind, FindCrud);
+                    break;
                 default:
                     break;
             }
@@ -290,9 +293,19 @@ namespace BrandDataProcessingUI
                 case nameof(Classification):
                     UpdateClassification(cells);
                     break;
+                case nameof(Find):
+                    UpdateFind(cells);
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void UpdateFind(DataGridViewCellCollection cells)
+        {
+            ViewModelFind updatedFind = RetrieverSelectedData.GetSelectedFind(cells);
+            IMapper<ViewModelFind> findMapper = new FindMapper();
+            UpdateData(updatedFind, findMapper);
         }
 
         private void UpdateClassification(DataGridViewCellCollection cells)
@@ -325,6 +338,10 @@ namespace BrandDataProcessingUI
                     break;
                 case nameof(FindsClass):
                     FindsClassCrud.Update(this, (IMapper<ViewModelFindsClass>)mapper, sourceBrandData as ViewModelFindsClass);
+                    break;
+                case nameof(Find):
+                    FindsClass parentFindsClass = GetParentFindsClass(SelectedParentId);
+                    FindCrud.OnGetFullFindInfo(sourceBrandData as ViewModelFind, parentFindsClass);
                     break;
                 default:
                     break;

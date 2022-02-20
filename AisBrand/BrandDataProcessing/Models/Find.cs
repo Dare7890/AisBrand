@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    [TranslatedName("Клеймы")]
+    [TranslatedName("Клейма")]
     public class Find : IIdentifier
     {
         public int ID { get; set; }

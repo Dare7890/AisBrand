@@ -120,7 +120,12 @@ namespace AddBrandDataUI
             // 
             // cboAdmixture
             // 
+            this.cboAdmixture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAdmixture.FormattingEnabled = true;
+            this.cboAdmixture.Items.AddRange(new object[] {
+            "Примесь_1",
+            "Примесь_2",
+            "Примесь_3"});
             this.cboAdmixture.Location = new System.Drawing.Point(86, 43);
             this.cboAdmixture.Name = "cboAdmixture";
             this.cboAdmixture.Size = new System.Drawing.Size(153, 23);
@@ -128,7 +133,12 @@ namespace AddBrandDataUI
             // 
             // cboClay
             // 
+            this.cboClay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClay.FormattingEnabled = true;
+            this.cboClay.Items.AddRange(new object[] {
+            "Глина_1",
+            "Глина_2",
+            "Глина_3"});
             this.cboClay.Location = new System.Drawing.Point(86, 12);
             this.cboClay.Name = "cboClay";
             this.cboClay.Size = new System.Drawing.Size(153, 23);
@@ -136,7 +146,12 @@ namespace AddBrandDataUI
             // 
             // cboSprinkling
             // 
+            this.cboSprinkling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSprinkling.FormattingEnabled = true;
+            this.cboSprinkling.Items.AddRange(new object[] {
+            "Подсыпка_1",
+            "Подсыпка_2",
+            "Подсыпка_3"});
             this.cboSprinkling.Location = new System.Drawing.Point(87, 76);
             this.cboSprinkling.Name = "cboSprinkling";
             this.cboSprinkling.Size = new System.Drawing.Size(152, 23);

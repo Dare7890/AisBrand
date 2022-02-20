@@ -22,6 +22,7 @@ namespace BrandDataProcessing.Models
         [XmlElement(ElementName = "ImageAsString", DataType = "hexBinary")]
         public byte[] Image { get; set; }
 
+        [XmlElement("Find")]
         public List<Find> Finds { get; set; }
 
         public bool Equals(Classification other)
