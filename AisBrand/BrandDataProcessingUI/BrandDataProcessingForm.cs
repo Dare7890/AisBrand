@@ -123,12 +123,18 @@ namespace BrandDataProcessingUI
         private void dgvTable_RowContextMenuStripNeeded(object sender, DataGridViewRowContextMenuStripNeededEventArgs e)
         {
             e.ContextMenuStrip = cmsContext;
-            selectedRowIndex = e.RowIndex;
+            ChangeSelectedRowIndex(e.RowIndex);
         }
 
         private void dgvTable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             SelectRowByRightClick(e);
+            ChangeSelectedRowIndex(e.RowIndex);
+        }
+
+        private void ChangeSelectedRowIndex(int newIndex)
+        {
+            selectedRowIndex = newIndex;
         }
 
         private void SelectRowByRightClick(DataGridViewCellMouseEventArgs e)
@@ -385,6 +391,11 @@ namespace BrandDataProcessingUI
                     FindsClassCrud.GetId(viewModelFindsClass);
                     FillFindData();
                     SetTableName(typeof(Find));
+                    break;
+                case nameof(Find):
+                    selectedRow = dgvTable.Rows[selectedRowIndex];
+                    cells = GetSelectedRowCells(selectedRow);
+                    UpdateFind(cells);
                     break;
                 default:
                     break;
