@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BrandDataProcessing;
+using System;
 
 namespace AddBrandDataUI
 {
@@ -34,6 +31,12 @@ namespace AddBrandDataUI
         {
             public static bool ValidSquare(string square, out string errorMessage)
             {
+                if (square == "")
+                {
+                    errorMessage = "";
+                    return true;
+                }
+
                 if (!IsInteger(square, out int squareInt, out errorMessage))
                     return false;
 
@@ -45,6 +48,12 @@ namespace AddBrandDataUI
 
             public static bool ValidDepth(string depth, out string errorMessage)
             {
+                if (depth == "")
+                {
+                    errorMessage = "";
+                    return true;
+                }
+
                 if (!IsInteger(depth, out int depthInt, out errorMessage))
                     return false;
 
@@ -60,6 +69,30 @@ namespace AddBrandDataUI
                     return false;
 
                 return true;
+            }
+
+            public static bool ValidDating(string dating, out string errorMessage)
+            {
+                errorMessage = "";
+                if (dating == string.Empty)
+                    return true;
+
+                try
+                {
+                    Parser.Parse(dating);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    if (e is ArgumentNullException || e is InvalidOperationException || e is ArgumentException || e is FormatException)
+                    {
+                        errorMessage = e.Message;
+                        return false;
+                    }
+
+                    errorMessage = "Incorrect value of dating";
+                    return false;
+                }
             }
         }
 

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Windows.Forms;
 using FindsClassModel = BrandDataProcessing.Models.FindsClass;
 using ClassificationModel = BrandDataProcessing.Models.Classification;
+using DatingBoundModel = BrandDataProcessing.Models.DatingBound;
+using BrandDataProcessing;
 
 namespace AddBrandDataUI
 {
@@ -131,8 +133,7 @@ namespace AddBrandDataUI
             string depth = txtDepth.Text.Trim();
             string fieldNumber = txtFieldNumber.Text.Trim();
             string collectorsNumber = txtCollectorsNumber.Text.Trim();
-            string datingLowerBound = txtDatingLowerBound.Text.Trim();
-            string datingUpperBound = txtDatingUpperBound.Text.Trim();
+            string dating = txtDating.Text.Trim();
             string description = txtDescription.Text.Trim();
             string analogy = txtAnalogy.Text.Trim();
             string note = txtNote.Text.Trim();
@@ -143,21 +144,18 @@ namespace AddBrandDataUI
 
             int? parsedSquare = square == string.Empty ? null : int.Parse(square);
             int? parsedDepth = depth == string.Empty ? null : int.Parse(depth);
-            int? parsedDatingLowerBound = datingLowerBound == string.Empty ? null : int.Parse(datingLowerBound);
-            int? parsedDatingUpperBound = datingUpperBound == string.Empty ? null : int.Parse(datingUpperBound);
+            DatingBoundModel datingBound = Parser.Parse(dating);
 
             switch (parentFindClass.Class)
             {
                 case "Клеймо":
                     IUserControl<Brand> brandUserControl = (IUserControl<Brand>)userControl;
                     Brand brand = brandUserControl.Add();
-                    return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, parsedDatingLowerBound, parsedDatingUpperBound, description, analogy,
-                 note, Image, Photo, brand);
+                    return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, datingBound, description, analogy, note, Image, Photo, brand);
             }
 
 
-            return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, parsedDatingLowerBound, parsedDatingUpperBound, description, analogy,
-                note, Image, Photo);
+            return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, datingBound, description, analogy, note, Image, Photo);
         }
 
         private void FillTextFields(Find find)
@@ -167,8 +165,7 @@ namespace AddBrandDataUI
             txtDepth.Text = find.Depth.ToString();
             txtFieldNumber.Text = find.FieldNumber;
             txtCollectorsNumber.Text = find.CollectorsNumber;
-            txtDatingLowerBound.Text = find.DatingLowerBound.ToString();
-            txtDatingUpperBound.Text = find.DatingUpperBound.ToString();
+            txtDating.Text = find.Dating?.BoundData?.ToString() ?? string.Empty;
             txtDescription.Text = find.Description;
             txtAnalogy.Text = find.Analogy;
             txtNote.Text = find.Note;
@@ -182,11 +179,12 @@ namespace AddBrandDataUI
 
         private void LoadPhoto(byte[] image)
         {
-            LoadPicture(image, Photo);
+            Photo = LoadPicture(image);
         }
 
-        private void LoadPicture(byte[] image, byte[] targetImage)
+        private byte[] LoadPicture(byte[] image)
         {
+            byte[] targetImage = null;
             if (image != null)
             {
                 int pictuteLength = image.Length;
@@ -194,11 +192,13 @@ namespace AddBrandDataUI
                 targetImage = new byte[pictuteLength];
                 image.CopyTo(targetImage, startIndex);
             }
+
+            return targetImage;
         }
 
         private void LoadImage(byte[] image)
         {
-            LoadPicture(image, Image);
+            Image = LoadPicture(image);
         }
 
         private void ShowImage()
@@ -323,6 +323,13 @@ namespace AddBrandDataUI
             string fieldNumber = txtFieldNumber.Text.Trim();
             bool isValid = Validator.Find.ValidFieldNumber(fieldNumber, out string errorMessage);
             ValidatingProperty(isValid, txtFieldNumber, e, errorMessage);
+        }
+
+        private void txtDating_Validating(object sender, CancelEventArgs e)
+        {
+            string dating = txtDating.Text.Trim();
+            bool isValid = Validator.Find.ValidDating(dating, out string errorMessage);
+            ValidatingProperty(isValid, txtDating, e, errorMessage);
         }
 
         //TODO: в отдельный класс.

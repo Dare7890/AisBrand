@@ -37,25 +37,7 @@ namespace BrandDataProcessing.Models
 
         public string CollectorsNumber { get; set; }
 
-        [XmlIgnore]
-        public int? DatingLowerBound { get; set; }
-
-        [XmlElement(nameof(DatingLowerBound))]
-        public string DatingLowerBoundText
-        {
-            get { return DatingLowerBound.HasValue ? DatingLowerBound.ToString() : null; }
-            set { DatingLowerBound = !string.IsNullOrEmpty(value) ? int.Parse(value) : null; }
-        }
-
-        [XmlIgnore]
-        public int? DatingUpperBound { get; set; }
-
-        [XmlElement(nameof(DatingUpperBound))]
-        public string DatingUpperBoundText
-        {
-            get { return DatingUpperBound.HasValue ? DatingUpperBound.ToString() : null; }
-            set { DatingUpperBound = !string.IsNullOrEmpty(value) ? int.Parse(value) : null; }
-        }
+        public DatingBound DatingBound { get; set; }
 
         public string Description { get; set; }
 

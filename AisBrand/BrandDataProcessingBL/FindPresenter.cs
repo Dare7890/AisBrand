@@ -47,7 +47,7 @@ namespace BrandDataProcessingBL
                 brand = new(find.Brand.Clay, find.Brand.Admixture, find.Brand.Sprinkling, find.Brand.Safety, find.Brand.Relief, find.Brand.ReconstructionReliability);
 
             AddBrandDataUI.ViewModels.Find viewModelFind = new AddBrandDataUI.ViewModels.Find(find.FieldNumber, find.Formation, find.Square, find.Depth, find.CollectorsNumber,
-                find.DatingLowerBound, find.DatingUpperBound, find.Description, find.Analogy, find.Note, find.Image, find.Photo, brand);
+                new DatingBound(find.DatingBound), find.Description, find.Analogy, find.Note, find.Image, find.Photo, brand);
             view.FindCrud.Update((System.Windows.Forms.Form)view, new FindMapper(), viewModelFind, e.FindsClass);
         }
 
@@ -87,8 +87,7 @@ namespace BrandDataProcessingBL
             find.Depth = e.BrandData.Depth;
             find.FieldNumber = e.BrandData.FieldNumber;
             find.CollectorsNumber = e.BrandData.CollectorsNumber;
-            find.DatingLowerBound = e.BrandData.DatingLowerBound;
-            find.DatingUpperBound = e.BrandData.DatingUpperBound;
+            find.DatingBound = new(e.BrandData.Dating);
             find.Description = e.BrandData.Description;
             find.Analogy = e.BrandData.Analogy;
             find.Note = e.BrandData.Note;

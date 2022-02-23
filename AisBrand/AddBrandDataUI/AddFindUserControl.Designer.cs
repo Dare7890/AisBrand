@@ -46,8 +46,7 @@ namespace AddBrandDataUI
             this.txtCollectorsNumber = new System.Windows.Forms.TextBox();
             this.txtAnalogy = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
-            this.txtDatingLowerBound = new System.Windows.Forms.TextBox();
-            this.txtDatingUpperBound = new System.Windows.Forms.TextBox();
+            this.txtDating = new System.Windows.Forms.TextBox();
             this.txtFieldNumber = new System.Windows.Forms.TextBox();
             this.txtDepth = new System.Windows.Forms.TextBox();
             this.txtSquare = new System.Windows.Forms.TextBox();
@@ -56,8 +55,7 @@ namespace AddBrandDataUI
             this.lblNote = new System.Windows.Forms.Label();
             this.lblAnalogy = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.lblDatingUpperBound = new System.Windows.Forms.Label();
-            this.lblDatingLowerBound = new System.Windows.Forms.Label();
+            this.lblDating = new System.Windows.Forms.Label();
             this.lblImage = new System.Windows.Forms.Label();
             this.lblCollectorsNumber = new System.Windows.Forms.Label();
             this.lblFieldNumber = new System.Windows.Forms.Label();
@@ -103,8 +101,7 @@ namespace AddBrandDataUI
             this.pnlFind.Controls.Add(this.txtCollectorsNumber);
             this.pnlFind.Controls.Add(this.txtAnalogy);
             this.pnlFind.Controls.Add(this.txtDescription);
-            this.pnlFind.Controls.Add(this.txtDatingLowerBound);
-            this.pnlFind.Controls.Add(this.txtDatingUpperBound);
+            this.pnlFind.Controls.Add(this.txtDating);
             this.pnlFind.Controls.Add(this.txtFieldNumber);
             this.pnlFind.Controls.Add(this.txtDepth);
             this.pnlFind.Controls.Add(this.txtSquare);
@@ -113,8 +110,7 @@ namespace AddBrandDataUI
             this.pnlFind.Controls.Add(this.lblNote);
             this.pnlFind.Controls.Add(this.lblAnalogy);
             this.pnlFind.Controls.Add(this.lblDescription);
-            this.pnlFind.Controls.Add(this.lblDatingUpperBound);
-            this.pnlFind.Controls.Add(this.lblDatingLowerBound);
+            this.pnlFind.Controls.Add(this.lblDating);
             this.pnlFind.Controls.Add(this.lblImage);
             this.pnlFind.Controls.Add(this.lblCollectorsNumber);
             this.pnlFind.Controls.Add(this.lblFieldNumber);
@@ -206,6 +202,7 @@ namespace AddBrandDataUI
             // 
             // pctPhoto
             // 
+            this.pctPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pctPhoto.Location = new System.Drawing.Point(310, 180);
             this.pctPhoto.Name = "pctPhoto";
             this.pctPhoto.Size = new System.Drawing.Size(100, 100);
@@ -214,6 +211,7 @@ namespace AddBrandDataUI
             // 
             // pctImage
             // 
+            this.pctImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pctImage.Location = new System.Drawing.Point(107, 180);
             this.pctImage.Name = "pctImage";
             this.pctImage.Size = new System.Drawing.Size(100, 100);
@@ -222,7 +220,7 @@ namespace AddBrandDataUI
             // 
             // txtNote
             // 
-            this.txtNote.Location = new System.Drawing.Point(528, 197);
+            this.txtNote.Location = new System.Drawing.Point(528, 205);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.Size = new System.Drawing.Size(153, 75);
@@ -230,43 +228,38 @@ namespace AddBrandDataUI
             // 
             // txtCollectorsNumber
             // 
-            this.txtCollectorsNumber.Location = new System.Drawing.Point(142, 143);
+            this.txtCollectorsNumber.Location = new System.Drawing.Point(142, 51);
             this.txtCollectorsNumber.Name = "txtCollectorsNumber";
             this.txtCollectorsNumber.Size = new System.Drawing.Size(153, 23);
             this.txtCollectorsNumber.TabIndex = 20;
             // 
             // txtAnalogy
             // 
-            this.txtAnalogy.Location = new System.Drawing.Point(528, 79);
+            this.txtAnalogy.Location = new System.Drawing.Point(528, 15);
             this.txtAnalogy.Name = "txtAnalogy";
             this.txtAnalogy.Size = new System.Drawing.Size(153, 23);
             this.txtAnalogy.TabIndex = 19;
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(528, 111);
+            this.txtDescription.Location = new System.Drawing.Point(528, 119);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(153, 75);
             this.txtDescription.TabIndex = 18;
             // 
-            // txtDatingLowerBound
+            // txtDating
             // 
-            this.txtDatingLowerBound.Location = new System.Drawing.Point(528, 15);
-            this.txtDatingLowerBound.Name = "txtDatingLowerBound";
-            this.txtDatingLowerBound.Size = new System.Drawing.Size(153, 23);
-            this.txtDatingLowerBound.TabIndex = 17;
-            // 
-            // txtDatingUpperBound
-            // 
-            this.txtDatingUpperBound.Location = new System.Drawing.Point(528, 46);
-            this.txtDatingUpperBound.Name = "txtDatingUpperBound";
-            this.txtDatingUpperBound.Size = new System.Drawing.Size(153, 23);
-            this.txtDatingUpperBound.TabIndex = 16;
+            this.txtDating.Location = new System.Drawing.Point(528, 46);
+            this.txtDating.Multiline = true;
+            this.txtDating.Name = "txtDating";
+            this.txtDating.Size = new System.Drawing.Size(153, 66);
+            this.txtDating.TabIndex = 17;
+            this.txtDating.Validating += new System.ComponentModel.CancelEventHandler(this.txtDating_Validating);
             // 
             // txtFieldNumber
             // 
-            this.txtFieldNumber.Location = new System.Drawing.Point(142, 111);
+            this.txtFieldNumber.Location = new System.Drawing.Point(142, 19);
             this.txtFieldNumber.Name = "txtFieldNumber";
             this.txtFieldNumber.Size = new System.Drawing.Size(153, 23);
             this.txtFieldNumber.TabIndex = 15;
@@ -274,7 +267,7 @@ namespace AddBrandDataUI
             // 
             // txtDepth
             // 
-            this.txtDepth.Location = new System.Drawing.Point(142, 79);
+            this.txtDepth.Location = new System.Drawing.Point(142, 142);
             this.txtDepth.Name = "txtDepth";
             this.txtDepth.Size = new System.Drawing.Size(153, 23);
             this.txtDepth.TabIndex = 14;
@@ -282,7 +275,7 @@ namespace AddBrandDataUI
             // 
             // txtSquare
             // 
-            this.txtSquare.Location = new System.Drawing.Point(142, 46);
+            this.txtSquare.Location = new System.Drawing.Point(142, 111);
             this.txtSquare.Name = "txtSquare";
             this.txtSquare.Size = new System.Drawing.Size(153, 23);
             this.txtSquare.TabIndex = 13;
@@ -290,7 +283,7 @@ namespace AddBrandDataUI
             // 
             // txtFormation
             // 
-            this.txtFormation.Location = new System.Drawing.Point(142, 15);
+            this.txtFormation.Location = new System.Drawing.Point(142, 82);
             this.txtFormation.Name = "txtFormation";
             this.txtFormation.Size = new System.Drawing.Size(153, 23);
             this.txtFormation.TabIndex = 12;
@@ -307,7 +300,7 @@ namespace AddBrandDataUI
             // lblNote
             // 
             this.lblNote.AutoSize = true;
-            this.lblNote.Location = new System.Drawing.Point(420, 200);
+            this.lblNote.Location = new System.Drawing.Point(420, 208);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(81, 15);
             this.lblNote.TabIndex = 10;
@@ -316,7 +309,7 @@ namespace AddBrandDataUI
             // lblAnalogy
             // 
             this.lblAnalogy.AutoSize = true;
-            this.lblAnalogy.Location = new System.Drawing.Point(421, 82);
+            this.lblAnalogy.Location = new System.Drawing.Point(421, 18);
             this.lblAnalogy.Name = "lblAnalogy";
             this.lblAnalogy.Size = new System.Drawing.Size(64, 15);
             this.lblAnalogy.TabIndex = 9;
@@ -325,29 +318,20 @@ namespace AddBrandDataUI
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(420, 114);
+            this.lblDescription.Location = new System.Drawing.Point(420, 122);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(65, 15);
             this.lblDescription.TabIndex = 8;
             this.lblDescription.Text = "Описание:";
             // 
-            // lblDatingUpperBound
+            // lblDating
             // 
-            this.lblDatingUpperBound.AutoSize = true;
-            this.lblDatingUpperBound.Location = new System.Drawing.Point(420, 49);
-            this.lblDatingUpperBound.Name = "lblDatingUpperBound";
-            this.lblDatingUpperBound.Size = new System.Drawing.Size(103, 15);
-            this.lblDatingUpperBound.TabIndex = 7;
-            this.lblDatingUpperBound.Text = "Верхняя граница:";
-            // 
-            // lblDatingLowerBound
-            // 
-            this.lblDatingLowerBound.AutoSize = true;
-            this.lblDatingLowerBound.Location = new System.Drawing.Point(420, 18);
-            this.lblDatingLowerBound.Name = "lblDatingLowerBound";
-            this.lblDatingLowerBound.Size = new System.Drawing.Size(102, 15);
-            this.lblDatingLowerBound.TabIndex = 6;
-            this.lblDatingLowerBound.Text = "Нижняя граница:";
+            this.lblDating.AutoSize = true;
+            this.lblDating.Location = new System.Drawing.Point(421, 49);
+            this.lblDating.Name = "lblDating";
+            this.lblDating.Size = new System.Drawing.Size(68, 15);
+            this.lblDating.TabIndex = 6;
+            this.lblDating.Text = "Датировка:";
             // 
             // lblImage
             // 
@@ -361,7 +345,7 @@ namespace AddBrandDataUI
             // lblCollectorsNumber
             // 
             this.lblCollectorsNumber.AutoSize = true;
-            this.lblCollectorsNumber.Location = new System.Drawing.Point(19, 146);
+            this.lblCollectorsNumber.Location = new System.Drawing.Point(19, 54);
             this.lblCollectorsNumber.Name = "lblCollectorsNumber";
             this.lblCollectorsNumber.Size = new System.Drawing.Size(117, 15);
             this.lblCollectorsNumber.TabIndex = 4;
@@ -370,7 +354,7 @@ namespace AddBrandDataUI
             // lblFieldNumber
             // 
             this.lblFieldNumber.AutoSize = true;
-            this.lblFieldNumber.Location = new System.Drawing.Point(19, 114);
+            this.lblFieldNumber.Location = new System.Drawing.Point(19, 22);
             this.lblFieldNumber.Name = "lblFieldNumber";
             this.lblFieldNumber.Size = new System.Drawing.Size(75, 15);
             this.lblFieldNumber.TabIndex = 3;
@@ -379,7 +363,7 @@ namespace AddBrandDataUI
             // lblDepth
             // 
             this.lblDepth.AutoSize = true;
-            this.lblDepth.Location = new System.Drawing.Point(19, 82);
+            this.lblDepth.Location = new System.Drawing.Point(19, 145);
             this.lblDepth.Name = "lblDepth";
             this.lblDepth.Size = new System.Drawing.Size(53, 15);
             this.lblDepth.TabIndex = 2;
@@ -388,7 +372,7 @@ namespace AddBrandDataUI
             // lblSquare
             // 
             this.lblSquare.AutoSize = true;
-            this.lblSquare.Location = new System.Drawing.Point(19, 49);
+            this.lblSquare.Location = new System.Drawing.Point(19, 114);
             this.lblSquare.Name = "lblSquare";
             this.lblSquare.Size = new System.Drawing.Size(53, 15);
             this.lblSquare.TabIndex = 1;
@@ -397,7 +381,7 @@ namespace AddBrandDataUI
             // lblFormation
             // 
             this.lblFormation.AutoSize = true;
-            this.lblFormation.Location = new System.Drawing.Point(19, 18);
+            this.lblFormation.Location = new System.Drawing.Point(19, 82);
             this.lblFormation.Name = "lblFormation";
             this.lblFormation.Size = new System.Drawing.Size(43, 15);
             this.lblFormation.TabIndex = 0;
@@ -433,8 +417,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.TextBox txtCollectorsNumber;
         private System.Windows.Forms.TextBox txtAnalogy;
         private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.TextBox txtDatingLowerBound;
-        private System.Windows.Forms.TextBox txtDatingUpperBound;
         private System.Windows.Forms.TextBox txtFieldNumber;
         private System.Windows.Forms.TextBox txtDepth;
         private System.Windows.Forms.TextBox txtSquare;
@@ -443,8 +425,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Label lblNote;
         private System.Windows.Forms.Label lblAnalogy;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.Label lblDatingUpperBound;
-        private System.Windows.Forms.Label lblDatingLowerBound;
         private System.Windows.Forms.Label lblImage;
         private System.Windows.Forms.Label lblCollectorsNumber;
         private System.Windows.Forms.Label lblFieldNumber;
@@ -461,5 +441,7 @@ namespace AddBrandDataUI
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cboVariant;
         private System.Windows.Forms.ComboBox cboType;
+        private System.Windows.Forms.TextBox txtDating;
+        private System.Windows.Forms.Label lblDating;
     }
 }

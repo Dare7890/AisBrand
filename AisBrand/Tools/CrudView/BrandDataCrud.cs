@@ -8,7 +8,7 @@ using Tools.Map;
 
 namespace Tools.CrudView
 {
-    public class BrandDataCrud<T> where T : class
+    public abstract class BrandDataCrud<T> where T : class
     {
         public event EventHandler<FillEventArgs> FillExcavationsList;
         public event EventHandler<DeleteEventArgs<T>> DeleteExcavation;

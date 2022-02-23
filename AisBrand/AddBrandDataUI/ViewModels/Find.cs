@@ -1,4 +1,6 @@
-﻿namespace AddBrandDataUI.ViewModels
+﻿using BrandDataProcessing.Models;
+
+namespace AddBrandDataUI.ViewModels
 {
     public class Find
     {
@@ -12,9 +14,7 @@
 
         public string CollectorsNumber { get; set; }
 
-        public int? DatingLowerBound { get; set; }
-
-        public int? DatingUpperBound { get; set; }
+        public DatingBound Dating { get; set; }
 
         public string Description { get; set; }
 
@@ -30,16 +30,15 @@
 
         public AdditionalBrand AdditionalBrand { get; set; }
 
-        public Find(string fieldNumber, string formation = null, int? square = null, int? depth = null, string collectorsNumber = null, int? datingLowerBound = null, int? datingUpperBound = null,
-            string description = null, string analogy = null, string note = null, byte[] image = null, byte[] photo = null, Brand brand = null, AdditionalBrand additionalBrand = null)
+        public Find(string fieldNumber, string formation = null, int? square = null, int? depth = null, string collectorsNumber = null, DatingBound dating = null, string description = null,
+            string analogy = null, string note = null, byte[] image = null, byte[] photo = null, Brand brand = null, AdditionalBrand additionalBrand = null)
         {
             FieldNumber = fieldNumber;
             Formation = formation;
             Square = square;
             Depth = depth;
             CollectorsNumber = collectorsNumber;
-            DatingLowerBound = datingLowerBound;
-            DatingUpperBound = datingUpperBound;
+            Dating = new DatingBound(dating);
             Description = description;
             Analogy = analogy;
             Note = note;

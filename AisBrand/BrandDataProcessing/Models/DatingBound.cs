@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace BrandDataProcessing
+namespace BrandDataProcessing.Models
 {
     public class DatingBound : IEquatable<DatingBound>
     {
-        public string BoundData { get; private set; }
+        public string BoundData { get; set; }
 
         public int DatingLowerBound { get; set; }
         public int DatingUpperBound { get; set; }
@@ -14,6 +14,15 @@ namespace BrandDataProcessing
         public DatingBound(string boundData)
         {
             BoundData = boundData;
+        }
+
+        public DatingBound(DatingBound datingBound) : this(datingBound?.BoundData)
+        {
+            if (datingBound != null)
+            {
+                DatingLowerBound = datingBound.DatingLowerBound;
+                DatingUpperBound = datingBound.DatingUpperBound;
+            }
         }
 
         public override bool Equals(object obj)

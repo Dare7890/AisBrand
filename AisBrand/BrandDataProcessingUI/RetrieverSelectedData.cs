@@ -43,7 +43,9 @@ namespace BrandDataProcessingUI
             string fieldNumber = cells[fieldNumberIndex].Value.ToString();
             string collectorsNumber = cells[collectorsNumberIndex].Value.ToString();
             string formation = cells[formationIndex].Value.ToString();
-            int? square = int.Parse(cells[squareIndex].Value.ToString());
+
+            string squareString = cells[squareIndex].Value?.ToString();
+            int? square = squareString == null ? null : int.Parse(squareString);
 
             return new Find(fieldNumber, formation, collectorsNumber: collectorsNumber, square: square);
         }

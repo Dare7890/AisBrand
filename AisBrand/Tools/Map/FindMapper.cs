@@ -1,5 +1,6 @@
 ﻿using AddBrandDataUI;
 using AddBrandDataUI.ViewModels;
+using DatingBoundModel = BrandDataProcessing.Models.DatingBound;
 
 namespace Tools.Map
 {
@@ -12,8 +13,7 @@ namespace Tools.Map
             int? depth = form.BrandData.Depth;
             string fieldNumber = form.BrandData.FieldNumber;
             string collectorsNumber = form.BrandData.CollectorsNumber;
-            int? datingLowerBound = form.BrandData.DatingLowerBound;
-            int? datingUpperBound = form.BrandData.DatingUpperBound;
+            DatingBoundModel dating = form.BrandData.Dating;
             string description = form.BrandData.Description;
             string analogy = form.BrandData.Analogy;
             string note = form.BrandData.Note;
@@ -23,7 +23,7 @@ namespace Tools.Map
 
             Brand brand = form.BrandData.Brand;
 
-            return new Find(fieldNumber, formation, square, depth, collectorsNumber, datingLowerBound, datingUpperBound, description, analogy, note, image, photo, brand);
+            return new Find(fieldNumber, formation, square, depth, collectorsNumber, new DatingBoundModel(dating), description, analogy, note, image, photo, brand);
         }
 
         // TODO : вынести в отдельный класс.

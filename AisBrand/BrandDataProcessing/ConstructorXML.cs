@@ -60,8 +60,6 @@ namespace BrandDataProcessing
                 new XElement(nameof(find.Depth), find.Depth),
                 new XElement(nameof(find.FieldNumber), find.FieldNumber),
                 new XElement(nameof(find.CollectorsNumber), find.CollectorsNumber),
-                new XElement(nameof(find.DatingLowerBound), find.DatingLowerBound),
-                new XElement(nameof(find.DatingUpperBound), find.DatingUpperBound),
                 new XElement(nameof(find.Description), find.Description),
                 new XElement(nameof(find.Analogy), find.Analogy),
                 new XElement(nameof(find.Note), find.Note)
@@ -76,7 +74,19 @@ namespace BrandDataProcessing
             if (find.Brand != null)
                 findXml.Add(Create(find.Brand));
 
+            XElement datingElement = find.DatingBound == null ? new XElement(nameof(DatingBound), find.DatingBound) : CreateDatingBound(find.DatingBound);
+            findXml.Add(datingElement);
+
             return findXml;
+        }
+
+        private static XElement CreateDatingBound(DatingBound datingBound)
+        {
+            return new XElement(nameof(DatingBound),
+                new XElement(nameof(datingBound.BoundData), datingBound.BoundData),
+                new XElement(nameof(datingBound.DatingLowerBound), datingBound.DatingLowerBound),
+                new XElement(nameof(datingBound.DatingUpperBound), datingBound.DatingUpperBound)
+                );
         }
 
         private static XElement CreatePictureElement(string name, byte[] image)
@@ -133,8 +143,6 @@ namespace BrandDataProcessing
             updatedFind.Element(nameof(find.Depth)).Value = find.Depth.ToString();
             updatedFind.Element(nameof(find.FieldNumber)).Value = find.FieldNumber;
             updatedFind.Element(nameof(find.CollectorsNumber)).Value = find.CollectorsNumber;
-            updatedFind.Element(nameof(find.DatingLowerBound)).Value = find.DatingLowerBound.ToString();
-            updatedFind.Element(nameof(find.DatingUpperBound)).Value = find.DatingUpperBound.ToString();
             updatedFind.Element(nameof(find.Description)).Value = find.Description;
             updatedFind.Element(nameof(find.Analogy)).Value = find.Analogy;
             updatedFind.Element(nameof(find.Note)).Value = find.Note;
@@ -144,6 +152,15 @@ namespace BrandDataProcessing
 
             string photoName = nameof(find.Image);
             UpdatePicture(photoName, find.Image, updatedFind);
+
+            UpdateDating(find.DatingBound, updatedFind);
+        }
+
+        private static void UpdateDating(DatingBound dating, XElement updatedDating)
+        {
+            updatedDating.Element(nameof(dating.BoundData)).Value = dating.BoundData;
+            updatedDating.Element(nameof(dating.DatingLowerBound)).Value = dating.DatingLowerBound.ToString();
+            updatedDating.Element(nameof(dating.DatingUpperBound)).Value = dating.DatingUpperBound.ToString();
         }
 
         private static void UpdatePicture(string name, byte[] picture, XElement updatedEntity)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using BrandDataProcessing.Models;
 
 namespace BrandDataProcessing
 {
@@ -9,6 +10,7 @@ namespace BrandDataProcessing
         private const int oneDateBoundaryAmount = 1;
         private const int twoDateBoundaryAmount = 2;
         private const int maxDateBoundaryAmount = 2;
+        private const int minDateBoundaryPartsAmount = 3;
 
         private const int firstDateBoundaryIndex = 0;
 
@@ -42,7 +44,7 @@ namespace BrandDataProcessing
                 throw new ArgumentNullException(nameof(line));
 
             if (string.IsNullOrEmpty(line))
-                throw new FormatException("The line was empty");
+                return null;
 
             string[] lineParts = line.Split(dateBoundaryRangeSeparator);
 
@@ -71,9 +73,13 @@ namespace BrandDataProcessing
             }
         }
 
-        public static int ParseDateBoundary(string dateBoundaryLine, bool isFirstDateBoundary = true)
+        private static int ParseDateBoundary(string dateBoundaryLine, bool isFirstDateBoundary = true)
         {
             string[] dateBoundaryLineParts = dateBoundaryLine.TrimStart().TrimEnd().Split(dateBoundaryLineSeparator);
+
+            if (dateBoundaryLineParts.Length < minDateBoundaryPartsAmount)
+                throw new FormatException($"Date format is incorrect. Minimum parts amount is {minDateBoundaryPartsAmount}");
+
             int? halfCenturyNumber = null;
             if (dateBoundaryLineParts[halfCenturyIndex] == halfCenturyText)
             {
@@ -88,9 +94,9 @@ namespace BrandDataProcessing
         private static int TakeIntoAccountPeriodHalf(bool isFirstDateBoundary, int halfNumber, int half, int wholeDateBoundary, bool isBC)
         {
             if (halfNumber == firstHalfCenturyNumber && !isFirstDateBoundary && isBC || halfNumber == secondHalfCenturyNumber && isFirstDateBoundary && !isBC)
-                    wholeDateBoundary += half;
+                wholeDateBoundary += half;
             else if (halfNumber == secondHalfCenturyNumber && isFirstDateBoundary && isBC || halfNumber == firstHalfCenturyNumber && !isFirstDateBoundary && !isBC)
-                    wholeDateBoundary -= half;
+                wholeDateBoundary -= half;
 
             return wholeDateBoundary;
         }

@@ -51,7 +51,6 @@ namespace BrandDataProcessingBL
         private void ClassificationCrud_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.Classification> e)
         {
             repository = new ClassificationLocal(e.FilePath);
-            // TODO: реализовать уникальность.
             Classification classification = GetClassification(classifications, e.SourceBrandData.Type, e.SourceBrandData.Variant);
 
             //  TODO: create mapper.
