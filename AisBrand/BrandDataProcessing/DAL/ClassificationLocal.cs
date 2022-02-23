@@ -30,15 +30,7 @@ namespace BrandDataProcessing.DAL
             IEnumerable<XElement> classificationElements = query.GetAll(id);
             List<Classification> classifications = Serializated<Classification>.XmlDeserialization(classificationElements).ToList();
             for (int i = 0; i < classifications.Count(); i++)
-            {
-                classifications[i].Image = classificationElements.Where(c => int.Parse(c.Element("ID").Value) == classifications[i].ID)
-                                                                .Select(c =>
-                                                                {
-                                                                    string image = c.Element("Image")?.Value;
-                                                                    return image != null ? Convert.FromBase64String(image) : null;
-                                                                })
-                                                                ?.FirstOrDefault() ?? null;
-            }
+                classifications[i].Image = query.GetPicture(classificationElements, classifications[i].ID, "Image");
 
             return classifications;
         }

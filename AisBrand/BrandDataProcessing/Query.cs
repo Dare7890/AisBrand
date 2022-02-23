@@ -41,11 +41,6 @@ namespace BrandDataProcessing
             XElement parentElement = id.HasValue ? parentElements.FirstOrDefault(e => int.Parse(e.Element("ID").Value) == id) : parentElements.First();
             XElement parentElementWithRoot = parentElement.Element(string.Format($"ArrayOf{typeof(T).Name}")) ?? parentElement;
 
-            //string rootElement = string.Format($"ArrayOf{nameof(T)}");
-            //if (parentElement.Element(rootElement) == null)
-            //{
-            //    XElement xmlElementWithRoot = new XElement()
-            //}
             parentElementWithRoot?.Add(constructXmlElement);
             xmlDocument.Save(filePath);
         }
@@ -84,6 +79,17 @@ namespace BrandDataProcessing
                 updater(obj, updatedObject);
                 xmlDocument.Save(filePath);
             }
+        }
+
+        public byte[] GetPicture(IEnumerable<XElement> elements, int entityId, string pictureName)
+        {
+            return elements.Where(c => int.Parse(c.Element("ID").Value) == entityId)
+                            .Select(c =>
+                            {
+                                string picture = c.Element(pictureName)?.Value;
+                                return picture != null ? Convert.FromBase64String(picture) : null;
+                            })
+                            ?.FirstOrDefault() ?? null;
         }
 
         private static IEnumerable<T> GetDeserializationElement(IEnumerable<XElement> xmlElements)

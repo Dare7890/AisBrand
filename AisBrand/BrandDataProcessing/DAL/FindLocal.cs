@@ -1,4 +1,5 @@
 ﻿using BrandDataProcessing.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -28,7 +29,14 @@ namespace BrandDataProcessing.DAL
         public IEnumerable<Find> GetAll(int? id)
         {
             IEnumerable<XElement> findElements = query.GetAll(id, nameof(FindsClass));
-            return Serializated<Find>.XmlDeserialization(findElements);
+            List<Find> finds = Serializated<Find>.XmlDeserialization(findElements).ToList();
+            for (int i = 0; i < finds.Count(); i++)
+            {
+                finds[i].Image = query.GetPicture(findElements, finds[i].ID, "Image");
+                finds[i].Photo = query.GetPicture(findElements, finds[i].ID, "Photo");
+            }
+
+            return finds;
         }
 
         public void Update(Find element)
