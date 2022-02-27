@@ -1,4 +1,8 @@
-﻿namespace AddBrandDataUI.ViewModels
+﻿using System.Linq;
+using FindsClassModel = BrandDataProcessing.Models.FindsClass;
+using ClassificationModel = BrandDataProcessing.Models.Classification;
+
+namespace AddBrandDataUI.ViewModels
 {
     public class Classification
     {
@@ -16,6 +20,29 @@
             Variant = variant;
             Description = description;
             Image = image;
+        }
+
+        public Classification(FindsClassModel findsClass, string fieldNumber)
+        {
+            Type = GetFindType(findsClass, fieldNumber);
+            Variant = GetFindVariant(findsClass, fieldNumber);
+        }
+
+        private static string GetFindType(FindsClassModel findsClass, string fieldNumber)
+        {
+            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
+            return classification?.Type;
+        }
+
+        private static string GetFindVariant(FindsClassModel findsClass, string fieldNumber)
+        {
+            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
+            return classification?.Variant;
+        }
+
+        private static ClassificationModel GetClassificationByFieldNumber(FindsClassModel findsClass, string fieldNumber)
+        {
+            return findsClass.Classifications.FirstOrDefault(c => c.Finds.Select(f => f.FieldNumber).Contains(fieldNumber));
         }
     }
 }

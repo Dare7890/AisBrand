@@ -45,6 +45,11 @@ namespace Tools.CrudView
             }
         }
 
+        public void Add(T data, int? parentId = null)
+        {
+            OnAdd(data, parentId);
+        }
+
         protected virtual void OnAdd(T data, int? parentId = null)
         {
             if (AddExcavation != null)

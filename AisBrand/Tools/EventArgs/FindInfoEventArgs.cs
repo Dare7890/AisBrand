@@ -10,11 +10,14 @@ namespace Tools.EventArgs
 
         public BrandDataProcessing.Models.FindsClass FindsClass { get; set; }
 
-        public FindInfoEventArgs(string filePath, Find find, BrandDataProcessing.Models.FindsClass findsClass)
+        public string FieldNumber { get; set; }
+
+        public FindInfoEventArgs(string filePath, Find find, BrandDataProcessing.Models.FindsClass findsClass, string fieldNumber = null)
         {
             FilePath = filePath;
             Find = find;
             FindsClass = findsClass;
+            FieldNumber = fieldNumber;
         }
     }
 }

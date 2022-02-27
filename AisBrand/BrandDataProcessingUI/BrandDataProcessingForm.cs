@@ -391,6 +391,7 @@ namespace BrandDataProcessingUI
                     FindsClassCrud.GetId(viewModelFindsClass);
                     FillFindData();
                     SetTableName(typeof(Find));
+                    EnableCopyButton();
                     break;
                 case nameof(Find):
                     selectedRow = dgvTable.Rows[selectedRowIndex];
@@ -432,6 +433,7 @@ namespace BrandDataProcessingUI
                     SelectedParentId = pastValue.Id;
                     FillFindsClassData();
                     SetTableName(typeof(FindsClass));
+                    DisableCopyButton();
                     break;
             }
 
@@ -469,9 +471,33 @@ namespace BrandDataProcessingUI
             tlsBack.Enabled = true;
         }
 
+        private void DisableCopyButton()
+        {
+            tlsCopy.Enabled = false;
+        }
+
+        private void EnableCopyButton()
+        {
+            tlsCopy.Enabled = true;
+        }
+
         private string TranslateModelName(string name)
         {
             return translater.Translate(name);
+        }
+
+        private void tlsCopy_Click(object sender, EventArgs e)
+        {
+            CopyFind();
+        }
+
+        private void CopyFind()
+        {
+            DataGridViewRow selectedRow = dgvTable.Rows[selectedRowIndex];
+            DataGridViewCellCollection cells = GetSelectedRowCells(selectedRow);
+            ViewModelFind selectedFind = RetrieverSelectedData.GetSelectedFind(cells);
+            FindsClass parentFindsClass = GetParentFindsClass(SelectedParentId);
+            FindCrud.Copy(selectedFind, parentFindsClass);
         }
     }
 }

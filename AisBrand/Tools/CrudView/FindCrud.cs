@@ -13,7 +13,8 @@ namespace Tools.CrudView
         public int ClassificationId { get; set; }
 
         public event EventHandler<GetIdEventArgs<Classification>> GetClassificationId;
-        public event EventHandler<FindInfoEventArgs> GetFullFindInfo;
+        public event EventHandler<FindInfoEventArgs> UpdateByViewModel;
+        public event EventHandler<FindInfoEventArgs> AddByViewModel;
 
         public override void Add(Form owner, IMapper<Find> mapper, IEnumerable<string> types = null, BrandDataProcessing.Models.FindsClass findsClass = null)
         {
@@ -61,8 +62,8 @@ namespace Tools.CrudView
             if (FilePath == null)
                 return;
 
-            if (GetFullFindInfo != null)
-                GetFullFindInfo.Invoke(this, new FindInfoEventArgs(FilePath, find, findsClas));
+            if (UpdateByViewModel != null)
+                UpdateByViewModel.Invoke(this, new FindInfoEventArgs(FilePath, find, findsClas));
         }
 
         public virtual void Update(Form owner, IMapper<Find> mapper, Find find, BrandDataProcessing.Models.FindsClass findsClass)
@@ -72,6 +73,28 @@ namespace Tools.CrudView
 
             using (AddBrandDataForm<Find> form = new AddBrandDataForm<Find>(find, parent: findsClass))
                 base.Update(owner, mapper, find, form);
+        }
+
+        public void Copy(Find find, BrandDataProcessing.Models.FindsClass parentFindsClass)
+        {
+            using (AddNumberFieldForm form = new())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    string fieldNumber = form.FieldNumber;
+                    OnAddByViewModel(FilePath, find, parentFindsClass, fieldNumber);
+
+
+                    // TODO: создать новое событие с eventargs, принимающим новый fieldNumber, где сначала будет вызываться 2 метода для поиска
+                    // типа и подтипа классификации, затем вызываться событие поиска id по классификации viewmodel, а затем вызываться метод OnAdd класса FindCrud.
+                }
+            }
+        }
+
+        protected virtual void OnAddByViewModel(string filePath, Find find, BrandDataProcessing.Models.FindsClass findsClass, string fieldNumber)
+        {
+            if (AddByViewModel != null)
+                AddByViewModel.Invoke(this, new FindInfoEventArgs(filePath, find, findsClass, fieldNumber));
         }
     }
 }

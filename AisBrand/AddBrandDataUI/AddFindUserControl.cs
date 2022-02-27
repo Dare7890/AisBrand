@@ -41,27 +41,9 @@ namespace AddBrandDataUI
         private void InitClassificationInfo(FindsClassModel findsClass, Find find)
         {
             string fieldNumber = find.FieldNumber;
-            string type = GetFindType(findsClass, fieldNumber);
-            string variant = GetFindVariant(findsClass, fieldNumber);
-            InitType(type);
-            InitVariant(variant);
-        }
-
-        private string GetFindType(FindsClassModel findsClass, string fieldNumber)
-        {
-            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
-            return classification?.Type;
-        }
-
-        private string GetFindVariant(FindsClassModel findsClass, string fieldNumber)
-        {
-            ClassificationModel classification = GetClassificationByFieldNumber(findsClass, fieldNumber);
-            return classification?.Variant;
-        }
-
-        private ClassificationModel GetClassificationByFieldNumber(FindsClassModel findsClass, string fieldNumber)
-        {
-            return findsClass.Classifications.FirstOrDefault(c => c.Finds.Select(f => f.FieldNumber).Contains(fieldNumber));
+            Classification classification = new(findsClass, fieldNumber);
+            InitType(classification.Type);
+            InitVariant(classification.Variant);
         }
 
         private void InitType(string type)

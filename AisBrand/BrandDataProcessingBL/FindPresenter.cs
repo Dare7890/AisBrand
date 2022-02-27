@@ -6,6 +6,7 @@ using BrandDataProcessing.Models;
 using Tools;
 using System;
 using Tools.Map;
+using Tools.EventArgs;
 
 namespace BrandDataProcessingBL
 {
@@ -23,13 +24,23 @@ namespace BrandDataProcessingBL
             this.view.FindCrud.AddExcavation += FindCrud_AddExcavation;
             this.view.FindCrud.GetClassificationId += FindCrud_GetClassificationId;
             this.view.FindCrud.DeleteExcavation += FindCrud_DeleteExcavation;
-            this.view.FindCrud.GetFullFindInfo += FindCrud_GetFullFindInfo;
+            this.view.FindCrud.UpdateByViewModel += FindCrud_UpdateByViewModel;
             this.view.FindCrud.UpdateExcavation += FindCrud_UpdateExcavation;
+            this.view.FindCrud.AddByViewModel += FindCrud_AddByViewModel;
         }
 
-        private void FindCrud_UpdateExcavation(object sender, Tools.EventArgs.UpdateEventArgs<AddBrandDataUI.ViewModels.Find> e)
+        private void FindCrud_AddByViewModel(object sender, FindInfoEventArgs e)
         {
-            repository = new FindLocal(e.FilePath);
+            AddBrandDataUI.ViewModels.Classification classification = new(e.FindsClass, e.Find.FieldNumber);
+            this.view.ClassificationCrud.GetId(classification);
+            AddBrandDataUI.ViewModels.Find viewModelFind = GetFullFindInfo(e.Find.FieldNumber);
+            viewModelFind.FieldNumber = e.FieldNumber;
+
+            view.FindCrud.Add(viewModelFind, view.FindCrud.ClassificationId);
+        }
+
+        private void FindCrud_UpdateExcavation(object sender, UpdateEventArgs<AddBrandDataUI.ViewModels.Find> e)
+        {
             this.view.FindCrud.Delete(e.SourceBrandData);
 
             FindsClass findsClass = view.FindsClassCrud.GetFindClassById(view.SelectedParentId.Value);
@@ -37,21 +48,25 @@ namespace BrandDataProcessingBL
             this.view.FindCrud.Add((System.Windows.Forms.Form)view, new FindMapper(), form: addForm, findsClass: findsClass);
         }
 
-        private void FindCrud_GetFullFindInfo(object sender, Tools.EventArgs.FindInfoEventArgs e)
+        private void FindCrud_UpdateByViewModel(object sender, FindInfoEventArgs e)
         {
-            repository = new FindLocal(e.FilePath);
+            AddBrandDataUI.ViewModels.Find viewModelFind = GetFullFindInfo(e.Find.FieldNumber);
+            view.FindCrud.Update((System.Windows.Forms.Form)view, new FindMapper(), viewModelFind, e.FindsClass);
+        }
 
-            Find find = GetFind(finds, e.Find.FieldNumber);
+        private AddBrandDataUI.ViewModels.Find GetFullFindInfo(string fieldNumber)
+        {
+            Find find = GetFind(finds, fieldNumber);
             AddBrandDataUI.ViewModels.Brand brand = null;
             if (find.Brand != null)
                 brand = new(find.Brand.Clay, find.Brand.Admixture, find.Brand.Sprinkling, find.Brand.Safety, find.Brand.Relief, find.Brand.ReconstructionReliability);
 
             AddBrandDataUI.ViewModels.Find viewModelFind = new AddBrandDataUI.ViewModels.Find(find.FieldNumber, find.Formation, find.Square, find.Depth, find.CollectorsNumber,
                 new DatingBound(find.DatingBound), find.Description, find.Analogy, find.Note, find.Image, find.Photo, brand);
-            view.FindCrud.Update((System.Windows.Forms.Form)view, new FindMapper(), viewModelFind, e.FindsClass);
+            return viewModelFind;
         }
 
-        private void FindCrud_DeleteExcavation(object sender, Tools.EventArgs.DeleteEventArgs<AddBrandDataUI.ViewModels.Find> e)
+        private void FindCrud_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.Find> e)
         {
             repository = new FindLocal(e.FilePath);
 
@@ -72,12 +87,12 @@ namespace BrandDataProcessingBL
             return finds.SingleOrDefault(e => e.FieldNumber == fieldNumber);
         }
 
-        private void FindCrud_GetClassificationId(object sender, Tools.EventArgs.GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
+        private void FindCrud_GetClassificationId(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
         {
             this.view.ClassificationCrud.GetId(e.BrandData);
         }
 
-        private void FindCrud_AddExcavation(object sender, Tools.EventArgs.AddEventArgs<AddBrandDataUI.ViewModels.Find> e)
+        private void FindCrud_AddExcavation(object sender, AddEventArgs<AddBrandDataUI.ViewModels.Find> e)
         {
             repository = new FindLocal(e.FilePath);
 
@@ -124,7 +139,7 @@ namespace BrandDataProcessingBL
             return sameFind != null;
         }
 
-        private void FindCrud_FillExcavationsList(object sender, Tools.EventArgs.FillEventArgs e)
+        private void FindCrud_FillExcavationsList(object sender, FillEventArgs e)
         {
             repository = new FindLocal(e.FilePath);
 
