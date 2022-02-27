@@ -235,6 +235,7 @@ namespace BrandDataProcessingUI
             this.tlsCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.tlsCopy.Size = new System.Drawing.Size(181, 22);
             this.tlsCopy.Text = "Копировать";
+            this.tlsCopy.Visible = false;
             this.tlsCopy.Click += new System.EventHandler(this.tlsCopy_Click);
             // 
             // анализToolStripMenuItem

@@ -474,12 +474,16 @@ namespace BrandDataProcessingUI
         private void DisableCopyButton()
         {
             tlsCopy.Enabled = false;
+            tlsCopy.Visible = false;
         }
 
         private void EnableCopyButton()
         {
             if (dgvTable.SelectedRows.Count > 0)
+            {
                 tlsCopy.Enabled = true;
+                tlsCopy.Visible = true;
+            }
         }
 
         private string TranslateModelName(string name)
