@@ -478,7 +478,8 @@ namespace BrandDataProcessingUI
 
         private void EnableCopyButton()
         {
-            tlsCopy.Enabled = true;
+            if (dgvTable.SelectedRows.Count > 0)
+                tlsCopy.Enabled = true;
         }
 
         private string TranslateModelName(string name)
