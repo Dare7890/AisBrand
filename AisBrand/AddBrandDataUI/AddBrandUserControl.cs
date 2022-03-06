@@ -20,7 +20,7 @@ namespace AddBrandDataUI
             string sprinkling = cboSprinkling.SelectedItem?.ToString().Trim() ?? cboSprinkling.Text.Trim();
             string safety = txtSafety.Text.Trim();
             string relief = txtRelief.Text.Trim();
-            string reliability = txtReliability.Text.Trim();
+            string reliability = cboReliability.SelectedItem?.ToString().Trim() ?? cboReliability.Text.Trim();
 
             return new Brand(clay, admixture, sprinkling, safety, relief, reliability);
         }
@@ -30,8 +30,8 @@ namespace AddBrandDataUI
             cboClay.SelectedItem = brand.Clay;
             cboSprinkling.SelectedItem = brand.Sprinkling;
             cboAdmixture.SelectedItem = brand.Admixture;
+            cboReliability.SelectedItem = brand.ReconstructionReliability;
 
-            txtReliability.Text = brand.ReconstructionReliability;
             txtRelief.Text = brand.Relief;
             txtSafety.Text = brand.Safety;
         }

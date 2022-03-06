@@ -152,7 +152,9 @@ namespace BrandDataProcessingBL
             finds = repository.GetAll(id);
 
             view.BrandDataList = finds.Select(c => new { c.FieldNumber, c.CollectorsNumber, c.Formation, c.Square })
-                                        .OrderBy(c => c.FieldNumber)
+                                        .OrderBy(c => c.Formation)
+                                        .ThenBy(c => c.Square)
+                                        .ThenBy(c => c.FieldNumber)
                                         .ToList();
         }
     }

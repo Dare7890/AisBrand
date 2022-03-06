@@ -29,8 +29,6 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtReliability = new System.Windows.Forms.TextBox();
-            this.txtSafety = new System.Windows.Forms.TextBox();
             this.txtRelief = new System.Windows.Forms.TextBox();
             this.lblReliability = new System.Windows.Forms.Label();
             this.lblRelief = new System.Windows.Forms.Label();
@@ -41,21 +39,9 @@ namespace AddBrandDataUI
             this.cboAdmixture = new System.Windows.Forms.ComboBox();
             this.cboClay = new System.Windows.Forms.ComboBox();
             this.cboSprinkling = new System.Windows.Forms.ComboBox();
+            this.txtSafety = new System.Windows.Forms.TextBox();
+            this.cboReliability = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtReliability
-            // 
-            this.txtReliability.Location = new System.Drawing.Point(361, 76);
-            this.txtReliability.Name = "txtReliability";
-            this.txtReliability.Size = new System.Drawing.Size(153, 23);
-            this.txtReliability.TabIndex = 31;
-            // 
-            // txtSafety
-            // 
-            this.txtSafety.Location = new System.Drawing.Point(361, 12);
-            this.txtSafety.Name = "txtSafety";
-            this.txtSafety.Size = new System.Drawing.Size(153, 23);
-            this.txtSafety.TabIndex = 30;
             // 
             // txtRelief
             // 
@@ -67,11 +53,11 @@ namespace AddBrandDataUI
             // lblReliability
             // 
             this.lblReliability.AutoSize = true;
-            this.lblReliability.Location = new System.Drawing.Point(262, 79);
+            this.lblReliability.Location = new System.Drawing.Point(262, 15);
             this.lblReliability.Name = "lblReliability";
-            this.lblReliability.Size = new System.Drawing.Size(93, 15);
+            this.lblReliability.Size = new System.Drawing.Size(47, 15);
             this.lblReliability.TabIndex = 25;
-            this.lblReliability.Text = "Достоверность:";
+            this.lblReliability.Text = "Обжиг:";
             // 
             // lblRelief
             // 
@@ -85,7 +71,7 @@ namespace AddBrandDataUI
             // lblSafety
             // 
             this.lblSafety.AutoSize = true;
-            this.lblSafety.Location = new System.Drawing.Point(261, 15);
+            this.lblSafety.Location = new System.Drawing.Point(261, 79);
             this.lblSafety.Name = "lblSafety";
             this.lblSafety.Size = new System.Drawing.Size(82, 15);
             this.lblSafety.TabIndex = 23;
@@ -123,9 +109,10 @@ namespace AddBrandDataUI
             this.cboAdmixture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAdmixture.FormattingEnabled = true;
             this.cboAdmixture.Items.AddRange(new object[] {
-            "Примесь_1",
-            "Примесь_2",
-            "Примесь_3"});
+            "ПП",
+            "ПД",
+            "ПДиП",
+            "БВПР"});
             this.cboAdmixture.Location = new System.Drawing.Point(86, 43);
             this.cboAdmixture.Name = "cboAdmixture";
             this.cboAdmixture.Size = new System.Drawing.Size(153, 23);
@@ -136,9 +123,10 @@ namespace AddBrandDataUI
             this.cboClay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClay.FormattingEnabled = true;
             this.cboClay.Items.AddRange(new object[] {
-            "Глина_1",
-            "Глина_2",
-            "Глина_3"});
+            "БГК",
+            "КГК",
+            "КСОЖ",
+            "Неопределима"});
             this.cboClay.Location = new System.Drawing.Point(86, 12);
             this.cboClay.Name = "cboClay";
             this.cboClay.Size = new System.Drawing.Size(153, 23);
@@ -149,22 +137,44 @@ namespace AddBrandDataUI
             this.cboSprinkling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSprinkling.FormattingEnabled = true;
             this.cboSprinkling.Items.AddRange(new object[] {
-            "Подсыпка_1",
-            "Подсыпка_2",
-            "Подсыпка_3"});
+            "ПМП",
+            "ПКП",
+            "ПЗ",
+            "Заглажено"});
             this.cboSprinkling.Location = new System.Drawing.Point(87, 76);
             this.cboSprinkling.Name = "cboSprinkling";
             this.cboSprinkling.Size = new System.Drawing.Size(152, 23);
             this.cboSprinkling.TabIndex = 34;
             // 
+            // txtSafety
+            // 
+            this.txtSafety.Location = new System.Drawing.Point(361, 76);
+            this.txtSafety.Name = "txtSafety";
+            this.txtSafety.Size = new System.Drawing.Size(153, 23);
+            this.txtSafety.TabIndex = 30;
+            // 
+            // cboReliability
+            // 
+            this.cboReliability.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboReliability.FormattingEnabled = true;
+            this.cboReliability.Items.AddRange(new object[] {
+            "КПОО",
+            "КНОО",
+            "КВО",
+            "Неопределим"});
+            this.cboReliability.Location = new System.Drawing.Point(361, 12);
+            this.cboReliability.Name = "cboReliability";
+            this.cboReliability.Size = new System.Drawing.Size(153, 23);
+            this.cboReliability.TabIndex = 35;
+            // 
             // AddBrandUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboReliability);
             this.Controls.Add(this.cboSprinkling);
             this.Controls.Add(this.cboClay);
             this.Controls.Add(this.cboAdmixture);
-            this.Controls.Add(this.txtReliability);
             this.Controls.Add(this.txtSafety);
             this.Controls.Add(this.txtRelief);
             this.Controls.Add(this.lblReliability);
@@ -181,9 +191,6 @@ namespace AddBrandDataUI
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtReliability;
-        private System.Windows.Forms.TextBox txtSafety;
         private System.Windows.Forms.TextBox txtRelief;
         private System.Windows.Forms.Label lblReliability;
         private System.Windows.Forms.Label lblRelief;
@@ -194,5 +201,7 @@ namespace AddBrandDataUI
         private System.Windows.Forms.ComboBox cboAdmixture;
         private System.Windows.Forms.ComboBox cboClay;
         private System.Windows.Forms.ComboBox cboSprinkling;
+        private System.Windows.Forms.TextBox txtSafety;
+        private System.Windows.Forms.ComboBox cboReliability;
     }
 }

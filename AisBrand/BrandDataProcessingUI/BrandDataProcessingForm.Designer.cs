@@ -281,7 +281,7 @@ namespace BrandDataProcessingUI
             this.MainMenuStrip = this.mnsMenu;
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "BrandDataProcessingForm";
-            this.Text = "Brand Data Processing";
+            this.Text = "ААИС";
             this.Load += new System.EventHandler(this.BrandDataProcessingForm_Load);
             this.tlpStructure.ResumeLayout(false);
             this.tlpStructure.PerformLayout();
