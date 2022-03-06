@@ -35,6 +35,7 @@ namespace AddBrandDataUI
             this.txtName = new System.Windows.Forms.TextBox();
             this.errValidating = new System.Windows.Forms.ErrorProvider(this.components);
             this.cboMonument = new System.Windows.Forms.ComboBox();
+            this.chkIsCopy = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errValidating)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,16 +83,27 @@ namespace AddBrandDataUI
             this.cboMonument.Size = new System.Drawing.Size(175, 23);
             this.cboMonument.TabIndex = 4;
             // 
+            // chkIsCopy
+            // 
+            this.chkIsCopy.AutoSize = true;
+            this.chkIsCopy.Location = new System.Drawing.Point(121, 92);
+            this.chkIsCopy.Name = "chkIsCopy";
+            this.chkIsCopy.Size = new System.Drawing.Size(135, 19);
+            this.chkIsCopy.TabIndex = 5;
+            this.chkIsCopy.Text = "Копировать данные";
+            this.chkIsCopy.UseVisualStyleBackColor = true;
+            // 
             // AddExcavationUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkIsCopy);
             this.Controls.Add(this.cboMonument);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblMonument);
             this.Controls.Add(this.lblName);
             this.Name = "AddExcavationUserControl";
-            this.Size = new System.Drawing.Size(270, 96);
+            this.Size = new System.Drawing.Size(270, 126);
             ((System.ComponentModel.ISupportInitialize)(this.errValidating)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -105,5 +117,6 @@ namespace AddBrandDataUI
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.ErrorProvider errValidating;
         private System.Windows.Forms.ComboBox cboMonument;
+        private System.Windows.Forms.CheckBox chkIsCopy;
     }
 }

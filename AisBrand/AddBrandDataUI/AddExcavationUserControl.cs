@@ -7,6 +7,8 @@ namespace AddBrandDataUI
 {
     public partial class AddExcavationUserControl : UserControl, IUserControl<Excavation>
     {
+        public bool IsCopyData { get; set; } = false;
+
         public AddExcavationUserControl(IEnumerable<string> monuments, Excavation excavation = null)
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace AddBrandDataUI
 
         public Excavation Add()
         {
+            IsCopyData = chkIsCopy.Checked;
+            
             string name = txtName.Text.Trim();
             string monument = cboMonument.SelectedItem?.ToString().Trim() ?? cboMonument.Text.Trim();
 

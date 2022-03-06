@@ -28,8 +28,28 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.GetIdExcavation += ExcavationCrud_GetIdExcavation;
             this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
             this.view.ExcavationCrud.GetAllExcavations += ExcavationCrud_GetAllExcavations;
+            this.view.ExcavationCrud.AddOnlyExcavation += ExcavationCrud_AddOnlyExcavation;
 
             this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void ExcavationCrud_AddOnlyExcavation(object sender, AddEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
+        {
+            repository = new ExcavationLocal(e.FilePath);
+            Excavation excavation = Map(e.BrandData);
+            CheckOnSameExcavation(excavation);
+
+            repository.Add(excavation);
+            RefreshExcavationsList();
+        }
+
+        private static Excavation Map(AddBrandDataUI.ViewModels.Excavation viewModelExcavation)
+        {
+            Excavation excavation = new();
+            excavation.Name = viewModelExcavation.Name;
+            excavation.Monument = viewModelExcavation.Monument;
+
+            return excavation;
         }
 
         private void ExcavationCrud_GetAllExcavations(object sender, EventArgs e)
@@ -70,10 +90,9 @@ namespace BrandDataProcessingBL
         {
             repository = new ExcavationLocal(e.FilePath);
 
-            Excavation excavation = new Excavation();
-            excavation.Name = e.BrandData.Name;
-            excavation.Monument = e.BrandData.Monument;
+            Excavation excavation = Map(e.BrandData);
             CheckOnSameExcavation(excavation);
+
             excavation.FindsClasses = RetrieveFindClassesByMonuments(excavation.Monument);
             RetrieveClassificationsByMonuments(excavation.FindsClasses, excavation.Monument);
 

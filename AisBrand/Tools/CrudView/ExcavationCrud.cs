@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using AddBrandDataUI;
 using AddBrandDataUI.ViewModels;
+using Tools.EventArgs;
 using Tools.Map;
 
 namespace Tools.CrudView
@@ -13,6 +14,7 @@ namespace Tools.CrudView
 
         public event EventHandler<System.EventArgs> GetMonuments;
         public event EventHandler<System.EventArgs> GetAllExcavations;
+        public event EventHandler<AddEventArgs<Excavation>> AddOnlyExcavation;
 
         public ExcavationCrud()
         {
@@ -40,7 +42,38 @@ namespace Tools.CrudView
         public override void Add(Form owner, IMapper<Excavation> mapper, IEnumerable<string> types = null, BrandDataProcessing.Models.FindsClass findsClass = null)
         {
             OnGetMonuments();
-            base.Add(owner, mapper, ExistingMonuments);
+
+            if (FilePath == null)
+                return;
+
+            using (AddBrandDataForm<Excavation> form = new AddBrandDataForm<Excavation>(types: ExistingMonuments, parent: findsClass))
+            {
+                if (form.ShowDialog(owner) == DialogResult.OK)
+                {
+                    try
+                    {
+                        Excavation excavation = mapper.Map(form);
+
+                        if (form.IsCopyData())
+                            OnAdd(excavation);
+                        else
+                            OnAddOnlyExcavation(excavation);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        NotifyAboutExistsSameExcavation();
+                        Add(owner, mapper, types);
+                    }
+                }
+
+                form.Close();
+            }
+        }
+
+        protected void OnAddOnlyExcavation(Excavation excavation, int? parentId = null)
+        {
+            if (AddOnlyExcavation != null)
+                AddOnlyExcavation.Invoke(this, new AddEventArgs<Excavation>(FilePath, excavation, parentId));
         }
 
         public override void Update(Form owner, IMapper<Excavation> mapper, Excavation sourceData)

@@ -85,6 +85,17 @@ namespace AddBrandDataUI
             DialogResult = BrandData != null && control.ValidateChildren() ? DialogResult.OK : DialogResult.None;
         }
 
+        public bool IsCopyData()
+        {
+            if (userControl is AddExcavationUserControl)
+            {
+                AddExcavationUserControl excavationUserControl = (AddExcavationUserControl)userControl;
+                return excavationUserControl.IsCopyData;
+            }
+
+            return false;
+        }
+
         public Classification GetParentClassification()
         {
             if (userControl is AddFindUserControl)

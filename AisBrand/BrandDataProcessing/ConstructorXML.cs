@@ -14,10 +14,13 @@ namespace BrandDataProcessing
                                     new XElement(nameof(excavation.Monument), excavation.Monument)
                                     );
 
-            foreach (FindsClass findsClass in excavation.FindsClasses)
+            if (excavation.FindsClasses != null)
             {
-                XElement findsClassesElement = Create(findsClass);
-                excavationElement.Add(findsClassesElement);
+                foreach (FindsClass findsClass in excavation.FindsClasses)
+                {
+                    XElement findsClassesElement = Create(findsClass);
+                    excavationElement.Add(findsClassesElement);
+                }
             }
 
             return excavationElement;
