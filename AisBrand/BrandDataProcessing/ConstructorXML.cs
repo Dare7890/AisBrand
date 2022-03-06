@@ -104,10 +104,13 @@ namespace BrandDataProcessing
                                         new XElement(nameof(findsClass.Class), findsClass.Class)
                                         );
 
-            foreach (Classification classification in findsClass.Classifications)
+            if (findsClass.Classifications != null)
             {
-                XElement classificationElement = Create(classification);
-                findsClassElement.Add(classificationElement);
+                foreach (Classification classification in findsClass.Classifications)
+                {
+                    XElement classificationElement = Create(classification);
+                    findsClassElement.Add(classificationElement);
+                }
             }
 
             return findsClassElement;

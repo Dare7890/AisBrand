@@ -18,7 +18,7 @@ namespace BrandDataProcessingUI
 
         public static FindsClass GetSelectedFindsClass(DataGridViewCellCollection cells)
         {
-            const int classIndex = 0;
+            const int classIndex = 1;
             string findsClass = cells[classIndex].Value.ToString();
 
             return new FindsClass(findsClass);

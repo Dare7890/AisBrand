@@ -16,9 +16,10 @@ namespace BrandDataProcessing
 
         public static IEnumerable<string> RetrieveTranslatedNames(Type parentType, ITranslater translater)
         {
-            Type childrenType = typeof(List<>);
-            IEnumerable<PropertyInfo> parentLists = parentType.GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == childrenType);
-            IEnumerable<string> entitiesNames = parentLists.Select(l => l.PropertyType.GetGenericArguments()[0].FullName);
+            Type childrenTypeInterface = typeof(IIdentifier);
+            IEnumerable<string> entitiesNames = parentType.GetProperties()
+                                                                .Where(p => childrenTypeInterface.IsAssignableFrom(p.PropertyType)).Select(l => l.PropertyType.FullName);
+            //IEnumerable<string> entitiesNames = parentLists.Select(l => l.PropertyType.GetGenericArguments()[0].FullName);
 
             return translater.Translate(entitiesNames);
         }

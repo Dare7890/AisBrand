@@ -87,13 +87,17 @@ namespace AddBrandDataUI
 
         public bool IsCopyData()
         {
-            if (userControl is AddExcavationUserControl)
+            switch (userControl)
             {
-                AddExcavationUserControl excavationUserControl = (AddExcavationUserControl)userControl;
-                return excavationUserControl.IsCopyData;
+                case AddExcavationUserControl:
+                    AddExcavationUserControl excavationUserControl = (AddExcavationUserControl)userControl;
+                    return excavationUserControl.IsCopyData;
+                case AddFindsClassUserControl:
+                    AddFindsClassUserControl findClassUserControl = (AddFindsClassUserControl)userControl;
+                    return findClassUserControl.IsCopyData;
+                default:
+                    return false;
             }
-
-            return false;
         }
 
         public Classification GetParentClassification()

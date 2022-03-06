@@ -31,6 +31,7 @@ namespace AddBrandDataUI
         {
             this.lblClass = new System.Windows.Forms.Label();
             this.cboClass = new System.Windows.Forms.ComboBox();
+            this.chkIsCopy = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblClass
@@ -53,10 +54,21 @@ namespace AddBrandDataUI
             this.cboClass.Size = new System.Drawing.Size(175, 23);
             this.cboClass.TabIndex = 5;
             // 
+            // chkIsCopy
+            // 
+            this.chkIsCopy.AutoSize = true;
+            this.chkIsCopy.Location = new System.Drawing.Point(149, 47);
+            this.chkIsCopy.Name = "chkIsCopy";
+            this.chkIsCopy.Size = new System.Drawing.Size(135, 19);
+            this.chkIsCopy.TabIndex = 6;
+            this.chkIsCopy.Text = "Копировать данные";
+            this.chkIsCopy.UseVisualStyleBackColor = true;
+            // 
             // AddFindsClassUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkIsCopy);
             this.Controls.Add(this.cboClass);
             this.Controls.Add(this.lblClass);
             this.Name = "AddFindsClassUserControl";
@@ -69,5 +81,6 @@ namespace AddBrandDataUI
         #endregion
         private System.Windows.Forms.Label lblClass;
         private System.Windows.Forms.ComboBox cboClass;
+        private System.Windows.Forms.CheckBox chkIsCopy;
     }
 }

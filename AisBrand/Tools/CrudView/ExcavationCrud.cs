@@ -14,7 +14,7 @@ namespace Tools.CrudView
 
         public event EventHandler<System.EventArgs> GetMonuments;
         public event EventHandler<System.EventArgs> GetAllExcavations;
-        public event EventHandler<AddEventArgs<Excavation>> AddOnlyExcavation;
+        public event EventHandler<AddEventArgs<Excavation>> AddEmptyExcavation;
 
         public ExcavationCrud()
         {
@@ -72,8 +72,8 @@ namespace Tools.CrudView
 
         protected void OnAddOnlyExcavation(Excavation excavation, int? parentId = null)
         {
-            if (AddOnlyExcavation != null)
-                AddOnlyExcavation.Invoke(this, new AddEventArgs<Excavation>(FilePath, excavation, parentId));
+            if (AddEmptyExcavation != null)
+                AddEmptyExcavation.Invoke(this, new AddEventArgs<Excavation>(FilePath, excavation, parentId));
         }
 
         public override void Update(Form owner, IMapper<Excavation> mapper, Excavation sourceData)

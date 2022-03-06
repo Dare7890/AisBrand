@@ -28,7 +28,7 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.GetIdExcavation += ExcavationCrud_GetIdExcavation;
             this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
             this.view.ExcavationCrud.GetAllExcavations += ExcavationCrud_GetAllExcavations;
-            this.view.ExcavationCrud.AddOnlyExcavation += ExcavationCrud_AddOnlyExcavation;
+            this.view.ExcavationCrud.AddEmptyExcavation += ExcavationCrud_AddOnlyExcavation;
 
             this.classificationsRetriever = classificationsRetriever;
         }

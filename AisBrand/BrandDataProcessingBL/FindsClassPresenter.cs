@@ -23,12 +23,30 @@ namespace BrandDataProcessingBL
             this.view = view;
             this.view.FindsClassCrud.FillExcavationsList += View_FillExcavationsList;
             this.view.FindsClassCrud.AddExcavation += FindsClassCrud_AddExcavation;
+            this.view.FindsClassCrud.AddEmptyFindsClass += FindsClassCrud_AddEmptyFindsClass;
             this.view.FindsClassCrud.UpdateExcavation += FindsClassCrud_UpdateExcavation;
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
             this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
             this.view.FindsClassCrud.GetFindClass += FindsClassCrud_GetFindClass;
 
             this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void FindsClassCrud_AddEmptyFindsClass(object sender, AddEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
+        {
+            repository = new FindsClassLocal(e.FilePath);
+
+            FindsClass findsClass = new();
+            findsClass.Class = e.BrandData.Class;
+
+            if (!view.SelectedParentId.HasValue)
+                throw new ArgumentNullException("Add error. Parent id is null");
+
+            CheckOnSameFindsClass(findsClass);
+
+            int parentId = view.SelectedParentId.Value;
+            repository.Add(findsClass, parentId);
+            RefreshExcavationsList(parentId);
         }
 
         private void FindsClassCrud_GetFindClass(object sender, GetFindClassEventArgs e)
@@ -111,7 +129,7 @@ namespace BrandDataProcessingBL
             CheckOnSameFindsClass(findsClass);
 
             string monument = GetExcavationMonument(view.AllExcavations, view.SelectedParentId.Value);
-            int id = GetEnableClassificationId();
+            int id = GetEnableClassificationId(view.SelectedParentId.Value);
             classificationsRetriever.RetrieveFindsClassClassifications(view.AllExcavations, monument, ref id, findsClass);
 
             int parentId = view.SelectedParentId.Value;
@@ -130,9 +148,10 @@ namespace BrandDataProcessingBL
             return selectedExcavation.Monument;
         }
 
-        private int GetEnableClassificationId()
+        private int GetEnableClassificationId(int parentId)
         {
-            IEnumerable<Classification> classifications = classificationsRetriever.GetClassifications(findsClasses);
+            IEnumerable<FindsClass> allFindsClasses = repository.GetAll(null);
+            IEnumerable<Classification> classifications = classificationsRetriever.GetClassifications(allFindsClasses);
             return GetEnableId(classifications);
         }
 

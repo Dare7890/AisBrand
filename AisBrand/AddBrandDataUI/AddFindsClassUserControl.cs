@@ -7,6 +7,8 @@ namespace AddBrandDataUI
 {
     public partial class AddFindsClassUserControl : UserControl, IUserControl<FindsClass>
     {
+        public bool IsCopyData { get; set; } = false;
+
         public AddFindsClassUserControl(IEnumerable<string> findTypes, FindsClass findsClass = null)
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace AddBrandDataUI
 
         public FindsClass Add()
         {
+            IsCopyData = chkIsCopy.Checked;
             string findsClass = cboClass.SelectedItem.ToString();
 
             return new FindsClass(findsClass);
