@@ -126,7 +126,7 @@ namespace AddBrandDataUI
             "БГК",
             "КГК",
             "КСОЖ",
-            "Неопределима"});
+            "Другая"});
             this.cboClay.Location = new System.Drawing.Point(86, 12);
             this.cboClay.Name = "cboClay";
             this.cboClay.Size = new System.Drawing.Size(153, 23);
@@ -158,6 +158,7 @@ namespace AddBrandDataUI
             this.cboReliability.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboReliability.FormattingEnabled = true;
             this.cboReliability.Items.AddRange(new object[] {
+            "КОО",
             "КПОО",
             "КНОО",
             "КВО",
