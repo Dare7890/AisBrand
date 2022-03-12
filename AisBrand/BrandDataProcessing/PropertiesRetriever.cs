@@ -7,12 +7,12 @@ namespace BrandDataProcessing
     {
         public static class Excavation
         {
-            public static IEnumerable<string> Retrieve()
+            public static Dictionary<string, string> Retrieve()
             {
-                return new List<string>()
+                return new Dictionary<string, string>()
                 {
-                    "Monument",
-                    "Name"
+                    {"Monument", "Памятник" },
+                    { "Name", "Раскоп" }
                 };
             }
         }

@@ -116,7 +116,7 @@ namespace BrandDataProcessingBL
 
         private void FillPropertiesList()
         {
-            view.Properties = PropertiesRetriever.Classification.Retrieve();
+            //view.Properties = PropertiesRetriever.Classification.Retrieve();
         }
 
         private void RefreshExcavationsList(int id)

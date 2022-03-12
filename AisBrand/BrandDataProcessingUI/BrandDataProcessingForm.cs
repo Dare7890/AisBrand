@@ -40,12 +40,14 @@ namespace BrandDataProcessingUI
             set { dgvTable.DataSource = value; }
         }
 
-        public IEnumerable<string> Properties
+        public Dictionary<string, string> Properties
         {
             set
             {
                 cmbProperties.Items.Clear();
-                cmbProperties.Items.AddRange(value.ToArray());
+                cmbProperties.DataSource = new BindingSource(value, null);
+                cmbProperties.DisplayMember = "Value";
+                cmbProperties.ValueMember = "Key";
 
                 if (cmbProperties.Items.Count > 0)
                     cmbProperties.SelectedIndex = 0;
@@ -526,7 +528,7 @@ namespace BrandDataProcessingUI
 
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
-            string selectedProperty = cmbProperties.SelectedItem.ToString();
+            string selectedProperty = cmbProperties.SelectedValue.ToString();
             string text = txtValue.Text;
             switch (currentTableName)
             {

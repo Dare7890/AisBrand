@@ -150,7 +150,7 @@ namespace BrandDataProcessingBL
         private void FillPropertiesList()
         {
             FindsClass parentFindsClass = view.FindsClassCrud.GetFindClassById(view.SelectedParentId.Value);
-            view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass.Class);
+            //view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass.Class);
         }
 
         private void RefreshFinds(int? id = null)
