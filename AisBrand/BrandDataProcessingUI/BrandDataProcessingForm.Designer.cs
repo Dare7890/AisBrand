@@ -38,7 +38,6 @@ namespace BrandDataProcessingUI
             this.tlpControllers = new System.Windows.Forms.TableLayoutPanel();
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.cmbProperties = new System.Windows.Forms.ComboBox();
-            this.btnApply = new System.Windows.Forms.Button();
             this.lblFilter = new System.Windows.Forms.Label();
             this.txtValue = new System.Windows.Forms.TextBox();
             this.mnsMenu = new System.Windows.Forms.MenuStrip();
@@ -142,7 +141,6 @@ namespace BrandDataProcessingUI
             this.pnlFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFilter.Controls.Add(this.cmbProperties);
-            this.pnlFilter.Controls.Add(this.btnApply);
             this.pnlFilter.Controls.Add(this.lblFilter);
             this.pnlFilter.Controls.Add(this.txtValue);
             this.pnlFilter.Location = new System.Drawing.Point(3, 3);
@@ -156,21 +154,10 @@ namespace BrandDataProcessingUI
             | System.Windows.Forms.AnchorStyles.Left)));
             this.cmbProperties.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProperties.FormattingEnabled = true;
-            this.cmbProperties.Location = new System.Drawing.Point(189, 6);
+            this.cmbProperties.Location = new System.Drawing.Point(169, 6);
             this.cmbProperties.Name = "cmbProperties";
-            this.cmbProperties.Size = new System.Drawing.Size(103, 23);
+            this.cmbProperties.Size = new System.Drawing.Size(123, 23);
             this.cmbProperties.TabIndex = 3;
-            // 
-            // btnApply
-            // 
-            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.Location = new System.Drawing.Point(679, 6);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(103, 26);
-            this.btnApply.TabIndex = 2;
-            this.btnApply.Text = "Поиск";
-            this.btnApply.UseVisualStyleBackColor = true;
             // 
             // lblFilter
             // 
@@ -186,8 +173,9 @@ namespace BrandDataProcessingUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtValue.Location = new System.Drawing.Point(298, 6);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(375, 23);
+            this.txtValue.Size = new System.Drawing.Size(484, 23);
             this.txtValue.TabIndex = 0;
+            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
             // 
             // mnsMenu
             // 
@@ -310,7 +298,6 @@ namespace BrandDataProcessingUI
         private System.Windows.Forms.TableLayoutPanel tlpControllers;
         private System.Windows.Forms.Panel pnlFilter;
         private System.Windows.Forms.ComboBox cmbProperties;
-        private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.ToolStripMenuItem анализToolStripMenuItem;

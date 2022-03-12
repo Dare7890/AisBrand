@@ -11,8 +11,8 @@ namespace BrandDataProcessing
             {
                 return new List<string>()
                 {
-                    "Памятник",
-                    "Раскоп"
+                    "Monument",
+                    "Name"
                 };
             }
         }

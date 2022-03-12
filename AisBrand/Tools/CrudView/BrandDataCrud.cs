@@ -15,6 +15,7 @@ namespace Tools.CrudView
         public event EventHandler<AddEventArgs<T>> AddExcavation;
         public event EventHandler<UpdateEventArgs<T>> UpdateExcavation;
         public event EventHandler<GetIdEventArgs<T>> GetIdExcavation;
+        public event EventHandler<FilterEventArgs<T>> Filter;
 
         public string FilePath { get; set; }
 
@@ -121,6 +122,12 @@ namespace Tools.CrudView
 
             if (GetIdExcavation != null)
                 GetIdExcavation.Invoke(this, new GetIdEventArgs<T>(FilePath, viewModel));
+        }
+
+        public void OnFilter(string selectedProperty, string text)
+        {
+            if (Filter != null)
+                Filter.Invoke(this, new FilterEventArgs<T>(selectedProperty, text));
         }
     }
 }

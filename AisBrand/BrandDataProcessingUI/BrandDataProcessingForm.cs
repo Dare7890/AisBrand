@@ -40,16 +40,16 @@ namespace BrandDataProcessingUI
             set { dgvTable.DataSource = value; }
         }
 
-        public IEnumerable<string> Properties 
-        { 
-            set 
+        public IEnumerable<string> Properties
+        {
+            set
             {
                 cmbProperties.Items.Clear();
                 cmbProperties.Items.AddRange(value.ToArray());
 
                 if (cmbProperties.Items.Count > 0)
                     cmbProperties.SelectedIndex = 0;
-            } 
+            }
         }
 
         public IEnumerable<Excavation> AllExcavations { get; set; }
@@ -413,6 +413,13 @@ namespace BrandDataProcessingUI
                 default:
                     break;
             }
+
+            ClearFilterText();
+        }
+
+        private void ClearFilterText()
+        {
+            txtValue.Text = string.Empty;
         }
 
         private void FillFindData()
@@ -515,6 +522,20 @@ namespace BrandDataProcessingUI
             ViewModelFind selectedFind = RetrieverSelectedData.GetSelectedFind(cells);
             FindsClass parentFindsClass = GetParentFindsClass(SelectedParentId);
             FindCrud.Copy(selectedFind, parentFindsClass);
+        }
+
+        private void txtValue_TextChanged(object sender, EventArgs e)
+        {
+            string selectedProperty = cmbProperties.SelectedItem.ToString();
+            string text = txtValue.Text;
+            switch (currentTableName)
+            {
+                case nameof(Excavation):
+                    ExcavationCrud.OnFilter(selectedProperty, text);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

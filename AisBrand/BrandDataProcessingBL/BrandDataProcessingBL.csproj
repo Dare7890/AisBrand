@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AddBrandDataUI\AddBrandDataUI.csproj" />
     <ProjectReference Include="..\BrandDataProcessing\BrandDataProcessing.csproj" />
+    <ProjectReference Include="..\GenericFilter\GenericFilter.csproj" />
     <ProjectReference Include="..\Tools\Tools.csproj" />
   </ItemGroup>
 

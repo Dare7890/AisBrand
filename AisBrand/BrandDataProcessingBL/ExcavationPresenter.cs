@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
+using GenericFilters;
 using Tools;
 using Tools.EventArgs;
 
@@ -30,8 +30,16 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
             this.view.ExcavationCrud.GetAllExcavations += ExcavationCrud_GetAllExcavations;
             this.view.ExcavationCrud.AddEmptyExcavation += ExcavationCrud_AddOnlyExcavation;
+            this.view.ExcavationCrud.Filter += ExcavationCrud_Filter;
 
             this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void ExcavationCrud_Filter(object sender, FilterEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
+        {
+            GenericFilter<Excavation> genericFilter = new();
+            IEnumerable<Excavation> filteredExcavations = genericFilter.CheckStartsWith(excavations, e.Property, e.Text);
+            RefreshBrandDataList(filteredExcavations);
         }
 
         private void ExcavationCrud_AddOnlyExcavation(object sender, AddEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
@@ -203,10 +211,14 @@ namespace BrandDataProcessingBL
         private void RefreshExcavationsList()
         {
             excavations = repository.GetAll(null);
+            RefreshBrandDataList(excavations);
+        }
 
-            view.BrandDataList = excavations.Select(e => new { e.Monument, e.Name, findsAmount = e.FindsClasses?.SelectMany(f => f?.Classifications)
+        private void RefreshBrandDataList(IEnumerable<Excavation> excavations)
+        {
+            view.BrandDataList = excavations.Select(e => new {e.Monument,e.Name,findsAmount = e.FindsClasses?.SelectMany(f => f?.Classifications)
                                                                                                                 .SelectMany(c => c?.Finds)?
-                                                                                                                .Count() ?? 0 })
+                                                                                                                .Count() ?? 0})
                                             .OrderBy(e => e.Monument)
                                             .ThenBy(e => e.Name)
                                             .ToList();
