@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
@@ -191,6 +192,12 @@ namespace BrandDataProcessingBL
         {
             repository = new ExcavationLocal(e.FilePath);
             RefreshExcavationsList();
+            FillPropertiesList();
+        }
+
+        private void FillPropertiesList()
+        {
+            view.Properties = PropertiesRetriever.Excavation.Retrieve();
         }
 
         private void RefreshExcavationsList()

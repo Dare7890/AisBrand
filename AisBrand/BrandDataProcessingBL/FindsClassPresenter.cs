@@ -178,6 +178,12 @@ namespace BrandDataProcessingBL
 
             int parentId = view.SelectedParentId.Value;
             RefreshExcavationsList(parentId);
+            FillPropertiesList();
+        }
+
+        private void FillPropertiesList()
+        {
+            view.Properties = PropertiesRetriever.FindsClass.Retrieve();
         }
 
         private void RefreshExcavationsList(int? id = null)

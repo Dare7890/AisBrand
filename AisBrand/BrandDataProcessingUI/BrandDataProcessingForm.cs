@@ -40,6 +40,18 @@ namespace BrandDataProcessingUI
             set { dgvTable.DataSource = value; }
         }
 
+        public IEnumerable<string> Properties 
+        { 
+            set 
+            {
+                cmbProperties.Items.Clear();
+                cmbProperties.Items.AddRange(value.ToArray());
+
+                if (cmbProperties.Items.Count > 0)
+                    cmbProperties.SelectedIndex = 0;
+            } 
+        }
+
         public IEnumerable<Excavation> AllExcavations { get; set; }
 
         public BrandDataProcessingForm(ITranslater translater)

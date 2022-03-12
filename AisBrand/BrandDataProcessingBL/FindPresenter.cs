@@ -61,9 +61,8 @@ namespace BrandDataProcessingBL
             if (find.Brand != null)
                 brand = new(find.Brand.Clay, find.Brand.Admixture, find.Brand.Sprinkling, find.Brand.Safety, find.Brand.Relief, find.Brand.ReconstructionReliability);
 
-            AddBrandDataUI.ViewModels.Find viewModelFind = new AddBrandDataUI.ViewModels.Find(find.FieldNumber, find.Formation, find.Square, find.Depth, find.CollectorsNumber,
+            return new AddBrandDataUI.ViewModels.Find(find.FieldNumber, find.Formation, find.Square, find.Depth, find.CollectorsNumber,
                 new DatingBound(find.DatingBound), find.Description, find.Analogy, find.Note, find.Image, find.Photo, brand);
-            return viewModelFind;
         }
 
         private void FindCrud_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.Find> e)
@@ -145,6 +144,13 @@ namespace BrandDataProcessingBL
 
             int parentId = view.SelectedParentId.Value;
             RefreshFinds(parentId);
+            FillPropertiesList();
+        }
+
+        private void FillPropertiesList()
+        {
+            FindsClass parentFindsClass = view.FindsClassCrud.GetFindClassById(view.SelectedParentId.Value);
+            view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass.Class);
         }
 
         private void RefreshFinds(int? id = null)

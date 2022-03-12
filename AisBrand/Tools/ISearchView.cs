@@ -9,6 +9,7 @@ namespace Tools
     {
         //  TODO: подумать над обобщением.
         IEnumerable BrandDataList { get; set; }
+        IEnumerable<string> Properties { set; }
         int? SelectedParentId { get; set; }
         IEnumerable<Excavation> AllExcavations { get; set; }
 
