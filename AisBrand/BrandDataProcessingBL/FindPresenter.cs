@@ -7,6 +7,7 @@ using Tools;
 using System;
 using Tools.Map;
 using Tools.EventArgs;
+using GenericFilters;
 
 namespace BrandDataProcessingBL
 {
@@ -27,6 +28,7 @@ namespace BrandDataProcessingBL
             this.view.FindCrud.UpdateByViewModel += FindCrud_UpdateByViewModel;
             this.view.FindCrud.UpdateExcavation += FindCrud_UpdateExcavation;
             this.view.FindCrud.AddByViewModel += FindCrud_AddByViewModel;
+            this.view.FindCrud.Filter += FindCrud_Filter; ;
         }
 
         private void FindCrud_AddByViewModel(object sender, FindInfoEventArgs e)
@@ -147,21 +149,32 @@ namespace BrandDataProcessingBL
             FillPropertiesList();
         }
 
+        private void FindCrud_Filter(object sender, FilterEventArgs<AddBrandDataUI.ViewModels.Find> e)
+        {
+            GenericFilter<Find> genericFilter = new();
+            IEnumerable<Find> filteredFinds = genericFilter.CheckStartsWith(finds, e.Property, e.Text);
+            RefreshBrandDataList(filteredFinds);
+        }
+
         private void FillPropertiesList()
         {
             FindsClass parentFindsClass = view.FindsClassCrud.GetFindClassById(view.SelectedParentId.Value);
-            //view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass.Class);
+            view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass.Class);
         }
 
         private void RefreshFinds(int? id = null)
         {
             finds = repository.GetAll(id);
+            RefreshBrandDataList(finds);
+        }
 
-            view.BrandDataList = finds.Select(c => new { c.FieldNumber, c.CollectorsNumber, c.Formation, c.Square })
-                                        .OrderBy(c => c.Formation)
-                                        .ThenBy(c => c.Square)
-                                        .ThenBy(c => c.FieldNumber)
-                                        .ToList();
+        private void RefreshBrandDataList(IEnumerable<Find> filteredFinds)
+        {
+            view.BrandDataList = filteredFinds.Select(c => new { c.FieldNumber, c.CollectorsNumber, c.Formation, c.Square })
+                                            .OrderBy(c => c.Formation)
+                                            .ThenBy(c => c.Square)
+                                            .ThenBy(c => c.FieldNumber)
+                                            .ToList();
         }
     }
 }

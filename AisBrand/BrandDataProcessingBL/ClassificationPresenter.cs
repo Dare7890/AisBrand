@@ -1,6 +1,7 @@
 ﻿using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
+using GenericFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace BrandDataProcessingBL
             this.view.ClassificationCrud.UpdateExcavation += ClassificationCrud_UpdateExcavation;
             this.view.ClassificationCrud.FillClassificationInfo += ClassificationCrud_FillClassificationInfo;
             this.view.ClassificationCrud.GetIdExcavation += ClassificationCrud_GetIdExcavation;
+            this.view.ClassificationCrud.Filter += ClassificationCrud_Filter; ;
         }
 
         private void ClassificationCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
@@ -114,16 +116,27 @@ namespace BrandDataProcessingBL
             FillPropertiesList();
         }
 
+        private void ClassificationCrud_Filter(object sender, FilterEventArgs<AddBrandDataUI.ViewModels.Classification> e)
+        {
+            GenericFilter<Classification> genericFilter = new();
+            IEnumerable<Classification> filteredClassification = genericFilter.CheckStartsWith(classifications, e.Property, e.Text);
+            RefreshBrandDataList(filteredClassification);
+        }
+
         private void FillPropertiesList()
         {
-            //view.Properties = PropertiesRetriever.Classification.Retrieve();
+            view.Properties = PropertiesRetriever.Classification.Retrieve();
         }
 
         private void RefreshExcavationsList(int id)
         {
             classifications = repository.GetAll(id);
+            RefreshBrandDataList(classifications);
+        }
 
-            view.BrandDataList = classifications.Select(c => new { c.Type, c.Variant, findsAmount = c.Finds.Count()})
+        private void RefreshBrandDataList(IEnumerable<Classification> filteredClassification)
+        {
+            view.BrandDataList = filteredClassification.Select(c => new { c.Type, c.Variant, findsAmount = c.Finds.Count() })
                                                 .OrderBy(c => c.Type)
                                                 .ThenBy(c => c.Variant)
                                                 .ToList();

@@ -4,6 +4,7 @@ using System.Linq;
 using BrandDataProcessing;
 using BrandDataProcessing.DAL;
 using BrandDataProcessing.Models;
+using GenericFilters;
 using Tools;
 using Tools.EventArgs;
 
@@ -28,6 +29,7 @@ namespace BrandDataProcessingBL
             this.view.FindsClassCrud.DeleteExcavation += FindsClassCrud_DeleteExcavation;
             this.view.FindsClassCrud.GetIdExcavation += FindsClassCrud_GetIdExcavation;
             this.view.FindsClassCrud.GetFindClass += FindsClassCrud_GetFindClass;
+            this.view.FindsClassCrud.Filter += FindsClassCrud_Filter;
 
             this.classificationsRetriever = classificationsRetriever;
         }
@@ -181,20 +183,32 @@ namespace BrandDataProcessingBL
             FillPropertiesList();
         }
 
+        private void FindsClassCrud_Filter(object sender, FilterEventArgs<AddBrandDataUI.ViewModels.FindsClass> e)
+        {
+            GenericFilter<FindsClass> genericFilter = new();
+            IEnumerable<FindsClass> filteredFindsClass = genericFilter.CheckStartsWith(findsClasses, e.Property, e.Text);
+            RefreshBrandDataList(filteredFindsClass);
+        }
+
         private void FillPropertiesList()
         {
-            //view.Properties = PropertiesRetriever.FindsClass.Retrieve();
+            view.Properties = PropertiesRetriever.FindsClass.Retrieve();
         }
 
         private void RefreshExcavationsList(int? id = null)
         {
             GetAll(id.Value);
+            RefreshBrandDataList(findsClasses);
+        }
 
+        private void RefreshBrandDataList(IEnumerable<FindsClass> findsClasses)
+        {
             view.BrandDataList = findsClasses.Select(c => new { ClassName = CategoryRetriever.Retrieve(c.Class), Subclass = c.Class, findsAmount = c.Classifications?.SelectMany(c => c?.Finds)?
-                                                                                                                                                                        .Count() ?? 0})
-                                            .OrderBy(c => c.ClassName)
-                                            .ThenBy(c => c.Subclass)
-                                            .ToList();
+                                                                                                                                                                    .Count() ?? 0
+            })
+                                               .OrderBy(c => c.ClassName)
+                                               .ThenBy(c => c.Subclass)
+                                               .ToList();
         }
     }
 }

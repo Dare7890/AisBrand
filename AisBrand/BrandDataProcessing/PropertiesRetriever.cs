@@ -11,7 +11,7 @@ namespace BrandDataProcessing
             {
                 return new Dictionary<string, string>()
                 {
-                    {"Monument", "Памятник" },
+                    { "Monument", "Памятник" },
                     { "Name", "Раскоп" }
                 };
             }
@@ -19,70 +19,38 @@ namespace BrandDataProcessing
 
         public static class FindsClass
         {
-            public static IEnumerable<string> Retrieve()
+            public static Dictionary<string, string> Retrieve()
             {
-                return new List<string>()
+                return new Dictionary<string, string>()
                 {
-                    "Категория",
-                    "Подкатегория"
+                    { "Class", "Подкатегория" }
                 };
             }
         }
 
         public static class Classification
         {
-            public static IEnumerable<string> Retrieve()
+            public static Dictionary<string, string> Retrieve()
             {
-                return new List<string>()
+                return new Dictionary<string, string>()
                 {
-                    "Тип",
-                    "Вариант"
+                    { "Type", "Тип" },
+                    { "Variant", "Вариант" }
                 };
             }
         }
 
         public static class Find
         {
-            private const string brandEntityName = "Клеймо";
-
-            public static IEnumerable<string> Retrieve(string type)
+            public static Dictionary<string, string> Retrieve(string type)
             {
-                List<string> properties = new List<string>()
+                return new Dictionary<string, string>()
                 {
-                    "Коллекционный №",
-                    "Полевой №",
-                    "Пласт",
-                    "Квадрат",
-                    "Глубина",
+                    { "CollectorsNumber", "Коллекционный №" },
+                    { "FieldNumber", "Полевой №" },
+                    { "Formation", "Пласт" },
+                    { "Square", "Квадрат" }
                 };
-
-                IEnumerable<string> subproperties;
-                subproperties = type == brandEntityName ? Brand.Retrieve() : AdditionalBrand.Retrieve();
-                properties.AddRange(subproperties);
-
-                return properties;
-            }
-        }
-
-        private static class Brand
-        {
-            public static IEnumerable<string> Retrieve()
-            {
-                return new List<string>()
-                {
-                    "Глина",
-                    "Примеси",
-                    "Подсыпка",
-                    "Обжиг"
-                };
-            }
-        }
-
-        private static class AdditionalBrand
-        {
-            public static IEnumerable<string> Retrieve()
-            {
-                return Enumerable.Empty<string>();
             }
         }
     }

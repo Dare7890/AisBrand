@@ -44,7 +44,6 @@ namespace BrandDataProcessingUI
         {
             set
             {
-                cmbProperties.Items.Clear();
                 cmbProperties.DataSource = new BindingSource(value, null);
                 cmbProperties.DisplayMember = "Value";
                 cmbProperties.ValueMember = "Key";
@@ -528,16 +527,50 @@ namespace BrandDataProcessingUI
 
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
+            Filter();
+        }
+
+        private void Filter()
+        {
             string selectedProperty = cmbProperties.SelectedValue.ToString();
             string text = txtValue.Text;
             switch (currentTableName)
             {
                 case nameof(Excavation):
-                    ExcavationCrud.OnFilter(selectedProperty, text);
+                    FilterExcavation(selectedProperty, text);
+                    break;
+                case nameof(FindsClass):
+                    FilterFindsClass(selectedProperty, text);
+                    break;
+                case nameof(Classification):
+                    FilterClassification(selectedProperty, text);
+                    break;
+                case nameof(Find):
+                    FilterFind(selectedProperty, text);
                     break;
                 default:
                     break;
             }
+        }
+
+        private void FilterExcavation(string selectedProperty, string text)
+        {
+            ExcavationCrud.OnFilter(selectedProperty, text);
+        }
+
+        private void FilterFindsClass(string selectedProperty, string text)
+        {
+            FindsClassCrud.OnFilter(selectedProperty, text);
+        }
+
+        private void FilterClassification(string selectedProperty, string text)
+        {
+            ClassificationCrud.OnFilter(selectedProperty, text);
+        }
+
+        private void FilterFind(string selectedProperty, string text)
+        {
+            FindCrud.OnFilter(selectedProperty, text);
         }
     }
 }
