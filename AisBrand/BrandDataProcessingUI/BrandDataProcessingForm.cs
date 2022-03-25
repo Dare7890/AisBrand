@@ -83,6 +83,7 @@ namespace BrandDataProcessingUI
         private void BrandDataProcessingForm_Load(object sender, EventArgs e)
         {
             FillExcavationsData();
+            EnableAnalyseButton();
         }
 
         private void InitNavigation()
@@ -391,6 +392,7 @@ namespace BrandDataProcessingUI
                     navigation.Forward(currentTableName, null);
                     SetTableName(typeof(FindsClass));
                     EnableBackButton();
+                    DisableAnalyseButton();
                     ExcavationCrud.OnGetAllExcavations();
                     break;
                 case nameof(Classification):
@@ -448,6 +450,7 @@ namespace BrandDataProcessingUI
                 case nameof(Excavation):
                     FillExcavationsData();
                     SetTableName(typeof(Excavation));
+                    EnableAnalyseButton();
                     break;
                 case nameof(FindsClass):
                     SelectedParentId = pastValue.Id;
@@ -495,6 +498,17 @@ namespace BrandDataProcessingUI
         {
             tlsCopy.Enabled = false;
             tlsCopy.Visible = false;
+        }
+
+        private void EnableAnalyseButton()
+        {
+            if (dgvTable.SelectedRows.Count > 0)
+                tlsAnalyse.Enabled = true;
+        }
+
+        private void DisableAnalyseButton()
+        {
+            tlsAnalyse.Enabled = false;
         }
 
         private void EnableCopyButton()
@@ -571,6 +585,52 @@ namespace BrandDataProcessingUI
         private void FilterFind(string selectedProperty, string text)
         {
             FindCrud.OnFilter(selectedProperty, text);
+        }
+
+        private void tlsAnalyse_Click(object sender, EventArgs e)
+        {
+            OpenAnalyseWindow();
+        }
+
+        private void OpenAnalyseWindow()
+        {
+            const int nameIndex = 0;
+            const int monumentIndex = 1;
+            IList<ViewModelExcavation> viewModelExcavations = new List<ViewModelExcavation>();
+            foreach (DataGridViewRow row in dgvTable.SelectedRows)
+                viewModelExcavations.Add(new ViewModelExcavation(row.Cells[monumentIndex].Value.ToString(), row.Cells[nameIndex].Value.ToString()));
+            IEnumerable<Excavation> excavations = ExcavationCrud.GetExcavations(viewModelExcavations);
+            IEnumerable<string> classes = excavations.SelectMany(e => e.FindsClasses)
+                                                    .Select(f => f.Class);
+
+            using (AnalyseOpenForm analyseForm = new(classes))
+            {
+                if (analyseForm.ShowDialog() != DialogResult.OK)
+                    return;
+
+                string selectedClass = analyseForm.SelectedSubclass;
+                IEnumerable<Excavation> filteredExcavations = FilterExcavationsByClassName(excavations, selectedClass);
+            }
+        }
+
+        private IEnumerable<Excavation> FilterExcavationsByClassName(IEnumerable<Excavation> excavations, string selectedClass)
+        {
+            IList<Excavation> filteredExcavations = new List<Excavation>();
+            foreach (Excavation excavation in excavations)
+            {
+                Excavation filteredExcavation = FilterExcavationByClassName(excavation, selectedClass);
+                if (filteredExcavation != null && filteredExcavation.FindsClasses.Count > 0)
+                    filteredExcavations.Add(filteredExcavation);
+            }
+
+            return filteredExcavations;
+        }
+
+        private Excavation FilterExcavationByClassName(Excavation excavation, string selectedClass)
+        {
+            Excavation filteredExcavation = new Excavation(excavation.ID, excavation.Name, excavation.Monument);
+            filteredExcavation.FindsClasses = new List<FindsClass>(excavation.FindsClasses.Where(c => c.Class == selectedClass));
+            return filteredExcavation;
         }
     }
 }

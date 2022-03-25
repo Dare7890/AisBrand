@@ -45,7 +45,7 @@ namespace BrandDataProcessingUI
             this.tlsBack = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.анализToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlsAnalyse = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.smiUpdate = new System.Windows.Forms.ToolStripMenuItem();
@@ -181,7 +181,6 @@ namespace BrandDataProcessingUI
             // 
             this.mnsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tlsFile,
-            this.анализToolStripMenuItem,
             this.справкаToolStripMenuItem});
             this.mnsMenu.Location = new System.Drawing.Point(0, 0);
             this.mnsMenu.Name = "mnsMenu";
@@ -194,7 +193,8 @@ namespace BrandDataProcessingUI
             this.tlsFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tlsBack,
             this.tlsAdd,
-            this.tlsCopy});
+            this.tlsCopy,
+            this.tlsAnalyse});
             this.tlsFile.Name = "tlsFile";
             this.tlsFile.Size = new System.Drawing.Size(68, 16);
             this.tlsFile.Text = "Функции";
@@ -226,11 +226,14 @@ namespace BrandDataProcessingUI
             this.tlsCopy.Visible = false;
             this.tlsCopy.Click += new System.EventHandler(this.tlsCopy_Click);
             // 
-            // анализToolStripMenuItem
+            // tlsAnalyse
             // 
-            this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
-            this.анализToolStripMenuItem.Size = new System.Drawing.Size(59, 16);
-            this.анализToolStripMenuItem.Text = "Анализ";
+            this.tlsAnalyse.Enabled = false;
+            this.tlsAnalyse.Name = "tlsAnalyse";
+            this.tlsAnalyse.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tlsAnalyse.Size = new System.Drawing.Size(181, 22);
+            this.tlsAnalyse.Text = "Анализ";
+            this.tlsAnalyse.Click += new System.EventHandler(this.tlsAnalyse_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -300,9 +303,9 @@ namespace BrandDataProcessingUI
         private System.Windows.Forms.ComboBox cmbProperties;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.TextBox txtValue;
-        private System.Windows.Forms.ToolStripMenuItem анализToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tlsCopy;
+        private System.Windows.Forms.ToolStripMenuItem tlsAnalyse;
     }
 }
 

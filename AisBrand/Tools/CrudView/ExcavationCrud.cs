@@ -12,9 +12,12 @@ namespace Tools.CrudView
     {
         public List<string> ExistingMonuments { get; set; }
 
+        public IEnumerable<BrandDataProcessing.Models.Excavation> Excavations { private get; set; }
+
         public event EventHandler<System.EventArgs> GetMonuments;
         public event EventHandler<System.EventArgs> GetAllExcavations;
         public event EventHandler<AddEventArgs<Excavation>> AddEmptyExcavation;
+        public event EventHandler<GetExcavationsEventArgs> GetExcavationsByViewModel;
 
         public ExcavationCrud()
         {
@@ -84,6 +87,14 @@ namespace Tools.CrudView
             OnGetMonuments();
             using (AddBrandDataForm<Excavation> form = new AddBrandDataForm<Excavation>(sourceData, ExistingMonuments))
                 Update(owner, mapper, sourceData, form);
+        }
+
+        public IEnumerable<BrandDataProcessing.Models.Excavation> GetExcavations(IEnumerable<Excavation> viewModelExcavations)
+        {
+            if (GetExcavationsByViewModel != null)
+                GetExcavationsByViewModel.Invoke(this, new GetExcavationsEventArgs(viewModelExcavations));
+
+            return Excavations;
         }
     }
 }

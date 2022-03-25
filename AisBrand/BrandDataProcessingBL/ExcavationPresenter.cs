@@ -30,9 +30,21 @@ namespace BrandDataProcessingBL
             this.view.ExcavationCrud.GetMonuments += ExcavationCrud_GetMonuments;
             this.view.ExcavationCrud.GetAllExcavations += ExcavationCrud_GetAllExcavations;
             this.view.ExcavationCrud.AddEmptyExcavation += ExcavationCrud_AddOnlyExcavation;
+            this.view.ExcavationCrud.GetExcavationsByViewModel += ExcavationCrud_GetExcavationsByViewModel; ;
             this.view.ExcavationCrud.Filter += ExcavationCrud_Filter;
 
             this.classificationsRetriever = classificationsRetriever;
+        }
+
+        private void ExcavationCrud_GetExcavationsByViewModel(object sender, GetExcavationsEventArgs e)
+        {
+            IEnumerable<Excavation> excavations = GetExcavationByViewModel(e.ViewModelExcavations);
+            this.view.ExcavationCrud.Excavations = new List<Excavation>(excavations);
+        }
+
+        private IEnumerable<Excavation> GetExcavationByViewModel(IEnumerable<AddBrandDataUI.ViewModels.Excavation> viewModelExcavations)
+        {
+            return viewModelExcavations.Select(e => GetExcavation(excavations, e.Name, e.Monument));
         }
 
         private void ExcavationCrud_Filter(object sender, FilterEventArgs<AddBrandDataUI.ViewModels.Excavation> e)
