@@ -14,6 +14,7 @@ using Tools.Map;
 using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
+using AnalyticsTableExcel;
 
 namespace BrandDataProcessingUI
 {
@@ -599,6 +600,7 @@ namespace BrandDataProcessingUI
             IList<ViewModelExcavation> viewModelExcavations = new List<ViewModelExcavation>();
             foreach (DataGridViewRow row in dgvTable.SelectedRows)
                 viewModelExcavations.Add(new ViewModelExcavation(row.Cells[monumentIndex].Value.ToString(), row.Cells[nameIndex].Value.ToString()));
+
             IEnumerable<Excavation> excavations = ExcavationCrud.GetExcavations(viewModelExcavations);
             IEnumerable<string> classes = excavations.SelectMany(e => e.FindsClasses)
                                                     .Select(f => f.Class);
@@ -610,6 +612,8 @@ namespace BrandDataProcessingUI
 
                 string selectedClass = analyseForm.SelectedSubclass;
                 IEnumerable<Excavation> filteredExcavations = FilterExcavationsByClassName(excavations, selectedClass);
+                DocumentDisplayer displayer = new(filteredExcavations);
+                displayer.Show();
             }
         }
 

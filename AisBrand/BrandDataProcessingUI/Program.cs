@@ -1,6 +1,5 @@
 using BrandDataProcessing;
 using BrandDataProcessingBL;
-using LoginUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +20,14 @@ namespace BrandDataProcessingUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ITranslater translater = new EntitiyNameTranslater();
-            IClassificationsRetriever classificationsRetriever = new ClassificationsRetriever();
-            BrandDataProcessingForm form = new BrandDataProcessingForm(translater);
-            ExcavationPresenter excavationPresenter = new ExcavationPresenter(form, classificationsRetriever);
-            FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form, classificationsRetriever);
-            ClassificationPresenter classificationPresenter = new ClassificationPresenter(form);
-            FindPresenter findPresenter = new FindPresenter(form);
-            Application.Run(form);
+            //ITranslater translater = new EntitiyNameTranslater();
+            //IClassificationsRetriever classificationsRetriever = new ClassificationsRetriever();
+            //BrandDataProcessingForm form = new BrandDataProcessingForm(translater);
+            //ExcavationPresenter excavationPresenter = new ExcavationPresenter(form, classificationsRetriever);
+            //FindsClassPresenter findsClassPresenter = new FindsClassPresenter(form, classificationsRetriever);
+            //ClassificationPresenter classificationPresenter = new ClassificationPresenter(form);
+            //FindPresenter findPresenter = new FindPresenter(form);
+            //Application.Run(form);
         }
     }
 }
