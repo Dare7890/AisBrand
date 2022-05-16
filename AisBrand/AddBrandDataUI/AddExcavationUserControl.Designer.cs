@@ -46,9 +46,9 @@ namespace AddBrandDataUI
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(13, 23);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(62, 15);
+            this.lblName.Size = new System.Drawing.Size(49, 15);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Название:";
+            this.lblName.Text = "Раскоп:";
             // 
             // lblMonument
             // 

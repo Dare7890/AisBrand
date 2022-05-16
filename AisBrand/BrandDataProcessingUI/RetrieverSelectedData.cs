@@ -8,8 +8,8 @@ namespace BrandDataProcessingUI
     {
         public static Excavation GetSelectedExcavation(DataGridViewCellCollection cells)
         {
-            const int deletedNameIndex = 0;
-            const int deletedMonumentIndex = 1;
+            const int deletedMonumentIndex = 0;
+            const int deletedNameIndex = 1;
             string deletedName = cells[deletedNameIndex].Value.ToString();
             string deletedMonument = cells[deletedMonumentIndex].Value.ToString();
 
