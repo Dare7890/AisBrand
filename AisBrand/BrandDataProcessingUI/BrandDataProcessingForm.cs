@@ -636,5 +636,11 @@ namespace BrandDataProcessingUI
             filteredExcavation.FindsClasses = new List<FindsClass>(excavation.FindsClasses.Where(c => c.Class == selectedClass));
             return filteredExcavation;
         }
+
+        private void docsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReferenceReader reader = new();
+            reader.Show();
+        }
     }
 }
