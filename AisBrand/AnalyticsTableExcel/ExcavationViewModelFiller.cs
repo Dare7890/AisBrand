@@ -41,7 +41,8 @@ namespace AnalyticsTableExcel
                 excavationViewModel.Clay = u.Second.Brand?.Clay;
                 excavationViewModel.Admixture = u.Second.Brand?.Admixture;
                 excavationViewModel.Dating = u.Second.DatingBound?.BoundData;
-                excavationViewModel.Safety = u.Second.Brand?.Safety;
+                excavationViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                excavationViewModel.ReconstructionReliability = u.Second.Brand?.ReconstructionReliability;
 
                 excavationViewModels.Add(excavationViewModel);
             }
