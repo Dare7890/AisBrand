@@ -84,7 +84,7 @@ namespace AddBrandDataUI
             using (Stream stream = new MemoryStream(imageBytes))
             {
                 Image image = System.Drawing.Image.FromStream(stream);
-                Bitmap bitmap = new Bitmap(image, picPicture.Size);
+                Bitmap bitmap = new Bitmap(image);
                 picPicture.Image = bitmap;
             }
         }

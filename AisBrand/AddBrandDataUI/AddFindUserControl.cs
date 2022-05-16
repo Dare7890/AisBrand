@@ -186,21 +186,21 @@ namespace AddBrandDataUI
         private void ShowImage()
         {
             if (Image != null)
-                ShowPicture(Image, pctImage.Size, pctImage);
+                ShowPicture(Image, pctImage);
         }
 
         private void ShowPhoto()
         {
             if (Photo != null)
-                ShowPicture(Photo, pctPhoto.Size, pctPhoto);
+                ShowPicture(Photo, pctPhoto);
         }
 
-        private void ShowPicture(byte[] imageBytes, Size imageSize, PictureBox pictureBox)
+        private void ShowPicture(byte[] imageBytes, PictureBox pictureBox)
         {
             using (Stream stream = new MemoryStream(imageBytes))
             {
                 Image image = System.Drawing.Image.FromStream(stream);
-                Bitmap bitmap = new Bitmap(image, imageSize);
+                Bitmap bitmap = new Bitmap(image);
                 pictureBox.Image = bitmap;
             }
         }

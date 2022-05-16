@@ -134,6 +134,7 @@ namespace AddBrandDataUI
             this.picPicture.Location = new System.Drawing.Point(88, 170);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(147, 127);
+            this.picPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPicture.TabIndex = 12;
             this.picPicture.TabStop = false;
             // 

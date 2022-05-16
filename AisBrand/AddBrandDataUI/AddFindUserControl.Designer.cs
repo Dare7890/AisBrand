@@ -206,6 +206,7 @@ namespace AddBrandDataUI
             this.pctPhoto.Location = new System.Drawing.Point(310, 180);
             this.pctPhoto.Name = "pctPhoto";
             this.pctPhoto.Size = new System.Drawing.Size(100, 100);
+            this.pctPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pctPhoto.TabIndex = 23;
             this.pctPhoto.TabStop = false;
             // 
@@ -215,6 +216,7 @@ namespace AddBrandDataUI
             this.pctImage.Location = new System.Drawing.Point(107, 180);
             this.pctImage.Name = "pctImage";
             this.pctImage.Size = new System.Drawing.Size(100, 100);
+            this.pctImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pctImage.TabIndex = 22;
             this.pctImage.TabStop = false;
             // 
