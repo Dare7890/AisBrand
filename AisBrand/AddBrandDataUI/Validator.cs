@@ -114,7 +114,7 @@ namespace AddBrandDataUI
             const int minValue = 1;
             if (square < minValue)
             {
-                errorMessage = string.Format($"Номер квадрата не должен быть меньше {minValue}");
+                errorMessage = string.Format($"Значение не должен быть меньше {minValue}");
                 return false;
             }
 

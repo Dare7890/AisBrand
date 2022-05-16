@@ -93,8 +93,10 @@ namespace AddBrandDataUI
             this.txtDescription.Location = new System.Drawing.Point(88, 82);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDescription.Size = new System.Drawing.Size(147, 78);
             this.txtDescription.TabIndex = 9;
+            this.txtDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblDescription
             // 

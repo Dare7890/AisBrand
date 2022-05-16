@@ -225,8 +225,10 @@ namespace AddBrandDataUI
             this.txtNote.Location = new System.Drawing.Point(528, 205);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
+            this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtNote.Size = new System.Drawing.Size(153, 75);
             this.txtNote.TabIndex = 21;
+            this.txtNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtCollectorsNumber
             // 
@@ -247,16 +249,20 @@ namespace AddBrandDataUI
             this.txtDescription.Location = new System.Drawing.Point(528, 119);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDescription.Size = new System.Drawing.Size(153, 75);
             this.txtDescription.TabIndex = 18;
+            this.txtDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtDating
             // 
             this.txtDating.Location = new System.Drawing.Point(528, 46);
             this.txtDating.Multiline = true;
             this.txtDating.Name = "txtDating";
+            this.txtDating.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDating.Size = new System.Drawing.Size(153, 66);
             this.txtDating.TabIndex = 17;
+            this.txtDating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtDating.Validating += new System.ComponentModel.CancelEventHandler(this.txtDating_Validating);
             // 
             // txtFieldNumber
