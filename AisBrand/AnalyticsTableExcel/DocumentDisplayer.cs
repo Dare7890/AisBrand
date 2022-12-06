@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using BrandDataProcessing;
@@ -10,7 +11,7 @@ namespace AnalyticsTableExcel
 {
     public class DocumentDisplayer
     {
-        private const string filePath = "../../../../../Data1.xlsx";
+        private const string filePath = @"..\..\..\..\..\Data1.xlsx";
         private List<Excavation> excavations;
 
         public DocumentDisplayer(IEnumerable<Excavation> excavations)
@@ -61,6 +62,16 @@ namespace AnalyticsTableExcel
                     workbook.SaveAs(stream);
                 }
             }
+        }
+
+        public static void OpenDocument()
+        {
+            ProcessStartInfo psInfo = new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true
+            };
+            Process.Start(psInfo);
         }
     }
 }

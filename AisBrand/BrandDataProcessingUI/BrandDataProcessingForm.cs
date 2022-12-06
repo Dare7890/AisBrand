@@ -591,7 +591,9 @@ namespace BrandDataProcessingUI
 
         private void tlsAnalyse_Click(object sender, EventArgs e)
         {
+            ExcavationCrud.OnGetAllExcavations();
             OpenAnalyseWindow();
+            DocumentDisplayer.OpenDocument();
         }
 
         private void OpenAnalyseWindow()
