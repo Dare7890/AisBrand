@@ -140,6 +140,17 @@ namespace AddBrandDataUI
             return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, datingBound, description, analogy, note, Image, Photo);
         }
 
+        public IEnumerable<string> GetPropertyItems(string propertyName)
+        {
+            if (userControl is (IUserControl<Brand>))
+            {
+                IBrandUserControl brandUserControl = (IBrandUserControl)userControl;
+                return brandUserControl.GetPropertyItems(propertyName);
+            }
+
+            return Enumerable.Empty<string>();
+        }
+
         private void FillTextFields(Find find)
         {
             txtFormation.Text = find.Formation;

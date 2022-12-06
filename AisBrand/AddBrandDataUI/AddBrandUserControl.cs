@@ -1,9 +1,12 @@
-﻿using AddBrandDataUI.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using AddBrandDataUI.ViewModels;
 
 namespace AddBrandDataUI
 {
-    public partial class AddBrandUserControl : UserControl, IUserControl<Brand>
+    public partial class AddBrandUserControl : UserControl, IBrandUserControl
     {
         public AddBrandUserControl(Brand brand = null)
         {
@@ -23,6 +26,23 @@ namespace AddBrandDataUI
             string reliability = cboReliability.SelectedItem?.ToString().Trim() ?? cboReliability.Text.Trim();
 
             return new Brand(clay, admixture, sprinkling, safety, relief, reliability);
+        }
+
+        public IEnumerable<string> GetPropertyItems(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Brand.Clay):
+                    return cboClay.Items.Cast<string>();
+                case nameof(Brand.Admixture):
+                    return cboAdmixture.Items.Cast<string>();
+                case nameof(Brand.Sprinkling):
+                    return cboSprinkling.Items.Cast<string>();
+                case nameof(Brand.ReconstructionReliability):
+                    return cboReliability.Items.Cast<string>();
+                default:
+                    throw new InvalidOperationException(propertyName);
+            }
         }
 
         private void FillTextFields(Brand brand)

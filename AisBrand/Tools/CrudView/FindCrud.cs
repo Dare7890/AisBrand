@@ -91,6 +91,14 @@ namespace Tools.CrudView
             }
         }
 
+        public IEnumerable<string> GetPropertyItems(BrandDataProcessing.Models.FindsClass findsClass, string propertyName)
+        {
+            using (AddBrandDataForm<Find> form = new AddBrandDataForm<Find>(null, parent: findsClass))
+            {
+                return form.GetPropertyItems(propertyName);
+            }
+        }
+
         protected virtual void OnAddByViewModel(string filePath, Find find, BrandDataProcessing.Models.FindsClass findsClass, string fieldNumber)
         {
             if (AddByViewModel != null)

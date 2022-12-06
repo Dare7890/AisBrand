@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using AddBrandDataUI.ViewModels;
 using FindsClassModel = BrandDataProcessing.Models.FindsClass;
@@ -109,6 +110,13 @@ namespace AddBrandDataUI
             }
 
             return null;
+        }
+
+        public IEnumerable<string> GetPropertyItems(string propertyName)
+        {
+            return userControl is AddFindUserControl ?
+                ((AddFindUserControl)userControl).GetPropertyItems(propertyName) :
+                Enumerable.Empty<string>();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using BrandDataProcessing.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BrandDataProcessing.Models;
 
 namespace AnalyticsTableExcel
 {
@@ -43,11 +43,53 @@ namespace AnalyticsTableExcel
                 excavationViewModel.Dating = u.Second.DatingBound?.BoundData;
                 excavationViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 excavationViewModel.ReconstructionReliability = u.Second.Brand?.ReconstructionReliability;
+                excavationViewModel.Formation = u.Second.Formation;
+                excavationViewModel.Depth = u.Second.Depth;
+                excavationViewModel.Description = u.Second.Description;
+                excavationViewModel.Note = u.Second.Note;
+                excavationViewModel.Square = u.Second.Square;
+                excavationViewModel.Analogy = u.Second.Analogy;
 
                 excavationViewModels.Add(excavationViewModel);
             }
 
             return excavationViewModels;
+        }
+
+        public IEnumerable<StatisticViewModel> FillStatistic(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<StatisticViewModel>();
+
+            List<StatisticViewModel> excavationViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                StatisticViewModel statisticViewModel = new();
+                statisticViewModel.Type = u.First.Second.Type;
+                statisticViewModel.Variant = u.First.Second.Variant;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+
+                excavationViewModels.Add(statisticViewModel);
+            }
+
+            return excavationViewModels.Distinct();
         }
     }
 }

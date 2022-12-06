@@ -15,6 +15,7 @@ using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
 using AnalyticsTableExcel;
+using AddBrandDataUI;
 
 namespace BrandDataProcessingUI
 {
@@ -612,9 +613,19 @@ namespace BrandDataProcessingUI
 
                 string selectedClass = analyseForm.SelectedSubclass;
                 IEnumerable<Excavation> filteredExcavations = FilterExcavationsByClassName(excavations, selectedClass);
+                BrandPropertyHeaders brandPropertyHeaders = GetBrandPropertyHeaders();
                 DocumentDisplayer displayer = new(filteredExcavations);
-                displayer.Show();
+                displayer.Show(brandPropertyHeaders);
             }
+        }
+
+        private BrandPropertyHeaders GetBrandPropertyHeaders()
+        {
+            var findClass = AllExcavations.SelectMany(e => e.FindsClasses).FirstOrDefault(f => f != null);
+            return new BrandPropertyHeaders(FindCrud.GetPropertyItems(findClass, nameof(Brand.Clay)),
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.Admixture)),
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.Sprinkling)),
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.ReconstructionReliability)));
         }
 
         private IEnumerable<Excavation> FilterExcavationsByClassName(IEnumerable<Excavation> excavations, string selectedClass)
