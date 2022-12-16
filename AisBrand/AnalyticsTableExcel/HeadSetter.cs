@@ -1,5 +1,6 @@
 ﻿using BrandDataProcessing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AnalyticsTableExcel
 {
@@ -41,6 +42,39 @@ namespace AnalyticsTableExcel
             headers.AddRange(brandPropertyHeaders.ReliabilityHeaders);
 
             return headers;
+        }
+
+        public static List<string[]> GetScalarMultipleHeader(BrandPropertyHeaders brandPropertyHeaders)
+        {
+            List<string[]> headers = new()
+            {
+                new string[] { "Тип" },
+                new string[] { "Подтип" },
+                new string[] { "Датировка" }
+            };
+
+            List<IEnumerable<string>> items = new()
+            {
+                brandPropertyHeaders.ReliabilityHeaders,
+                brandPropertyHeaders.ClayHeaders,
+                brandPropertyHeaders.AdmixtureHeaders,
+                brandPropertyHeaders.SprinklingHeaders
+            };
+
+            headers.AddRange(items.ConcatLines().Select(i => i.ToArray()));
+
+            return headers;
+        }
+
+        private static IEnumerable<IEnumerable<string>> ConcatLines(this IEnumerable<IEnumerable<string>> sequences)
+        {
+            IEnumerable<IEnumerable<string>> emptyProduct = new[] { Enumerable.Empty<string>() };
+            return sequences.Aggregate(
+                emptyProduct,
+                (accumulator, sequence) =>
+                    from accseq in accumulator
+                    from item in sequence
+                    select accseq.Concat(new[] { item }));
         }
     }
 }

@@ -159,10 +159,7 @@ namespace AddBrandDataUI
             this.cboReliability.FormattingEnabled = true;
             this.cboReliability.Items.AddRange(new object[] {
             "КОО",
-            "КПОО",
-            "КНОО",
-            "КВО",
-            "Неопределим"});
+            "КПОО"});
             this.cboReliability.Location = new System.Drawing.Point(361, 12);
             this.cboReliability.Name = "cboReliability";
             this.cboReliability.Size = new System.Drawing.Size(153, 23);
