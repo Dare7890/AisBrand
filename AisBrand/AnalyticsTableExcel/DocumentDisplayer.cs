@@ -102,7 +102,7 @@ namespace AnalyticsTableExcel
                     }
                 }
 
-                DeleteEmptyColumns(thirdWorksheet);
+                DeleteEmptyColumns(thirdWorksheet, headerRowsAmount);
 
                 firstWorksheet.InsertColumn(firstWorksheet.Columns.Length + 1);
                 foreach (var row in firstWorksheet.Rows)
@@ -131,13 +131,13 @@ namespace AnalyticsTableExcel
             }
         }
 
-        private static void DeleteEmptyColumns(IWorksheet worksheet)
+        private static void DeleteEmptyColumns(IWorksheet worksheet, int skipRowsAmount = 1)
         {
             int counter = 0;
             List<int> deletedColumnIndexes = new List<int>(0);
             foreach (var column in worksheet.Columns)
             {
-                if (column.Rows.Skip(headerRowsAmount).All(r => r.Text == "0"))
+                if (column.Rows.Skip(skipRowsAmount).All(r => r.Text == "0"))
                 {
                     deletedColumnIndexes.Add(column.Column - counter);
                     counter++;
