@@ -29,7 +29,6 @@ namespace AddBrandDataUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtRelief = new System.Windows.Forms.TextBox();
             this.lblReliability = new System.Windows.Forms.Label();
             this.lblRelief = new System.Windows.Forms.Label();
             this.lblSafety = new System.Windows.Forms.Label();
@@ -39,21 +38,15 @@ namespace AddBrandDataUI
             this.cboAdmixture = new System.Windows.Forms.ComboBox();
             this.cboClay = new System.Windows.Forms.ComboBox();
             this.cboSprinkling = new System.Windows.Forms.ComboBox();
-            this.txtSafety = new System.Windows.Forms.TextBox();
             this.cboReliability = new System.Windows.Forms.ComboBox();
+            this.cboSafety = new System.Windows.Forms.ComboBox();
+            this.cboRelief = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtRelief
-            // 
-            this.txtRelief.Location = new System.Drawing.Point(361, 43);
-            this.txtRelief.Name = "txtRelief";
-            this.txtRelief.Size = new System.Drawing.Size(153, 23);
-            this.txtRelief.TabIndex = 29;
             // 
             // lblReliability
             // 
             this.lblReliability.AutoSize = true;
-            this.lblReliability.Location = new System.Drawing.Point(262, 15);
+            this.lblReliability.Location = new System.Drawing.Point(279, 10);
             this.lblReliability.Name = "lblReliability";
             this.lblReliability.Size = new System.Drawing.Size(47, 15);
             this.lblReliability.TabIndex = 25;
@@ -62,43 +55,43 @@ namespace AddBrandDataUI
             // lblRelief
             // 
             this.lblRelief.AutoSize = true;
-            this.lblRelief.Location = new System.Drawing.Point(261, 46);
+            this.lblRelief.Location = new System.Drawing.Point(5, 51);
             this.lblRelief.Name = "lblRelief";
-            this.lblRelief.Size = new System.Drawing.Size(82, 15);
+            this.lblRelief.Size = new System.Drawing.Size(66, 15);
             this.lblRelief.TabIndex = 24;
-            this.lblRelief.Text = "Рельефность:";
+            this.lblRelief.Text = "Орнамент:";
             // 
             // lblSafety
             // 
             this.lblSafety.AutoSize = true;
-            this.lblSafety.Location = new System.Drawing.Point(261, 79);
+            this.lblSafety.Location = new System.Drawing.Point(5, 84);
             this.lblSafety.Name = "lblSafety";
-            this.lblSafety.Size = new System.Drawing.Size(82, 15);
+            this.lblSafety.Size = new System.Drawing.Size(36, 15);
             this.lblSafety.TabIndex = 23;
-            this.lblSafety.Text = "Сохранность:";
+            this.lblSafety.Text = "ДОП:";
             // 
             // lblSprinkling
             // 
             this.lblSprinkling.AutoSize = true;
-            this.lblSprinkling.Location = new System.Drawing.Point(14, 79);
+            this.lblSprinkling.Location = new System.Drawing.Point(279, 84);
             this.lblSprinkling.Name = "lblSprinkling";
-            this.lblSprinkling.Size = new System.Drawing.Size(66, 15);
+            this.lblSprinkling.Size = new System.Drawing.Size(61, 15);
             this.lblSprinkling.TabIndex = 22;
-            this.lblSprinkling.Text = "Подсыпка:";
+            this.lblSprinkling.Text = "Примеси:";
             // 
             // lblAdmixture
             // 
             this.lblAdmixture.AutoSize = true;
-            this.lblAdmixture.Location = new System.Drawing.Point(14, 46);
+            this.lblAdmixture.Location = new System.Drawing.Point(5, 12);
             this.lblAdmixture.Name = "lblAdmixture";
-            this.lblAdmixture.Size = new System.Drawing.Size(61, 15);
+            this.lblAdmixture.Size = new System.Drawing.Size(30, 15);
             this.lblAdmixture.TabIndex = 21;
-            this.lblAdmixture.Text = "Примеси:";
+            this.lblAdmixture.Text = "Тип:";
             // 
             // lblClay
             // 
             this.lblClay.AutoSize = true;
-            this.lblClay.Location = new System.Drawing.Point(14, 15);
+            this.lblClay.Location = new System.Drawing.Point(279, 46);
             this.lblClay.Name = "lblClay";
             this.lblClay.Size = new System.Drawing.Size(43, 15);
             this.lblClay.TabIndex = 20;
@@ -109,11 +102,10 @@ namespace AddBrandDataUI
             this.cboAdmixture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAdmixture.FormattingEnabled = true;
             this.cboAdmixture.Items.AddRange(new object[] {
-            "ПП",
-            "ПД",
-            "ПДиП",
-            "БВПР"});
-            this.cboAdmixture.Location = new System.Drawing.Point(86, 43);
+            "БВПР",
+            "ПМП",
+            "ПКП"});
+            this.cboAdmixture.Location = new System.Drawing.Point(361, 81);
             this.cboAdmixture.Name = "cboAdmixture";
             this.cboAdmixture.Size = new System.Drawing.Size(153, 23);
             this.cboAdmixture.TabIndex = 32;
@@ -127,7 +119,7 @@ namespace AddBrandDataUI
             "КГК",
             "КСОЖ",
             "Другая"});
-            this.cboClay.Location = new System.Drawing.Point(86, 12);
+            this.cboClay.Location = new System.Drawing.Point(361, 48);
             this.cboClay.Name = "cboClay";
             this.cboClay.Size = new System.Drawing.Size(153, 23);
             this.cboClay.TabIndex = 33;
@@ -136,22 +128,10 @@ namespace AddBrandDataUI
             // 
             this.cboSprinkling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSprinkling.FormattingEnabled = true;
-            this.cboSprinkling.Items.AddRange(new object[] {
-            "ПМП",
-            "ПКП",
-            "ПЗ",
-            "Заглажено"});
-            this.cboSprinkling.Location = new System.Drawing.Point(87, 76);
+            this.cboSprinkling.Location = new System.Drawing.Point(93, 12);
             this.cboSprinkling.Name = "cboSprinkling";
             this.cboSprinkling.Size = new System.Drawing.Size(152, 23);
             this.cboSprinkling.TabIndex = 34;
-            // 
-            // txtSafety
-            // 
-            this.txtSafety.Location = new System.Drawing.Point(361, 76);
-            this.txtSafety.Name = "txtSafety";
-            this.txtSafety.Size = new System.Drawing.Size(153, 23);
-            this.txtSafety.TabIndex = 30;
             // 
             // cboReliability
             // 
@@ -165,16 +145,42 @@ namespace AddBrandDataUI
             this.cboReliability.Size = new System.Drawing.Size(153, 23);
             this.cboReliability.TabIndex = 35;
             // 
+            // cboSafety
+            // 
+            this.cboSafety.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSafety.FormattingEnabled = true;
+            this.cboSafety.Items.AddRange(new object[] {
+            "авып",
+            "вапв",
+            "ыыы"});
+            this.cboSafety.Location = new System.Drawing.Point(93, 84);
+            this.cboSafety.Name = "cboSafety";
+            this.cboSafety.Size = new System.Drawing.Size(152, 23);
+            this.cboSafety.TabIndex = 36;
+            // 
+            // cboRelief
+            // 
+            this.cboRelief.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRelief.FormattingEnabled = true;
+            this.cboRelief.Items.AddRange(new object[] {
+            "dsf",
+            "ssss",
+            "a"});
+            this.cboRelief.Location = new System.Drawing.Point(93, 46);
+            this.cboRelief.Name = "cboRelief";
+            this.cboRelief.Size = new System.Drawing.Size(152, 23);
+            this.cboRelief.TabIndex = 37;
+            // 
             // AddBrandUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboRelief);
+            this.Controls.Add(this.cboSafety);
             this.Controls.Add(this.cboReliability);
             this.Controls.Add(this.cboSprinkling);
             this.Controls.Add(this.cboClay);
             this.Controls.Add(this.cboAdmixture);
-            this.Controls.Add(this.txtSafety);
-            this.Controls.Add(this.txtRelief);
             this.Controls.Add(this.lblReliability);
             this.Controls.Add(this.lblRelief);
             this.Controls.Add(this.lblSafety);
@@ -189,7 +195,6 @@ namespace AddBrandDataUI
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtRelief;
         private System.Windows.Forms.Label lblReliability;
         private System.Windows.Forms.Label lblRelief;
         private System.Windows.Forms.Label lblSafety;
@@ -199,7 +204,8 @@ namespace AddBrandDataUI
         private System.Windows.Forms.ComboBox cboAdmixture;
         private System.Windows.Forms.ComboBox cboClay;
         private System.Windows.Forms.ComboBox cboSprinkling;
-        private System.Windows.Forms.TextBox txtSafety;
         private System.Windows.Forms.ComboBox cboReliability;
+        private System.Windows.Forms.ComboBox cboSafety;
+        private System.Windows.Forms.ComboBox cboRelief;
     }
 }

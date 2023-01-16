@@ -34,8 +34,8 @@ namespace BrandDataProcessing
             {
                 return new Dictionary<string, string>()
                 {
-                    { "Type", "Тип" },
-                    { "Variant", "Вариант" }
+                    { "Type", "Форма" },
+                    { "Variant", "Часть" }
                 };
             }
         }

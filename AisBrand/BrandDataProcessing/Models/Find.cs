@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    [TranslatedName("Клейма")]
+    [TranslatedName("Посуда ")]
     public class Find : IIdentifier
     {
         public int ID { get; set; }
@@ -45,7 +45,7 @@ namespace BrandDataProcessing.Models
         [XmlIgnore]
         public string PhotoAsString { get; set; }
 
-        public string Analogy { get; set; }
+        public string Analogy { get; set; } = "1";
 
         public string Note { get; set; }
 

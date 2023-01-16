@@ -10,36 +10,42 @@ namespace AnalyticsTableExcel
         {
             yield return "Полевой №";
             yield return "Коллекционыный №";
-            yield return "Памятник";
+            yield return "Экспедиция";
             yield return "Раскоп";
             yield return "Пласт";
             yield return "Квадрат";
             yield return "Глубина";
             yield return "Тип";
-            yield return "Подтип";
             yield return "Обжиг";
             yield return "Глина";
             yield return "Примеси";
-            yield return "Подсыпка";
+            yield return "ДОП";
+            yield return "Орнамент";
             yield return "Датировка";
-            yield return "Аналогии";
+            yield return "Количество";
             yield return "Описание";
             yield return "Примичание";
         }
 
+        public static IEnumerable<string> GetStatisticHeader()
+        {
+            yield return "Тип";
+            yield return "Экспедиция";
+            yield return "Раскоп";
+            yield return "Пласт";
+            yield return "Квадрат";
+            yield return "Датировка";
+            yield return "Количество";
+        }
+
         public static IEnumerable<string> GetHeader(BrandPropertyHeaders brandPropertyHeaders)
         {
-            List<string> headers = new List<string>()
-            {
-                "Тип",
-                "Подтип",
-                "Датировка"
-            };
-
+            List<string> headers = new List<string>();
+            headers.AddRange(brandPropertyHeaders.SafetyHeaders);
+            headers.AddRange(brandPropertyHeaders.ReliefHeaders);
+            headers.AddRange(brandPropertyHeaders.ReliabilityHeaders);
             headers.AddRange(brandPropertyHeaders.ClayHeaders);
             headers.AddRange(brandPropertyHeaders.AdmixtureHeaders);
-            headers.AddRange(brandPropertyHeaders.SprinklingHeaders);
-            headers.AddRange(brandPropertyHeaders.ReliabilityHeaders);
 
             return headers;
         }
@@ -48,17 +54,16 @@ namespace AnalyticsTableExcel
         {
             List<string[]> headers = new()
             {
-                new string[] { "Тип" },
-                new string[] { "Подтип" },
-                new string[] { "Датировка" }
+                new string[] { "ДОП", "Орнамент", "Обжиг", "Глина", "Примеси", "Тип" }
             };
 
             List<IEnumerable<string>> items = new()
             {
+                brandPropertyHeaders.SafetyHeaders,
+                brandPropertyHeaders.ReliefHeaders,
                 brandPropertyHeaders.ReliabilityHeaders,
                 brandPropertyHeaders.ClayHeaders,
                 brandPropertyHeaders.AdmixtureHeaders,
-                brandPropertyHeaders.SprinklingHeaders
             };
 
             headers.AddRange(items.ConcatLines().Select(i => i.ToArray()));

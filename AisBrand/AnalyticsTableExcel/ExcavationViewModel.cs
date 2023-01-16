@@ -16,9 +16,7 @@
 
         public int? Depth { get; set; }
 
-        public string Type { get; set; }
-
-        public string Variant { get; set; }
+        public string Sprinkling { get; set; }
 
         public string ReconstructionReliability { get; set; }
 
@@ -26,7 +24,9 @@
 
         public string Admixture { get; set; }
 
-        public string Sprinkling { get; set; }
+        public string Safety{ get; set; }
+
+        public string Relief { get; set; }
 
         public string Dating { get; set; }
 

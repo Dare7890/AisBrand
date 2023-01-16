@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using FindsClassModel = BrandDataProcessing.Models.FindsClass;
-using ClassificationModel = BrandDataProcessing.Models.Classification;
 using DatingBoundModel = BrandDataProcessing.Models.DatingBound;
 using BrandDataProcessing;
 
@@ -60,8 +59,10 @@ namespace AddBrandDataUI
         {
             switch (subclass)
             {
-                case "Клеймо":
-                    userControl = brand == null ? new AddBrandUserControl() : new AddBrandUserControl(brand);
+                case "Посуда":
+                    string type = cboType.SelectedItem?.ToString().Trim() ?? cboType.Text.Trim();
+                    string variant = cboVariant.SelectedItem?.ToString().Trim() ?? cboVariant.Text.Trim();
+                    userControl = brand == null ? new AddBrandUserControl(form: type, part: variant) : new AddBrandUserControl(brand, type, variant);
                     break;
                 default:
                     break;
@@ -117,7 +118,9 @@ namespace AddBrandDataUI
             string collectorsNumber = txtCollectorsNumber.Text.Trim();
             string dating = txtDating.Text.Trim();
             string description = txtDescription.Text.Trim();
-            string analogy = txtAnalogy.Text.Trim();
+            string analogy = string.IsNullOrEmpty(txtAnalogy.Text.Trim()) || txtAnalogy.Text.Trim() == "0" ?
+                "1" :
+                txtAnalogy.Text.Trim();
             string note = txtNote.Text.Trim();
 
             string type = cboType.SelectedItem?.ToString().Trim() ?? cboType.Text.Trim();
@@ -130,7 +133,7 @@ namespace AddBrandDataUI
 
             switch (parentFindClass.Class)
             {
-                case "Клеймо":
+                case "Посуда":
                     IUserControl<Brand> brandUserControl = (IUserControl<Brand>)userControl;
                     Brand brand = brandUserControl.Add();
                     return new Find(fieldNumber, formation, parsedSquare, parsedDepth, collectorsNumber, datingBound, description, analogy, note, Image, Photo, brand);
@@ -369,6 +372,16 @@ namespace AddBrandDataUI
             return parentFindClass.Classifications.Where(c => c.Type == type)
                                                     .Select(c => c.Variant)
                                                     .Distinct();
+        }
+
+        private void txtAnalogy_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = IsDigit(e.KeyChar);
+        }
+
+        private static bool IsDigit(char number)
+        {
+            return !Char.IsDigit(number) && number != 8;
         }
     }
 }

@@ -128,18 +128,18 @@ namespace AddBrandDataUI
             this.lblVariant.AutoSize = true;
             this.lblVariant.Location = new System.Drawing.Point(310, 82);
             this.lblVariant.Name = "lblVariant";
-            this.lblVariant.Size = new System.Drawing.Size(55, 15);
+            this.lblVariant.Size = new System.Drawing.Size(41, 15);
             this.lblVariant.TabIndex = 31;
-            this.lblVariant.Text = "Вариант:";
+            this.lblVariant.Text = "Часть:";
             // 
             // lblType
             // 
             this.lblType.AutoSize = true;
             this.lblType.Location = new System.Drawing.Point(310, 18);
             this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(30, 15);
+            this.lblType.Size = new System.Drawing.Size(48, 15);
             this.lblType.TabIndex = 30;
-            this.lblType.Text = "Тип:";
+            this.lblType.Text = "Форма:";
             // 
             // cboVariant
             // 
@@ -243,6 +243,7 @@ namespace AddBrandDataUI
             this.txtAnalogy.Name = "txtAnalogy";
             this.txtAnalogy.Size = new System.Drawing.Size(153, 23);
             this.txtAnalogy.TabIndex = 19;
+            this.txtAnalogy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAnalogy_KeyPress);
             // 
             // txtDescription
             // 
@@ -319,9 +320,9 @@ namespace AddBrandDataUI
             this.lblAnalogy.AutoSize = true;
             this.lblAnalogy.Location = new System.Drawing.Point(421, 18);
             this.lblAnalogy.Name = "lblAnalogy";
-            this.lblAnalogy.Size = new System.Drawing.Size(64, 15);
+            this.lblAnalogy.Size = new System.Drawing.Size(75, 15);
             this.lblAnalogy.TabIndex = 9;
-            this.lblAnalogy.Text = "Аналогии:";
+            this.lblAnalogy.Text = "Количество:";
             // 
             // lblDescription
             // 

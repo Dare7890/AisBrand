@@ -3,7 +3,7 @@
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    [TranslatedName("Клеймо")]
+    [TranslatedName("Посуда")]
     [Category("Керамика")]
     public class Brand : IIdentifier
     {

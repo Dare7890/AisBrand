@@ -626,8 +626,9 @@ namespace BrandDataProcessingUI
             var findClass = AllExcavations.SelectMany(e => e.FindsClasses).FirstOrDefault(f => f != null);
             return new BrandPropertyHeaders(FindCrud.GetPropertyItems(findClass, nameof(Brand.Clay)),
                 FindCrud.GetPropertyItems(findClass, nameof(Brand.Admixture)),
-                FindCrud.GetPropertyItems(findClass, nameof(Brand.Sprinkling)),
-                FindCrud.GetPropertyItems(findClass, nameof(Brand.ReconstructionReliability)));
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.ReconstructionReliability)),
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.Relief)),
+                FindCrud.GetPropertyItems(findClass, nameof(Brand.Safety)));
         }
 
         private IEnumerable<Excavation> FilterExcavationsByClassName(IEnumerable<Excavation> excavations, string selectedClass)

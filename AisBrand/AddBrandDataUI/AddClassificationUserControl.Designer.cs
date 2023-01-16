@@ -71,9 +71,9 @@ namespace AddBrandDataUI
             this.lblVariant.AutoSize = true;
             this.lblVariant.Location = new System.Drawing.Point(20, 56);
             this.lblVariant.Name = "lblVariant";
-            this.lblVariant.Size = new System.Drawing.Size(55, 15);
+            this.lblVariant.Size = new System.Drawing.Size(41, 15);
             this.lblVariant.TabIndex = 5;
-            this.lblVariant.Text = "Вариант:";
+            this.lblVariant.Text = "Часть:";
             // 
             // lblType
             // 
@@ -82,9 +82,9 @@ namespace AddBrandDataUI
             this.lblType.AutoSize = true;
             this.lblType.Location = new System.Drawing.Point(20, 23);
             this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(30, 15);
+            this.lblType.Size = new System.Drawing.Size(48, 15);
             this.lblType.TabIndex = 4;
-            this.lblType.Text = "Тип:";
+            this.lblType.Text = "Форма:";
             // 
             // txtDescription
             // 

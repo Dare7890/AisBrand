@@ -4,11 +4,7 @@ namespace AnalyticsTableExcel
 {
     public class HardStatisticViewModel : IEquatable<HardStatisticViewModel>
     {
-        public string Type { get; set; }
-
-        public string Variant { get; set; }
-
-        public string Dating { get; set; }
+        public string Sprinkling { get; set; }
 
         public string ReconstructionReliability { get; set; }
 
@@ -16,7 +12,9 @@ namespace AnalyticsTableExcel
 
         public string Admixture { get; set; }
 
-        public string Sprinkling { get; set; }
+        public string Safety { get; set; }
+
+        public string Relief { get; set; }
 
         public int SequencesNumber { get; set; }
 
@@ -32,21 +30,20 @@ namespace AnalyticsTableExcel
             if (object.ReferenceEquals(other, null))
                 return false;
 
-            return Type == other.Type && Variant == other.Variant && Dating == other.Dating &&
-                ReconstructionReliability == other.ReconstructionReliability && Clay == other.Clay && Admixture == other.Admixture && Sprinkling == other.Sprinkling;
+            return Sprinkling == other.Sprinkling && ReconstructionReliability == other.ReconstructionReliability
+                && Clay == other.Clay && Admixture == other.Admixture && Safety == other.Safety && Relief == other.Relief;
         }
 
         public override int GetHashCode()
         {
-            int typeHash = Type.GetHashCode();
-            int variantHash = Variant.GetHashCode();
-            int datingHash = Dating.GetHashCode();
+            int sprinklingHash = Sprinkling.GetHashCode();
             int reliabilityHash = ReconstructionReliability.GetHashCode();
             int clayHash = Clay.GetHashCode();
             int admixtureHash = Admixture.GetHashCode();
-            int sprinklingHash = Sprinkling.GetHashCode();
+            int safetyHash = Safety.GetHashCode();
+            int reliefHash = Relief.GetHashCode();
 
-            return typeHash ^ variantHash ^ datingHash ^ reliabilityHash ^ clayHash ^ admixtureHash ^ sprinklingHash;
+            return sprinklingHash ^ reliabilityHash ^ clayHash ^ admixtureHash ^ safetyHash ^ reliefHash;
         }
 
         public static bool operator ==(HardStatisticViewModel a, HardStatisticViewModel b)

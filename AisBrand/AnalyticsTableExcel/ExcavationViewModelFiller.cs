@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BrandDataProcessing.Models;
 
@@ -34,12 +35,12 @@ namespace AnalyticsTableExcel
                 ExcavationViewModel excavationViewModel = new();
                 excavationViewModel.Monument = u.First.First.Monument;
                 excavationViewModel.Name = u.First.First.Name;
-                excavationViewModel.Type = u.First.Second.Type;
-                excavationViewModel.Variant = u.First.Second.Variant;
                 excavationViewModel.FieldNumber = u.Second.FieldNumber;
                 excavationViewModel.CollectorsNumber = u.Second.CollectorsNumber;
                 excavationViewModel.Clay = u.Second.Brand?.Clay;
                 excavationViewModel.Admixture = u.Second.Brand?.Admixture;
+                excavationViewModel.Safety = u.Second.Brand?.Safety;
+                excavationViewModel.Relief = u.Second.Brand?.Relief;
                 excavationViewModel.Dating = u.Second.DatingBound?.BoundData;
                 excavationViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 excavationViewModel.ReconstructionReliability = u.Second.Brand?.ReconstructionReliability;
@@ -61,7 +62,7 @@ namespace AnalyticsTableExcel
             if (excavations.Count == 0)
                 return Enumerable.Empty<StatisticViewModel>();
 
-            List<StatisticViewModel> excavationViewModels = new();
+            List<StatisticViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
                                                                                                     .SelectMany(c => c.Classifications)
                                                                                                     .SelectMany(f => f.Finds)
@@ -82,14 +83,32 @@ namespace AnalyticsTableExcel
             foreach (var u in union)
             {
                 StatisticViewModel statisticViewModel = new();
-                statisticViewModel.Type = u.First.Second.Type;
-                statisticViewModel.Variant = u.First.Second.Variant;
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Name = u.First.First.Name;
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Square = u.Second.Square;
+                statisticViewModel.Analogy = u.Second.Analogy;
 
-                excavationViewModels.Add(statisticViewModel);
+                statisticViewModels.Add(statisticViewModel);
             }
 
-            return excavationViewModels.Distinct();
+            return statisticViewModels.GroupBy(c => new { c.Monument, c.Name, c.Dating, c.Sprinkling, c.Formation, c.Square, c.Analogy }).Select(c => new StatisticViewModel() {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                    }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Name = c.First()?.Name,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
+                Square = c.First()?.Square
+            }).Distinct();
         }
     }
 }
