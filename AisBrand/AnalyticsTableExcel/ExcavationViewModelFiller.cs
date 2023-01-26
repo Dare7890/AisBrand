@@ -88,13 +88,13 @@ namespace AnalyticsTableExcel
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
-                statisticViewModel.Square = u.Second.Square;
+                statisticViewModel.Description = u.Second.Description;
                 statisticViewModel.Analogy = u.Second.Analogy;
 
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new { c.Monument, c.Name, c.Dating, c.Sprinkling, c.Formation, c.Square, c.Analogy }).Select(c => new StatisticViewModel() {
+            return statisticViewModels.GroupBy(c => new { c.Monument, c.Name, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy }).Select(c => new StatisticViewModel() {
                 Analogy = c.Select(a => {
                     if (decimal.TryParse(a.Analogy, out decimal result))
                     {
@@ -107,7 +107,7 @@ namespace AnalyticsTableExcel
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
-                Square = c.First()?.Square
+                Description = c.First()?.Description
             }).Distinct();
         }
     }

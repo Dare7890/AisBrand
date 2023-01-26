@@ -232,7 +232,7 @@ namespace BrandDataProcessingUI
             this.tlsAnalyse.Name = "tlsAnalyse";
             this.tlsAnalyse.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.tlsAnalyse.Size = new System.Drawing.Size(201, 22);
-            this.tlsAnalyse.Text = "Предобработка";
+            this.tlsAnalyse.Text = "Статистико-типологический анализ";
             this.tlsAnalyse.Click += new System.EventHandler(this.tlsAnalyse_Click);
             // 
             // docsToolStripMenuItem
@@ -273,7 +273,7 @@ namespace BrandDataProcessingUI
             this.MainMenuStrip = this.mnsMenu;
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "BrandDataProcessingForm";
-            this.Text = "ААИС";
+            this.Text = "АСТАИС";
             this.Load += new System.EventHandler(this.BrandDataProcessingForm_Load);
             this.tlpStructure.ResumeLayout(false);
             this.tlpStructure.PerformLayout();

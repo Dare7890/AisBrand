@@ -73,7 +73,7 @@ namespace AddBrandDataUI
             this.lblVariant.Name = "lblVariant";
             this.lblVariant.Size = new System.Drawing.Size(41, 15);
             this.lblVariant.TabIndex = 5;
-            this.lblVariant.Text = "Часть:";
+            this.lblVariant.Text = "Часть/Тип:";
             // 
             // lblType
             // 
@@ -107,7 +107,7 @@ namespace AddBrandDataUI
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(65, 15);
             this.lblDescription.TabIndex = 8;
-            this.lblDescription.Text = "Описание:";
+            this.lblDescription.Text = "Комплекс:";
             // 
             // btnAddPicture
             // 

@@ -43,28 +43,24 @@ namespace AnalyticsTableExcel
                 firstWorksheet.ImportData(excavationData, 2, 1, false);
 
                 IWorksheet secondWorksheet = workbook.Worksheets[1];
-                secondWorksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
-                secondWorksheet.ImportData(statisticData, 2, 1, false);
-
-                IWorksheet thirdWorksheet = workbook.Worksheets[2];
                 for (int i = 0; i < hardStatisticHeader.Count(); i++)
                 {
-                    thirdWorksheet.ImportArray(hardStatisticHeader[i], 1, i + 1, true);
+                    secondWorksheet.ImportArray(hardStatisticHeader[i], 1, i + 1, true);
                 }
-                thirdWorksheet.ImportArray(SubFields.sprinklings.ToArray(), 6, 1, true);
+                secondWorksheet.ImportArray(SubFields.sprinklings.ToArray(), 6, 1, true);
                 List<HardStatisticViewModel> choosedExcavations = new List<HardStatisticViewModel>();
-                AddSequenceNumber(thirdWorksheet);
+                AddSequenceNumber(secondWorksheet);
                 for (int i = 6; i < SubFields.sprinklings.Count() + 6; i++)
                 {
                     for (int j = 1; j < 1 + hardStatisticHeader.Skip(1).Count(); j++)
                     {
                         decimal excavationsAmount = excavationData.Where
-                            (e => e.Sprinkling == thirdWorksheet.Columns[0].Rows[i].Text &&
-                            (e.Safety != null && e.Safety.Contains(thirdWorksheet.Columns[j].Rows[0].Text) &&
-                            e.Relief != null && e.Relief.Contains(thirdWorksheet.Columns[j].Rows[1].Text) &&
-                            e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(thirdWorksheet.Columns[j].Rows[2].Text) &&
-                            e.Clay != null && e.Clay.Contains(thirdWorksheet.Columns[j].Rows[3].Text) &&
-                            e.Admixture != null && e.Admixture.Contains(thirdWorksheet.Columns[j].Rows[4].Text))).Sum(s => {
+                            (e => e.Sprinkling == secondWorksheet.Columns[0].Rows[i].Text &&
+                            e.Safety != null && e.Safety.Contains(secondWorksheet.Columns[j].Rows[0].Text) &&
+                            e.Relief != null && e.Relief.Contains(secondWorksheet.Columns[j].Rows[1].Text) &&
+                            e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(secondWorksheet.Columns[j].Rows[2].Text) &&
+                            e.Clay != null && e.Clay.Contains(secondWorksheet.Columns[j].Rows[3].Text) &&
+                            e.Admixture != null && e.Admixture.Contains(secondWorksheet.Columns[j].Rows[4].Text)).Sum(s => {
                                 if (decimal.TryParse(s.Analogy, out decimal result))
                                 {
                                     return result;
@@ -72,17 +68,17 @@ namespace AnalyticsTableExcel
 
                                 return 0;
                             });
-                        thirdWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
+                        secondWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
                         if (excavationsAmount > 0)
                         {
                             HardStatisticViewModel choosedExcavation = new()
                             {
-                                Admixture = thirdWorksheet.Columns[j].Rows[4].Text,
-                                ReconstructionReliability = thirdWorksheet.Columns[j].Rows[2].Text,
-                                Clay = thirdWorksheet.Columns[j].Rows[3].Text,
-                                Safety = thirdWorksheet.Columns[j].Rows[0].Text,
-                                Relief = thirdWorksheet.Columns[j].Rows[1].Text,
-                                Sprinkling = thirdWorksheet.Columns[0].Rows[i].Text,
+                                Admixture = secondWorksheet.Columns[j].Rows[4].Text,
+                                ReconstructionReliability = secondWorksheet.Columns[j].Rows[2].Text,
+                                Clay = secondWorksheet.Columns[j].Rows[3].Text,
+                                Safety = secondWorksheet.Columns[j].Rows[0].Text,
+                                Relief = secondWorksheet.Columns[j].Rows[1].Text,
+                                Sprinkling = secondWorksheet.Columns[0].Rows[i].Text,
                                 SequencesNumber = j - 1
                             };
                             choosedExcavations.Add(choosedExcavation);
@@ -90,11 +86,16 @@ namespace AnalyticsTableExcel
                     }
                 }
 
-                DeleteEmptyColumns(thirdWorksheet, headerRowsAmount);
-                DeleteEmptyRows(thirdWorksheet);
-                thirdWorksheet.ImportArray(new string[] { "Тип" }, 6, 1, false);
+                DeleteEmptyColumns(secondWorksheet, headerRowsAmount);
+                DeleteEmptyRows(secondWorksheet);
+                secondWorksheet.ImportArray(new string[] { "Вариант" }, 6, 1, false);
 
-                secondWorksheet.InsertColumn(1);
+
+                IWorksheet thirdWorksheet = workbook.Worksheets[2];
+                thirdWorksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
+                thirdWorksheet.ImportData(statisticData, 2, 1, false);
+
+                thirdWorksheet.InsertColumn(1);
                 foreach (var row in firstWorksheet.Rows)
                 {
                     if (row.Row == 1)
@@ -110,10 +111,10 @@ namespace AnalyticsTableExcel
                         e.Relief == row.Columns[12].Text)?.SequencesNumber;
                     if (sequencesNumber.HasValue)
                     {
-                        secondWorksheet.Columns[0].Rows[row.Row - 1].Text = (sequencesNumber.Value + 1).ToString();
+                        thirdWorksheet.Columns[0].Rows[row.Row - 1].Text = (sequencesNumber.Value + 1).ToString();
                     }
                 }
-                secondWorksheet.ImportArray(new string[] { "Технология" }, 1, 1, false);
+                thirdWorksheet.ImportArray(new string[] { "Технология" }, 1, 1, false);
                 using (Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     workbook.SaveAs(stream);

@@ -10,12 +10,12 @@ namespace AnalyticsTableExcel
         {
             yield return "Полевой №";
             yield return "Коллекционыный №";
-            yield return "Экспедиция";
-            yield return "Раскоп";
+            yield return "Памятник";
+            yield return "Раскоп/Экспедиция";
             yield return "Пласт";
             yield return "Квадрат";
             yield return "Глубина";
-            yield return "Тип";
+            yield return "Вариант";
             yield return "Обжиг";
             yield return "Глина";
             yield return "Примеси";
@@ -23,17 +23,17 @@ namespace AnalyticsTableExcel
             yield return "Орнамент";
             yield return "Датировка";
             yield return "Количество";
-            yield return "Описание";
+            yield return "Комплекс";
             yield return "Примичание";
         }
 
         public static IEnumerable<string> GetStatisticHeader()
         {
-            yield return "Тип";
-            yield return "Экспедиция";
-            yield return "Раскоп";
+            yield return "Вариант";
+            yield return "Памятник";
+            yield return "Раскоп/Экспедиция";
             yield return "Пласт";
-            yield return "Квадрат";
+            yield return "Комплекс";
             yield return "Датировка";
             yield return "Количество";
         }
@@ -54,7 +54,7 @@ namespace AnalyticsTableExcel
         {
             List<string[]> headers = new()
             {
-                new string[] { "ДОП", "Орнамент", "Обжиг", "Глина", "Примеси", "Тип" }
+                new string[] { "ДОП", "Орнамент", "Обжиг", "Глина", "Примеси", "Вариант" }
             };
 
             List<IEnumerable<string>> items = new()

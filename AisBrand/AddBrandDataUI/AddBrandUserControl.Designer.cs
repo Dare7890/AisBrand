@@ -86,7 +86,7 @@ namespace AddBrandDataUI
             this.lblAdmixture.Name = "lblAdmixture";
             this.lblAdmixture.Size = new System.Drawing.Size(30, 15);
             this.lblAdmixture.TabIndex = 21;
-            this.lblAdmixture.Text = "Тип:";
+            this.lblAdmixture.Text = "Вариант:";
             // 
             // lblClay
             // 

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace BrandDataProcessing.Models
 {
     [Serializable]
-    [TranslatedName("Форма")]
+    [TranslatedName("Классификация")]
     public class Classification : IIdentifier, IEquatable<Classification>
     {
         public int ID { get; set; }

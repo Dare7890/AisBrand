@@ -12,7 +12,7 @@ namespace AnalyticsTableExcel
 
         public string Formation { get; set; }
 
-        public int? Square { get; set; }
+        public string Description { get; set; }
 
         public string Dating { get; set; }
 
@@ -31,7 +31,7 @@ namespace AnalyticsTableExcel
                 return false;
 
             return Monument == other.Monument && Name == other.Name && Formation == other.Formation &&
-                Square == other.Square && Sprinkling == other.Sprinkling &&
+                Description == other.Description && Sprinkling == other.Sprinkling &&
                 Dating == other.Dating;
         }
 
@@ -40,7 +40,7 @@ namespace AnalyticsTableExcel
             int monumentHash = Monument.GetHashCode();
             int nameHash = Name.GetHashCode();
             int formationHash = Formation.GetHashCode();
-            int squareHash = Square.GetHashCode();
+            int squareHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
 

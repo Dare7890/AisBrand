@@ -12,7 +12,7 @@ namespace BrandDataProcessing
                 return new Dictionary<string, string>()
                 {
                     { "Monument", "Памятник" },
-                    { "Name", "Раскоп" }
+                    { "Name", "Раскоп/Экспедиция" }
                 };
             }
         }
@@ -35,7 +35,7 @@ namespace BrandDataProcessing
                 return new Dictionary<string, string>()
                 {
                     { "Type", "Форма" },
-                    { "Variant", "Часть" }
+                    { "Variant", "Часть/Тип" }
                 };
             }
         }

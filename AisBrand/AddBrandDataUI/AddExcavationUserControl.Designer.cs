@@ -46,20 +46,20 @@ namespace AddBrandDataUI
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(3, 23);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(75, 15);
+            this.lblName.Size = new System.Drawing.Size(65, 15);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Экспедиция:";
+            this.lblName.Text = "Памятник:";
             // 
             // lblMonument
             // 
             this.lblMonument.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMonument.AutoSize = true;
-            this.lblMonument.Location = new System.Drawing.Point(3, 56);
+            this.lblMonument.Location = new System.Drawing.Point(3, 46);
             this.lblMonument.Name = "lblMonument";
-            this.lblMonument.Size = new System.Drawing.Size(65, 15);
+            this.lblMonument.Size = new System.Drawing.Size(75, 30);
             this.lblMonument.TabIndex = 1;
-            this.lblMonument.Text = "Памятник:";
+            this.lblMonument.Text = "Раскоп/\r\nЭкспедиция:";
             // 
             // txtName
             // 
