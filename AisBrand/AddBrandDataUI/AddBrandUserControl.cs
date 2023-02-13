@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AddBrandDataUI.ViewModels;
+using BrandDataProcessing;
 using BrandDataProcessing.Constants;
 
 namespace AddBrandDataUI
@@ -14,6 +16,7 @@ namespace AddBrandDataUI
             InitializeComponent();
 
             InitSprinklingSubFields(part, form);
+            InitSubFields();
             if (brand != null)
                 FillTextFields(brand);
         }
@@ -70,13 +73,23 @@ namespace AddBrandDataUI
             string partFirstWord = part.Split(" ").FirstOrDefault();
 
             string sprinklingsTemplate = $"{formFirstWord} {partFirstWord} ";
-            var filteredSprinklings = SubFields.sprinklings.Where(a => a.StartsWith(sprinklingsTemplate))
+            var filteredSprinklings = SubFieldsRetriever.Retrieve().Sprinklings.Where(a => a.StartsWith(sprinklingsTemplate))
                 .Select(a => new { Value = a, Display = a[sprinklingsTemplate.Length..] })
                 .ToArray();
 
             cboSprinkling.DataSource = filteredSprinklings;
             cboSprinkling.DisplayMember = "Display";
             cboSprinkling.ValueMember = "Value";
+        }
+
+        private void InitSubFields()
+        {
+            SubFields subFields = SubFieldsRetriever.Retrieve();
+            cboAdmixture.Items.AddRange(subFields.Admixtures.ToArray());
+            cboClay.Items.AddRange(subFields.Clays.ToArray());
+            cboReliability.Items.AddRange(subFields.Reliabilities.ToArray());
+            cboRelief.Items.AddRange(subFields.Reliefs.ToArray());
+            cboSafety.Items.AddRange(subFields.Safeties.ToArray());
         }
     }
 }

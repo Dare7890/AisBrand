@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BrandDataProcessing.Models;
 
@@ -84,7 +83,6 @@ namespace AnalyticsTableExcel
             {
                 StatisticViewModel statisticViewModel = new();
                 statisticViewModel.Monument = u.First.First.Monument;
-                statisticViewModel.Name = u.First.First.Name;
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
@@ -94,7 +92,7 @@ namespace AnalyticsTableExcel
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new { c.Monument, c.Name, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy }).Select(c => new StatisticViewModel() {
+            return statisticViewModels.GroupBy(c => new { c.Monument, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy }).Select(c => new StatisticViewModel() {
                 Analogy = c.Select(a => {
                     if (decimal.TryParse(a.Analogy, out decimal result))
                     {
@@ -103,7 +101,6 @@ namespace AnalyticsTableExcel
                     return 0;
                     }).Sum().ToString(),
                 Monument = c.First()?.Monument,
-                Name = c.First()?.Name,
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,

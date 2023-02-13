@@ -6,8 +6,8 @@ namespace BrandDataProcessingUI
     {
         public static class Excavation
         {
-            private const string monumentTitle = "Памятник";
-            private const string nameTitle = "Раскоп/Экспедиция";
+            private const string monumentTitle = "Памятник/Раскоп";
+            private const string nameTitle = "Экспедиция";
             private const string findsAmountTitle = "Кол-во предметов";
 
             private const int monumentIndex = 0;

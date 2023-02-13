@@ -10,8 +10,8 @@ namespace AnalyticsTableExcel
         {
             yield return "Полевой №";
             yield return "Коллекционыный №";
-            yield return "Памятник";
-            yield return "Раскоп/Экспедиция";
+            yield return "Памятник/Раскоп";
+            yield return "Экспедиция";
             yield return "Пласт";
             yield return "Квадрат";
             yield return "Глубина";
@@ -30,8 +30,7 @@ namespace AnalyticsTableExcel
         public static IEnumerable<string> GetStatisticHeader()
         {
             yield return "Вариант";
-            yield return "Памятник";
-            yield return "Раскоп/Экспедиция";
+            yield return "Памятник/Раскоп";
             yield return "Пласт";
             yield return "Комплекс";
             yield return "Датировка";

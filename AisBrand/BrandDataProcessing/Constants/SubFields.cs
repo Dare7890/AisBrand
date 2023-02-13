@@ -2,16 +2,18 @@
 
 namespace BrandDataProcessing.Constants
 {
-    public static class SubFields
+    public class SubFields
     {
-        public static readonly IEnumerable<string> sprinklings = new List<string>()
-        {
-            //"ПП",
-            //"ПД",
-            //"ПДиП",
-            //"БВПР",
-            "II 1.2 fdgfdg",
-            "II 1.2 kiluo"
-        };
+        public List<string> Sprinklings { get; set; } = new();
+
+        public List<string> Reliabilities { get; set; } = new();
+
+        public List<string> Reliefs { get; set; } = new();
+
+        public List<string> Clays { get; set; } = new();
+
+        public List<string> Safeties { get; set; } = new();
+
+        public List<string> Admixtures { get; set; } = new();
     }
 }

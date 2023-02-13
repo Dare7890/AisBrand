@@ -19,7 +19,6 @@ namespace BrandDataProcessing
             Type childrenTypeInterface = typeof(IIdentifier);
             IEnumerable<string> entitiesNames = parentType.GetProperties()
                                                                 .Where(p => childrenTypeInterface.IsAssignableFrom(p.PropertyType)).Select(l => l.PropertyType.FullName);
-            //IEnumerable<string> entitiesNames = parentLists.Select(l => l.PropertyType.GetGenericArguments()[0].FullName);
 
             return translater.Translate(entitiesNames);
         }

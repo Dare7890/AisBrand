@@ -48,7 +48,7 @@ namespace AddBrandDataUI
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(65, 15);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Памятник:";
+            this.lblName.Text = "Памятник/\r\nРаскоп:";
             // 
             // lblMonument
             // 
@@ -59,7 +59,7 @@ namespace AddBrandDataUI
             this.lblMonument.Name = "lblMonument";
             this.lblMonument.Size = new System.Drawing.Size(75, 30);
             this.lblMonument.TabIndex = 1;
-            this.lblMonument.Text = "Раскоп/\r\nЭкспедиция:";
+            this.lblMonument.Text = "Экспедиция:";
             // 
             // txtName
             // 

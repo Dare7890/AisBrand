@@ -84,7 +84,7 @@ namespace AddBrandDataUI
             this.lblAdmixture.AutoSize = true;
             this.lblAdmixture.Location = new System.Drawing.Point(5, 12);
             this.lblAdmixture.Name = "lblAdmixture";
-            this.lblAdmixture.Size = new System.Drawing.Size(30, 15);
+            this.lblAdmixture.Size = new System.Drawing.Size(55, 15);
             this.lblAdmixture.TabIndex = 21;
             this.lblAdmixture.Text = "Вариант:";
             // 
@@ -101,10 +101,6 @@ namespace AddBrandDataUI
             // 
             this.cboAdmixture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAdmixture.FormattingEnabled = true;
-            this.cboAdmixture.Items.AddRange(new object[] {
-            "БВПР",
-            "ПМП",
-            "ПКП"});
             this.cboAdmixture.Location = new System.Drawing.Point(361, 81);
             this.cboAdmixture.Name = "cboAdmixture";
             this.cboAdmixture.Size = new System.Drawing.Size(153, 23);
@@ -114,11 +110,6 @@ namespace AddBrandDataUI
             // 
             this.cboClay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClay.FormattingEnabled = true;
-            this.cboClay.Items.AddRange(new object[] {
-            "БГК",
-            "КГК",
-            "КСОЖ",
-            "Другая"});
             this.cboClay.Location = new System.Drawing.Point(361, 48);
             this.cboClay.Name = "cboClay";
             this.cboClay.Size = new System.Drawing.Size(153, 23);
@@ -137,9 +128,6 @@ namespace AddBrandDataUI
             // 
             this.cboReliability.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboReliability.FormattingEnabled = true;
-            this.cboReliability.Items.AddRange(new object[] {
-            "КОО",
-            "КПОО"});
             this.cboReliability.Location = new System.Drawing.Point(361, 12);
             this.cboReliability.Name = "cboReliability";
             this.cboReliability.Size = new System.Drawing.Size(153, 23);
@@ -149,10 +137,6 @@ namespace AddBrandDataUI
             // 
             this.cboSafety.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSafety.FormattingEnabled = true;
-            this.cboSafety.Items.AddRange(new object[] {
-            "авып",
-            "вапв",
-            "ыыы"});
             this.cboSafety.Location = new System.Drawing.Point(93, 84);
             this.cboSafety.Name = "cboSafety";
             this.cboSafety.Size = new System.Drawing.Size(152, 23);
@@ -162,10 +146,6 @@ namespace AddBrandDataUI
             // 
             this.cboRelief.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRelief.FormattingEnabled = true;
-            this.cboRelief.Items.AddRange(new object[] {
-            "dsf",
-            "ssss",
-            "a"});
             this.cboRelief.Location = new System.Drawing.Point(93, 46);
             this.cboRelief.Name = "cboRelief";
             this.cboRelief.Size = new System.Drawing.Size(152, 23);

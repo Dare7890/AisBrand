@@ -47,10 +47,10 @@ namespace AnalyticsTableExcel
                 {
                     secondWorksheet.ImportArray(hardStatisticHeader[i], 1, i + 1, true);
                 }
-                secondWorksheet.ImportArray(SubFields.sprinklings.ToArray(), 6, 1, true);
+                secondWorksheet.ImportArray(SubFieldsRetriever.Retrieve().Sprinklings.ToArray(), 6, 1, true);
                 List<HardStatisticViewModel> choosedExcavations = new List<HardStatisticViewModel>();
                 AddSequenceNumber(secondWorksheet);
-                for (int i = 6; i < SubFields.sprinklings.Count() + 6; i++)
+                for (int i = 6; i < SubFieldsRetriever.Retrieve().Sprinklings.Count() + 6; i++)
                 {
                     for (int j = 1; j < 1 + hardStatisticHeader.Skip(1).Count(); j++)
                     {
@@ -115,6 +115,44 @@ namespace AnalyticsTableExcel
                     }
                 }
                 thirdWorksheet.ImportArray(new string[] { "Технология" }, 1, 1, false);
+
+                thirdWorksheet.InsertColumn(8, 2);
+                for (int i = 1; i < thirdWorksheet.Rows.Length; i++)
+                {
+                    decimal analogySum = excavationData.Where(e => e.Formation == thirdWorksheet.Columns[3].Rows[i].Text &&
+                                e.Monument == thirdWorksheet.Columns[2].Rows[i].Text).Sum(s => {
+                                    if (decimal.TryParse(s.Analogy, out decimal result))
+                                    {
+                                        return result;
+                                    }
+
+                                    return 0;
+                                });
+                    decimal currentAnalogy = string.IsNullOrWhiteSpace(thirdWorksheet.Columns[6].Rows[i].Text) ? 0m : decimal.Parse(thirdWorksheet.Columns[6].Rows[i].Text);
+                    thirdWorksheet.Columns[7].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.##");
+                    thirdWorksheet.Columns[8].Rows[i].Text = analogySum.ToString("0.##");
+                }
+                thirdWorksheet.ImportArray(new string[] { "% в пласте", "Всего в пласте" }, 1, 8, false);
+                thirdWorksheet.InsertColumn(10, 2);
+                for (int i = 1; i < thirdWorksheet.Rows.Length; i++)
+                {
+                    decimal analogySum = excavationData.Where(e => e.Formation == thirdWorksheet.Columns[3].Rows[i].Text &&
+                                e.Monument == thirdWorksheet.Columns[2].Rows[i].Text &&
+                                e.Description == thirdWorksheet.Columns[4].Rows[i].Text).Sum(s =>
+                                {
+                                    if (decimal.TryParse(s.Analogy, out decimal result))
+                                    {
+                                        return result;
+                                    }
+
+                                    return 0;
+                                });
+                    decimal currentAnalogy = string.IsNullOrWhiteSpace(thirdWorksheet.Columns[6].Rows[i].Text) ? 0m : decimal.Parse(thirdWorksheet.Columns[6].Rows[i].Text);
+                    thirdWorksheet.Columns[9].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.##");
+                    thirdWorksheet.Columns[10].Rows[i].Text = analogySum.ToString("0.##");
+                }
+
+                thirdWorksheet.ImportArray(new string[] { "% в комплексе", "Всего в комплексе" }, 1, 10, false);
                 using (Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     workbook.SaveAs(stream);

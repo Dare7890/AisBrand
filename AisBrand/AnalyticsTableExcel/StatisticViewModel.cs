@@ -8,8 +8,6 @@ namespace AnalyticsTableExcel
 
         public string Monument { get; set; }
 
-        public string Name { get; set; }
-
         public string Formation { get; set; }
 
         public string Description { get; set; }
@@ -30,7 +28,7 @@ namespace AnalyticsTableExcel
             if (object.ReferenceEquals(other, null))
                 return false;
 
-            return Monument == other.Monument && Name == other.Name && Formation == other.Formation &&
+            return Monument == other.Monument && Formation == other.Formation &&
                 Description == other.Description && Sprinkling == other.Sprinkling &&
                 Dating == other.Dating;
         }
@@ -38,13 +36,12 @@ namespace AnalyticsTableExcel
         public override int GetHashCode()
         {
             int monumentHash = Monument.GetHashCode();
-            int nameHash = Name.GetHashCode();
             int formationHash = Formation.GetHashCode();
             int squareHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
 
-            return monumentHash ^ nameHash ^ formationHash ^ squareHash ^ sprinklingHash ^ datingHash;
+            return monumentHash ^ formationHash ^ squareHash ^ sprinklingHash ^ datingHash;
         }
 
         public static bool operator ==(StatisticViewModel a, StatisticViewModel b)
