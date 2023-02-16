@@ -1,16 +1,14 @@
 ﻿using System;
 
-namespace AnalyticsTableExcel
+namespace AnalyticsTableExcel.Statistics
 {
-    public class StatisticViewModel : IEquatable<StatisticViewModel>
+    public class Statistic5ViewModel : IEquatable<Statistic5ViewModel>
     {
-        public string Sprinkling { get; set; }
-
         public string Monument { get; set; }
 
         public string Formation { get; set; }
 
-        public string Description { get; set; }
+        public string Sprinkling { get; set; }
 
         public string Dating { get; set; }
 
@@ -18,33 +16,31 @@ namespace AnalyticsTableExcel
 
         public override bool Equals(object obj)
         {
-            StatisticViewModel statistic = obj as StatisticViewModel;
+            Statistic5ViewModel statistic = obj as Statistic5ViewModel;
 
             return Equals(statistic);
         }
 
-        public bool Equals(StatisticViewModel other)
+        public bool Equals(Statistic5ViewModel other)
         {
             if (object.ReferenceEquals(other, null))
                 return false;
 
             return Monument == other.Monument && Formation == other.Formation &&
-                Description == other.Description && Sprinkling == other.Sprinkling &&
-                Dating == other.Dating;
+                Sprinkling == other.Sprinkling && Dating == other.Dating;
         }
 
         public override int GetHashCode()
         {
             int monumentHash = Monument.GetHashCode();
             int formationHash = Formation.GetHashCode();
-            int squareHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
 
-            return monumentHash ^ formationHash ^ squareHash ^ sprinklingHash ^ datingHash;
+            return monumentHash ^ formationHash ^ sprinklingHash ^ datingHash;
         }
 
-        public static bool operator ==(StatisticViewModel a, StatisticViewModel b)
+        public static bool operator ==(Statistic5ViewModel a, Statistic5ViewModel b)
         {
             if (object.ReferenceEquals(a, b))
                 return true;
@@ -55,7 +51,7 @@ namespace AnalyticsTableExcel
             return a.Equals(b);
         }
 
-        public static bool operator !=(StatisticViewModel a, StatisticViewModel b)
+        public static bool operator !=(Statistic5ViewModel a, Statistic5ViewModel b)
         {
             return !(a == b);
         }

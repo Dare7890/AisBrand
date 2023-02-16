@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AnalyticsTableExcel.Statistics;
 using BrandDataProcessing.Models;
 
 namespace AnalyticsTableExcel
@@ -56,12 +57,12 @@ namespace AnalyticsTableExcel
             return excavationViewModels;
         }
 
-        public IEnumerable<StatisticViewModel> FillStatistic(IList<Excavation> excavations)
+        public IEnumerable<Statistic1ViewModel> FillStatistic1(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<StatisticViewModel>();
+                return Enumerable.Empty<Statistic1ViewModel>();
 
-            List<StatisticViewModel> statisticViewModels = new();
+            List<Statistic1ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
                                                                                                     .SelectMany(c => c.Classifications)
                                                                                                     .SelectMany(f => f.Finds)
@@ -81,18 +82,20 @@ namespace AnalyticsTableExcel
             var union = exv.Zip(filteredClassifications).Zip(finds);
             foreach (var u in union)
             {
-                StatisticViewModel statisticViewModel = new();
+                Statistic1ViewModel statisticViewModel = new();
                 statisticViewModel.Monument = u.First.First.Monument;
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
                 statisticViewModel.Description = u.Second.Description;
                 statisticViewModel.Analogy = u.Second.Analogy;
+                statisticViewModel.Square = u.Second.SquareText;
 
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new { c.Monument, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy }).Select(c => new StatisticViewModel() {
+            return statisticViewModels.GroupBy(c => new { c.Monument, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy,
+                c.Square }).Select(c => new Statistic1ViewModel() {
                 Analogy = c.Select(a => {
                     if (decimal.TryParse(a.Analogy, out decimal result))
                     {
@@ -104,7 +107,349 @@ namespace AnalyticsTableExcel
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
+                Description = c.First()?.Description,
+                Square = c.First()?.Square
+                }).Distinct();
+        }
+
+        public IEnumerable<Statistic2ViewModel> FillStatistic2(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<Statistic2ViewModel>();
+
+            List<Statistic2ViewModel> statisticViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                Statistic2ViewModel statisticViewModel = new();
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Description = u.Second.Description;
+                statisticViewModel.Analogy = u.Second.Analogy;
+                statisticViewModel.Admixture = u.Second.Brand.Admixture;
+                statisticViewModel.ReconstructionReliability = u.Second.Brand.ReconstructionReliability;
+                statisticViewModel.Clay = u.Second.Brand.Clay;
+                statisticViewModel.Safety = u.Second.Brand.Safety;
+                statisticViewModel.Relief = u.Second.Brand.Relief;
+                statisticViewModel.Square = u.Second.SquareText;
+
+                statisticViewModels.Add(statisticViewModel);
+            }
+
+            return statisticViewModels.GroupBy(c => new {
+                c.Monument,
+                c.Dating,
+                c.Sprinkling,
+                c.Formation,
+                c.Description,
+                c.Analogy,
+                c.Admixture,
+                c.ReconstructionReliability,
+                c.Clay,
+                c.Safety,
+                c.Relief,
+                c.Square
+            }).Select(c => new Statistic2ViewModel()
+            {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
+                Description = c.First()?.Description,
+                Admixture = c.First()?.Admixture,
+                ReconstructionReliability = c.First()?.ReconstructionReliability,
+                Clay = c.First()?.Clay,
+                Safety = c.First()?.Safety,
+                Relief = c.First()?.Relief,
+                Square = c.First()?.Square
+            }).Distinct();
+        }
+
+        public IEnumerable<Statistic3ViewModel> FillStatistic3(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<Statistic3ViewModel>();
+
+            List<Statistic3ViewModel> statisticViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                Statistic3ViewModel statisticViewModel = new();
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Description = u.Second.Description;
+                statisticViewModel.Analogy = u.Second.Analogy;
+
+                statisticViewModels.Add(statisticViewModel);
+            }
+
+            return statisticViewModels.GroupBy(c => new {
+                c.Monument,
+                c.Dating,
+                c.Sprinkling,
+                c.Formation,
+                c.Description,
+                c.Analogy
+            }).Select(c => new Statistic3ViewModel()
+            {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
                 Description = c.First()?.Description
+            }).Distinct();
+        }
+
+        public IEnumerable<Statistic4ViewModel> FillStatistic4(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<Statistic4ViewModel>();
+
+            List<Statistic4ViewModel> statisticViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                Statistic4ViewModel statisticViewModel = new();
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Description = u.Second.Description;
+                statisticViewModel.Analogy = u.Second.Analogy;
+                statisticViewModel.Admixture = u.Second.Brand.Admixture;
+                statisticViewModel.ReconstructionReliability = u.Second.Brand.ReconstructionReliability;
+                statisticViewModel.Clay = u.Second.Brand.Clay;
+                statisticViewModel.Safety = u.Second.Brand.Safety;
+                statisticViewModel.Relief = u.Second.Brand.Relief;
+
+                statisticViewModels.Add(statisticViewModel);
+            }
+
+            return statisticViewModels.GroupBy(c => new {
+                c.Monument,
+                c.Dating,
+                c.Sprinkling,
+                c.Formation,
+                c.Description,
+                c.Analogy,
+                c.Admixture,
+                c.ReconstructionReliability,
+                c.Clay,
+                c.Safety,
+                c.Relief
+            }).Select(c => new Statistic4ViewModel()
+            {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
+                Description = c.First()?.Description,
+                Admixture = c.First()?.Admixture,
+                ReconstructionReliability = c.First()?.ReconstructionReliability,
+                Clay = c.First()?.Clay,
+                Safety = c.First()?.Safety,
+                Relief = c.First()?.Relief
+            }).Distinct();
+        }
+
+        public IEnumerable<Statistic5ViewModel> FillStatistic5(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<Statistic5ViewModel>();
+
+            List<Statistic5ViewModel> statisticViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                Statistic5ViewModel statisticViewModel = new();
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Analogy = u.Second.Analogy;
+                statisticViewModels.Add(statisticViewModel);
+            }
+
+            return statisticViewModels.GroupBy(c => new {
+                c.Monument,
+                c.Dating,
+                c.Sprinkling,
+                c.Formation,
+                c.Analogy
+            }).Select(c => new Statistic5ViewModel()
+            {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
+            }).Distinct();
+        }
+
+        public IEnumerable<Statistic6ViewModel> FillStatistic6(IList<Excavation> excavations)
+        {
+            if (excavations.Count == 0)
+                return Enumerable.Empty<Statistic6ViewModel>();
+
+            List<Statistic6ViewModel> statisticViewModels = new();
+            var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
+                                                                                                    .SelectMany(c => c.Classifications)
+                                                                                                    .SelectMany(f => f.Finds)
+                                                                                                    .Count())
+                                .SelectMany(e => e);
+
+            var classifications = excavations.SelectMany(e => e.FindsClasses)
+                                            .SelectMany(c => c.Classifications);
+
+            List<IEnumerable<Classification>> cls = new();
+            foreach (var classification in classifications)
+                cls.Add(Enumerable.Repeat(classification, classification.Finds.Count));
+
+            var filteredClassifications = cls.SelectMany(a => a);
+
+            var finds = excavations.SelectMany(e => e.FindsClasses).SelectMany(c => c.Classifications).SelectMany(f => f.Finds);
+            var union = exv.Zip(filteredClassifications).Zip(finds);
+            foreach (var u in union)
+            {
+                Statistic6ViewModel statisticViewModel = new();
+                statisticViewModel.Monument = u.First.First.Monument;
+                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
+                statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
+                statisticViewModel.Formation = u.Second.Formation;
+                statisticViewModel.Analogy = u.Second.Analogy;
+                statisticViewModel.Admixture = u.Second.Brand.Admixture;
+                statisticViewModel.ReconstructionReliability = u.Second.Brand.ReconstructionReliability;
+                statisticViewModel.Clay = u.Second.Brand.Clay;
+                statisticViewModel.Safety = u.Second.Brand.Safety;
+                statisticViewModel.Relief = u.Second.Brand.Relief;
+
+                statisticViewModels.Add(statisticViewModel);
+            }
+
+            return statisticViewModels.GroupBy(c => new {
+                c.Monument,
+                c.Dating,
+                c.Sprinkling,
+                c.Formation,
+                c.Analogy,
+                c.Admixture,
+                c.ReconstructionReliability,
+                c.Clay,
+                c.Safety,
+                c.Relief
+            }).Select(c => new Statistic6ViewModel()
+            {
+                Analogy = c.Select(a => {
+                    if (decimal.TryParse(a.Analogy, out decimal result))
+                    {
+                        return result;
+                    }
+                    return 0;
+                }).Sum().ToString(),
+                Monument = c.First()?.Monument,
+                Dating = c.First()?.Dating,
+                Sprinkling = c.First()?.Sprinkling,
+                Formation = c.First()?.Formation,
+                Admixture = c.First()?.Admixture,
+                ReconstructionReliability = c.First()?.ReconstructionReliability,
+                Clay = c.First()?.Clay,
+                Safety = c.First()?.Safety,
+                Relief = c.First()?.Relief
             }).Distinct();
         }
     }
