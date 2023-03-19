@@ -8,8 +8,6 @@ namespace AnalyticsTableExcel.Statistics
 
         public string Formation { get; set; }
 
-        public string Description { get; set; }
-
         public string Sprinkling { get; set; }
 
         public string Dating { get; set; }
@@ -29,7 +27,7 @@ namespace AnalyticsTableExcel.Statistics
                 return false;
 
             return Monument == other.Monument && Formation == other.Formation &&
-                Description == other.Description && Sprinkling == other.Sprinkling &&
+                Sprinkling == other.Sprinkling &&
                 Dating == other.Dating;
         }
 
@@ -37,11 +35,10 @@ namespace AnalyticsTableExcel.Statistics
         {
             int monumentHash = Monument.GetHashCode();
             int formationHash = Formation.GetHashCode();
-            int descriptionHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
 
-            return monumentHash ^ formationHash ^ descriptionHash ^ sprinklingHash ^ datingHash;
+            return monumentHash ^ formationHash ^ sprinklingHash ^ datingHash;
         }
 
         public static bool operator ==(Statistic3ViewModel a, Statistic3ViewModel b)

@@ -32,7 +32,6 @@ namespace AnalyticsTableExcel
             yield return "Памятник/Раскоп";
             yield return "Пласт";
             yield return "Комплекс";
-            yield return "Квадрат";
             yield return "Тип";
             yield return "Датировка";
             yield return "Количество";
@@ -43,14 +42,12 @@ namespace AnalyticsTableExcel
             yield return "Памятник/Раскоп";
             yield return "Пласт";
             yield return "Комплекс";
-            yield return "Квадрат";
             yield return "Тип";
             yield return "Обжиг";
             yield return "Глина";
             yield return "Примеси";
             yield return "ДОП";
             yield return "Орнамент";
-            yield return "Датировка";
             yield return "Количество";
         }
 
@@ -58,7 +55,6 @@ namespace AnalyticsTableExcel
         {
             yield return "Памятник/Раскоп";
             yield return "Пласт";
-            yield return "Комплекс";
             yield return "Тип";
             yield return "Датировка";
             yield return "Количество";
@@ -68,21 +64,18 @@ namespace AnalyticsTableExcel
         {
             yield return "Памятник/Раскоп";
             yield return "Пласт";
-            yield return "Комплекс";
             yield return "Тип";
             yield return "Обжиг";
             yield return "Глина";
             yield return "Примеси";
             yield return "ДОП";
             yield return "Орнамент";
-            yield return "Датировка";
             yield return "Количество";
         }
 
         public static IEnumerable<string> GetStatistic5Header()
         {
             yield return "Памятник/Раскоп";
-            yield return "Пласт";
             yield return "Тип";
             yield return "Датировка";
             yield return "Количество";
@@ -91,14 +84,12 @@ namespace AnalyticsTableExcel
         public static IEnumerable<string> GetStatistic6Header()
         {
             yield return "Памятник/Раскоп";
-            yield return "Пласт";
             yield return "Тип";
             yield return "Обжиг";
             yield return "Глина";
             yield return "Примеси";
             yield return "ДОП";
             yield return "Орнамент";
-            yield return "Датировка";
             yield return "Количество";
         }
 

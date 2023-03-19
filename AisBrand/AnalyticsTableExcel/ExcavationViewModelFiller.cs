@@ -89,13 +89,13 @@ namespace AnalyticsTableExcel
                 statisticViewModel.Formation = u.Second.Formation;
                 statisticViewModel.Description = u.Second.Description;
                 statisticViewModel.Analogy = u.Second.Analogy;
-                statisticViewModel.Square = u.Second.SquareText;
 
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new { c.Monument, c.Dating, c.Sprinkling, c.Formation, c.Description, c.Analogy,
-                c.Square }).Select(c => new Statistic1ViewModel() {
+            return statisticViewModels.Where(s => s.Sprinkling.Split('/').FirstOrDefault() == "Горшок Венчик")
+                .GroupBy(c => new { c.Monument, c.Dating, c.Sprinkling, c.Formation, c.Description })
+                .Select(c => new Statistic1ViewModel() {
                 Analogy = c.Select(a => {
                     if (decimal.TryParse(a.Analogy, out decimal result))
                     {
@@ -107,8 +107,7 @@ namespace AnalyticsTableExcel
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
-                Description = c.First()?.Description,
-                Square = c.First()?.Square
+                Description = c.First()?.Description
                 }).Distinct();
         }
 
@@ -139,7 +138,6 @@ namespace AnalyticsTableExcel
             {
                 Statistic2ViewModel statisticViewModel = new();
                 statisticViewModel.Monument = u.First.First.Monument;
-                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
                 statisticViewModel.Description = u.Second.Description;
@@ -149,24 +147,20 @@ namespace AnalyticsTableExcel
                 statisticViewModel.Clay = u.Second.Brand.Clay;
                 statisticViewModel.Safety = u.Second.Brand.Safety;
                 statisticViewModel.Relief = u.Second.Brand.Relief;
-                statisticViewModel.Square = u.Second.SquareText;
 
                 statisticViewModels.Add(statisticViewModel);
             }
 
             return statisticViewModels.GroupBy(c => new {
                 c.Monument,
-                c.Dating,
                 c.Sprinkling,
                 c.Formation,
                 c.Description,
-                c.Analogy,
                 c.Admixture,
                 c.ReconstructionReliability,
                 c.Clay,
                 c.Safety,
-                c.Relief,
-                c.Square
+                c.Relief
             }).Select(c => new Statistic2ViewModel()
             {
                 Analogy = c.Select(a => {
@@ -177,7 +171,6 @@ namespace AnalyticsTableExcel
                     return 0;
                 }).Sum().ToString(),
                 Monument = c.First()?.Monument,
-                Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
                 Description = c.First()?.Description,
@@ -185,8 +178,7 @@ namespace AnalyticsTableExcel
                 ReconstructionReliability = c.First()?.ReconstructionReliability,
                 Clay = c.First()?.Clay,
                 Safety = c.First()?.Safety,
-                Relief = c.First()?.Relief,
-                Square = c.First()?.Square
+                Relief = c.First()?.Relief
             }).Distinct();
         }
 
@@ -220,19 +212,17 @@ namespace AnalyticsTableExcel
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
-                statisticViewModel.Description = u.Second.Description;
                 statisticViewModel.Analogy = u.Second.Analogy;
 
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new {
+            return statisticViewModels.Where(s => s.Sprinkling.Split('/').FirstOrDefault() == "Горшок Венчик")
+                .GroupBy(c => new {
                 c.Monument,
                 c.Dating,
                 c.Sprinkling,
-                c.Formation,
-                c.Description,
-                c.Analogy
+                c.Formation
             }).Select(c => new Statistic3ViewModel()
             {
                 Analogy = c.Select(a => {
@@ -245,8 +235,7 @@ namespace AnalyticsTableExcel
                 Monument = c.First()?.Monument,
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
-                Formation = c.First()?.Formation,
-                Description = c.First()?.Description
+                Formation = c.First()?.Formation
             }).Distinct();
         }
 
@@ -277,10 +266,8 @@ namespace AnalyticsTableExcel
             {
                 Statistic4ViewModel statisticViewModel = new();
                 statisticViewModel.Monument = u.First.First.Monument;
-                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
                 statisticViewModel.Formation = u.Second.Formation;
-                statisticViewModel.Description = u.Second.Description;
                 statisticViewModel.Analogy = u.Second.Analogy;
                 statisticViewModel.Admixture = u.Second.Brand.Admixture;
                 statisticViewModel.ReconstructionReliability = u.Second.Brand.ReconstructionReliability;
@@ -293,11 +280,8 @@ namespace AnalyticsTableExcel
 
             return statisticViewModels.GroupBy(c => new {
                 c.Monument,
-                c.Dating,
                 c.Sprinkling,
                 c.Formation,
-                c.Description,
-                c.Analogy,
                 c.Admixture,
                 c.ReconstructionReliability,
                 c.Clay,
@@ -313,10 +297,8 @@ namespace AnalyticsTableExcel
                     return 0;
                 }).Sum().ToString(),
                 Monument = c.First()?.Monument,
-                Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
-                Description = c.First()?.Description,
                 Admixture = c.First()?.Admixture,
                 ReconstructionReliability = c.First()?.ReconstructionReliability,
                 Clay = c.First()?.Clay,
@@ -354,17 +336,15 @@ namespace AnalyticsTableExcel
                 statisticViewModel.Monument = u.First.First.Monument;
                 statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
-                statisticViewModel.Formation = u.Second.Formation;
                 statisticViewModel.Analogy = u.Second.Analogy;
                 statisticViewModels.Add(statisticViewModel);
             }
 
-            return statisticViewModels.GroupBy(c => new {
+            return statisticViewModels.Where(s => s.Sprinkling.Split('/').FirstOrDefault() == "Горшок Венчик")
+                .GroupBy(c => new {
                 c.Monument,
                 c.Dating,
-                c.Sprinkling,
-                c.Formation,
-                c.Analogy
+                c.Sprinkling
             }).Select(c => new Statistic5ViewModel()
             {
                 Analogy = c.Select(a => {
@@ -376,8 +356,7 @@ namespace AnalyticsTableExcel
                 }).Sum().ToString(),
                 Monument = c.First()?.Monument,
                 Dating = c.First()?.Dating,
-                Sprinkling = c.First()?.Sprinkling,
-                Formation = c.First()?.Formation,
+                Sprinkling = c.First()?.Sprinkling
             }).Distinct();
         }
 
@@ -408,9 +387,7 @@ namespace AnalyticsTableExcel
             {
                 Statistic6ViewModel statisticViewModel = new();
                 statisticViewModel.Monument = u.First.First.Monument;
-                statisticViewModel.Dating = u.Second.DatingBound?.BoundData;
                 statisticViewModel.Sprinkling = u.Second.Brand?.Sprinkling;
-                statisticViewModel.Formation = u.Second.Formation;
                 statisticViewModel.Analogy = u.Second.Analogy;
                 statisticViewModel.Admixture = u.Second.Brand.Admixture;
                 statisticViewModel.ReconstructionReliability = u.Second.Brand.ReconstructionReliability;
@@ -423,10 +400,7 @@ namespace AnalyticsTableExcel
 
             return statisticViewModels.GroupBy(c => new {
                 c.Monument,
-                c.Dating,
                 c.Sprinkling,
-                c.Formation,
-                c.Analogy,
                 c.Admixture,
                 c.ReconstructionReliability,
                 c.Clay,
@@ -442,9 +416,7 @@ namespace AnalyticsTableExcel
                     return 0;
                 }).Sum().ToString(),
                 Monument = c.First()?.Monument,
-                Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
-                Formation = c.First()?.Formation,
                 Admixture = c.First()?.Admixture,
                 ReconstructionReliability = c.First()?.ReconstructionReliability,
                 Clay = c.First()?.Clay,

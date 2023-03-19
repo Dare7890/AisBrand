@@ -8,8 +8,6 @@ namespace AnalyticsTableExcel.Statistics
 
         public string Formation { get; set; }
 
-        public string Description { get; set; }
-
         public string Sprinkling { get; set; }
 
         public string ReconstructionReliability { get; set; }
@@ -21,8 +19,6 @@ namespace AnalyticsTableExcel.Statistics
         public string Safety { get; set; }
 
         public string Relief { get; set; }
-
-        public string Dating { get; set; }
 
         public string Analogy { get; set; }
 
@@ -39,8 +35,8 @@ namespace AnalyticsTableExcel.Statistics
                 return false;
 
             return Monument == other.Monument && Formation == other.Formation &&
-                Description == other.Description && Sprinkling == other.Sprinkling &&
-                Dating == other.Dating && ReconstructionReliability == other.ReconstructionReliability
+                Sprinkling == other.Sprinkling &&
+                ReconstructionReliability == other.ReconstructionReliability
                 && Clay == other.Clay && Admixture == other.Admixture && Safety == other.Safety
                 && Relief == other.Relief;
         }
@@ -49,16 +45,14 @@ namespace AnalyticsTableExcel.Statistics
         {
             int monumentHash = Monument.GetHashCode();
             int formationHash = Formation.GetHashCode();
-            int descriptionHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
-            int datingHash = Dating.GetHashCode();
             int reconstructionReliabilityHash = ReconstructionReliability.GetHashCode();
             int clayHash = Clay.GetHashCode();
             int admixtureHash = Admixture.GetHashCode();
             int safetyHash = Safety.GetHashCode();
             int reliefHash = Relief.GetHashCode();
 
-            return monumentHash ^ formationHash ^ descriptionHash ^ sprinklingHash ^ datingHash ^
+            return monumentHash ^ formationHash ^ sprinklingHash ^
                 reconstructionReliabilityHash ^ clayHash ^ admixtureHash ^ safetyHash ^ reliefHash;
         }
 

@@ -10,8 +10,6 @@ namespace AnalyticsTableExcel
 
         public string Description { get; set; }
 
-        public string Square { get; set; }
-
         public string Sprinkling { get; set; }
 
         public string Dating { get; set; }
@@ -32,7 +30,7 @@ namespace AnalyticsTableExcel
 
             return Monument == other.Monument && Formation == other.Formation &&
                 Description == other.Description && Sprinkling == other.Sprinkling &&
-                Dating == other.Dating && Square == other.Square;
+                Dating == other.Dating;
         }
 
         public override int GetHashCode()
@@ -42,10 +40,8 @@ namespace AnalyticsTableExcel
             int descriptionHash = Description.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
-            int squareHash = Square == null ? string.Empty.GetHashCode() : Square.GetHashCode();
 
-            return monumentHash ^ formationHash ^ descriptionHash ^ sprinklingHash ^ datingHash
-                ^ squareHash;
+            return monumentHash ^ formationHash ^ descriptionHash ^ sprinklingHash ^ datingHash;
         }
 
         public static bool operator ==(Statistic1ViewModel a, Statistic1ViewModel b)

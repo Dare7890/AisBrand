@@ -6,8 +6,6 @@ namespace AnalyticsTableExcel.Statistics
     {
         public string Monument { get; set; }
 
-        public string Formation { get; set; }
-
         public string Sprinkling { get; set; }
 
         public string Dating { get; set; }
@@ -26,18 +24,17 @@ namespace AnalyticsTableExcel.Statistics
             if (object.ReferenceEquals(other, null))
                 return false;
 
-            return Monument == other.Monument && Formation == other.Formation &&
-                Sprinkling == other.Sprinkling && Dating == other.Dating;
+            return Monument == other.Monument && Sprinkling == other.Sprinkling &&
+                Dating == other.Dating;
         }
 
         public override int GetHashCode()
         {
             int monumentHash = Monument.GetHashCode();
-            int formationHash = Formation.GetHashCode();
             int sprinklingHash = Sprinkling.GetHashCode();
             int datingHash = Dating.GetHashCode();
 
-            return monumentHash ^ formationHash ^ sprinklingHash ^ datingHash;
+            return monumentHash ^ sprinklingHash ^ datingHash;
         }
 
         public static bool operator ==(Statistic5ViewModel a, Statistic5ViewModel b)
