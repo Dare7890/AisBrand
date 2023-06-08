@@ -210,6 +210,9 @@ namespace BrandDataProcessingUI
                 case nameof(Find):
                     Delete(cells, RetrieverSelectedData.GetSelectedFind, FindCrud);
                     break;
+                case nameof(Classification):
+                    Delete(cells, RetrieverSelectedData.GetSelectedClassification, ClassificationCrud);
+                    break;
                 default:
                     break;
             }

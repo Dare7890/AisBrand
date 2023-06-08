@@ -1,7 +1,5 @@
 ﻿using AddBrandDataUI.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Tools.EventArgs;
 using Tools.Map;

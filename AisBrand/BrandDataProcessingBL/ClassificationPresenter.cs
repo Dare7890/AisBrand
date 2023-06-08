@@ -26,7 +26,19 @@ namespace BrandDataProcessingBL
             this.view.ClassificationCrud.UpdateExcavation += ClassificationCrud_UpdateExcavation;
             this.view.ClassificationCrud.FillClassificationInfo += ClassificationCrud_FillClassificationInfo;
             this.view.ClassificationCrud.GetIdExcavation += ClassificationCrud_GetIdExcavation;
-            this.view.ClassificationCrud.Filter += ClassificationCrud_Filter; ;
+            this.view.ClassificationCrud.Filter += ClassificationCrud_Filter;
+            this.view.ClassificationCrud.DeleteExcavation += ClassificationCrud_DeleteExcavation;
+        }
+
+        private void ClassificationCrud_DeleteExcavation(object sender, DeleteEventArgs<AddBrandDataUI.ViewModels.Classification> e)
+        {
+            repository = new ClassificationLocal(e.FilePath);
+
+            int id = GetClassificationId(classifications, e.DeletedBrandData.Type, e.DeletedBrandData.Variant);
+            repository.Delete(id);
+
+            int parentId = view.SelectedParentId.Value;
+            RefreshExcavationsList(parentId);
         }
 
         private void ClassificationCrud_GetIdExcavation(object sender, GetIdEventArgs<AddBrandDataUI.ViewModels.Classification> e)
