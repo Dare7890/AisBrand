@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AnalyticsTableExcel.Statistics;
 using BrandDataProcessing.Models;
@@ -57,10 +58,10 @@ namespace AnalyticsTableExcel
             return excavationViewModels;
         }
 
-        public IEnumerable<Statistic1ViewModel> FillStatistic1(IList<Excavation> excavations)
+        public IList<Statistic1ViewModel> FillStatistic1(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic1ViewModel>();
+                return Array.Empty<Statistic1ViewModel>();
 
             List<Statistic1ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -108,13 +109,15 @@ namespace AnalyticsTableExcel
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation,
                 Description = c.First()?.Description
-                }).Distinct();
+                })
+                .Distinct()
+                .ToArray();
         }
 
-        public IEnumerable<Statistic2ViewModel> FillStatistic2(IList<Excavation> excavations)
+        public IList<Statistic2ViewModel> FillStatistic2(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic2ViewModel>();
+                return Array.Empty<Statistic2ViewModel>();
 
             List<Statistic2ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -179,13 +182,15 @@ namespace AnalyticsTableExcel
                 Clay = c.First()?.Clay,
                 Safety = c.First()?.Safety,
                 Relief = c.First()?.Relief
-            }).Distinct();
+            })
+            .Distinct()
+            .ToArray();
         }
 
-        public IEnumerable<Statistic3ViewModel> FillStatistic3(IList<Excavation> excavations)
+        public IList<Statistic3ViewModel> FillStatistic3(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic3ViewModel>();
+                return Array.Empty<Statistic3ViewModel>();
 
             List<Statistic3ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -236,13 +241,15 @@ namespace AnalyticsTableExcel
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling,
                 Formation = c.First()?.Formation
-            }).Distinct();
+            })
+            .Distinct()
+            .ToArray();
         }
 
-        public IEnumerable<Statistic4ViewModel> FillStatistic4(IList<Excavation> excavations)
+        public IList<Statistic4ViewModel> FillStatistic4(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic4ViewModel>();
+                return Array.Empty<Statistic4ViewModel>();
 
             List<Statistic4ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -304,13 +311,15 @@ namespace AnalyticsTableExcel
                 Clay = c.First()?.Clay,
                 Safety = c.First()?.Safety,
                 Relief = c.First()?.Relief
-            }).Distinct();
+            })
+            .Distinct()
+            .ToArray();
         }
 
-        public IEnumerable<Statistic5ViewModel> FillStatistic5(IList<Excavation> excavations)
+        public IList<Statistic5ViewModel> FillStatistic5(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic5ViewModel>();
+                return Array.Empty<Statistic5ViewModel>();
 
             List<Statistic5ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -357,13 +366,15 @@ namespace AnalyticsTableExcel
                 Monument = c.First()?.Monument,
                 Dating = c.First()?.Dating,
                 Sprinkling = c.First()?.Sprinkling
-            }).Distinct();
+            })
+            .Distinct()
+            .ToArray();
         }
 
-        public IEnumerable<Statistic6ViewModel> FillStatistic6(IList<Excavation> excavations)
+        public IList<Statistic6ViewModel> FillStatistic6(IList<Excavation> excavations)
         {
             if (excavations.Count == 0)
-                return Enumerable.Empty<Statistic6ViewModel>();
+                return Array.Empty<Statistic6ViewModel>();
 
             List<Statistic6ViewModel> statisticViewModels = new();
             var exv = Enumerable.Repeat(excavations.Select(e => new { e.Monument, e.Name }), excavations.SelectMany(f => f.FindsClasses)
@@ -422,7 +433,9 @@ namespace AnalyticsTableExcel
                 Clay = c.First()?.Clay,
                 Safety = c.First()?.Safety,
                 Relief = c.First()?.Relief
-            }).Distinct();
+            })
+            .Distinct()
+            .ToArray();
         }
     }
 }
