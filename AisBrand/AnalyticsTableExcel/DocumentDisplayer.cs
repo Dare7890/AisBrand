@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -42,240 +43,12 @@ namespace AnalyticsTableExcel
 
                 IWorkbook workbook = application.Workbooks.Create(7);
 
-                // 1.
-                IWorksheet firstWorksheet = workbook.Worksheets[0];
-                WriteFirstWorkSheet(excavationData, firstWorksheet);
-
-                // 2
-                IWorksheet secondWorksheet = workbook.Worksheets[1];
-                WriteSecondWorkSheet(excavationData, secondWorksheet);
-
-                // 3
-                IWorksheet thirdWorksheet = workbook.Worksheets[2];
-                thirdWorksheet.ImportArray(statistic3Header.ToArray(), 1, 1, false);
-                thirdWorksheet.ImportData(statistic3Data, 2, 1, false);
-
-                //thirdWorksheet.InsertColumn(6);
-                //for (int i = 1; i < thirdWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Formation == thirdWorksheet.Columns[1].Rows[i].Text &&
-                //                e.Monument == thirdWorksheet.Columns[0].Rows[i].Text &&
-                //                e.Sprinkling.Split('/', 1).FirstOrDefault() == thirdWorksheet.Columns[2].Rows[i].Text.Split('/', 1).FirstOrDefault()).Sum(s => {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(thirdWorksheet.Columns[4].Rows[i].Text) ? 0m : decimal.Parse(thirdWorksheet.Columns[4].Rows[i].Text);
-                //    thirdWorksheet.Columns[5].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-                //thirdWorksheet.ImportArray(new string[] { "% от части" }, 1, 6, false);
-
-                //var thirdDescriptions = excavationData.Select(e => e.Description).Distinct().ToArray();
-                //thirdWorksheet.ImportArray(thirdDescriptions, 1, 7, false);
-
-                //for (int i = 1; i < thirdWorksheet.Rows.Length; i++)
-                //{
-                //    for (int j = 6; j < 6 + thirdDescriptions.Length; j++)
-                //    {
-                //        decimal excavationsAmount = excavationData.Where
-                //            (e => e.Monument == thirdWorksheet.Columns[0].Rows[i].Text &&
-                //            e.Formation == thirdWorksheet.Columns[1].Rows[i].Text &&
-                //            e.Description == thirdWorksheet.Columns[j].Rows[0].DisplayText &&
-                //            e.Sprinkling == thirdWorksheet.Columns[2].Rows[i].Text &&
-                //            e.Dating == thirdWorksheet.Columns[3].Rows[i].Text).Sum(s =>
-                //            {
-                //                if (decimal.TryParse(s.Analogy, out decimal result))
-                //                {
-                //                    return result;
-                //                }
-
-                //                return 0;
-                //            });
-                //        thirdWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
-                //    }
-                //}
-
-                // 4
-                IWorksheet fourthWorksheet = workbook.Worksheets[3];
-                fourthWorksheet.ImportArray(statistic4Header.ToArray(), 1, 1, false);
-                fourthWorksheet.ImportData(statistic4Data, 2, 1, false);
-
-                //fourthWorksheet.InsertColumn(10);
-                //for (int i = 1; i < fourthWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Formation == fourthWorksheet.Columns[1].Rows[i].Text &&
-                //                e.Monument == fourthWorksheet.Columns[0].Rows[i].Text &&
-                //                e.Sprinkling.Split('/', 1).FirstOrDefault() == fourthWorksheet.Columns[2].Rows[i].Text.Split('/', 1).FirstOrDefault()).Sum(s => {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(fourthWorksheet.Columns[8].Rows[i].Text) ? 0m : decimal.Parse(fourthWorksheet.Columns[8].Rows[i].Text);
-                //    fourthWorksheet.Columns[9].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-                //fourthWorksheet.ImportArray(new string[] { "% от части" }, 1, 10, false);
-                //fourthWorksheet.InsertColumn(11);
-                //for (int i = 1; i < fourthWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Formation == fourthWorksheet.Columns[1].Rows[i].Text &&
-                //                e.Monument == fourthWorksheet.Columns[0].Rows[i].Text).Sum(s =>
-                //                {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(fourthWorksheet.Columns[8].Rows[i].Text) ? 0m : decimal.Parse(fourthWorksheet.Columns[8].Rows[i].Text);
-                //    fourthWorksheet.Columns[10].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-
-                //fourthWorksheet.ImportArray(new string[] { "%" }, 1, 11, false);
-
-                //var fourthDescriptions = excavationData.Select(e => e.Description).Distinct().ToArray();
-                //fourthWorksheet.ImportArray(fourthDescriptions, 1, 12, false);
-                //for (int i = 1; i < fourthWorksheet.Rows.Length; i++)
-                //{
-                //    for (int j = 11; j < 11 + fourthDescriptions.Length; j++)
-                //    {
-                //        decimal excavationsAmount = excavationData.Where
-                //            (e => e.Monument == fourthWorksheet.Columns[0].Rows[i].Text &&
-                //            e.Formation == fourthWorksheet.Columns[1].Rows[i].Text &&
-                //            e.Description == fourthWorksheet.Columns[j].Rows[0].DisplayText &&
-                //            e.Sprinkling == fourthWorksheet.Columns[2].Rows[i].Text &&
-                //            e.Safety != null && e.Safety.Contains(fourthWorksheet.Columns[6].Rows[i].Text) &&
-                //            e.Relief != null && e.Relief.Contains(fourthWorksheet.Columns[7].Rows[i].Text) &&
-                //            e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(fourthWorksheet.Columns[3].Rows[i].Text) &&
-                //            e.Clay != null && e.Clay.Contains(fourthWorksheet.Columns[4].Rows[i].Text) &&
-                //            e.Admixture != null && e.Admixture.Contains(fourthWorksheet.Columns[5].Rows[i].Text)).Sum(s =>
-                //            {
-                //                if (decimal.TryParse(s.Analogy, out decimal result))
-                //                {
-                //                    return result;
-                //                }
-
-                //                return 0;
-                //            });
-                //        fourthWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
-                //    }
-                //}
-
-                // 5
-                IWorksheet fifthWorksheet = workbook.Worksheets[4];
-                fifthWorksheet.ImportArray(statistic5Header.ToArray(), 1, 1, false);
-                fifthWorksheet.ImportData(statistic5Data, 2, 1, false);
-
-                //fifthWorksheet.InsertColumn(5);
-                //for (int i = 1; i < fifthWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Monument == fifthWorksheet.Columns[0].Rows[i].Text &&
-                //                e.Sprinkling.Split('/', 1).FirstOrDefault() == fifthWorksheet.Columns[1].Rows[i].Text.Split('/', 1).FirstOrDefault()).Sum(s => {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(fifthWorksheet.Columns[3].Rows[i].Text) ? 0m : decimal.Parse(fifthWorksheet.Columns[3].Rows[i].Text);
-                //    fifthWorksheet.Columns[4].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-                //fifthWorksheet.ImportArray(new string[] { "% от части" }, 1, 5, false);
-                //var fifthFormation = excavationData.Select(e => e.Formation).Distinct().ToArray();
-                //fifthWorksheet.ImportArray(fifthFormation, 1, 6, false);
-
-                //for (int i = 1; i < fifthWorksheet.Rows.Length; i++)
-                //{
-                //    for (int j = 5; j < 5 + fifthFormation.Length; j++)
-                //    {
-                //        decimal excavationsAmount = excavationData.Where
-                //            (e => e.Monument == fifthWorksheet.Columns[0].Rows[i].Text &&
-                //            e.Formation == fifthWorksheet.Columns[j].Rows[0].DisplayText &&
-                //            e.Sprinkling == fifthWorksheet.Columns[1].Rows[i].Text &&
-                //            e.Dating == fifthWorksheet.Columns[2].Rows[i].Text).Sum(s =>
-                //            {
-                //                if (decimal.TryParse(s.Analogy, out decimal result))
-                //                {
-                //                    return result;
-                //                }
-
-                //                return 0;
-                //            });
-                //        fifthWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
-                //    }
-                //}
-
-                // 6
-                IWorksheet sixWorksheet = workbook.Worksheets[5];
-                sixWorksheet.ImportArray(statistic6Header.ToArray(), 1, 1, false);
-                sixWorksheet.ImportData(statistic6Data, 2, 1, false);
-
-                //sixWorksheet.InsertColumn(9);
-                //for (int i = 1; i < sixWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Monument == sixWorksheet.Columns[0].Rows[i].Text &&
-                //                e.Sprinkling.Split('/').FirstOrDefault() == sixWorksheet.Columns[1].Rows[i].Text.Split('/').FirstOrDefault()).Sum(s => {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(sixWorksheet.Columns[7].Rows[i].Text) ? 0m : decimal.Parse(sixWorksheet.Columns[7].Rows[i].Text);
-                //    sixWorksheet.Columns[8].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-                //sixWorksheet.ImportArray(new string[] { "% от части" }, 1, 9, false);
-                //sixWorksheet.InsertColumn(10);
-                //for (int i = 1; i < sixWorksheet.Rows.Length; i++)
-                //{
-                //    decimal analogySum = excavationData.Where(e => e.Monument == sixWorksheet.Columns[0].Rows[i].Text).Sum(s =>
-                //                {
-                //                    if (decimal.TryParse(s.Analogy, out decimal result))
-                //                    {
-                //                        return result;
-                //                    }
-
-                //                    return 0;
-                //                });
-                //    decimal currentAnalogy = string.IsNullOrWhiteSpace(sixWorksheet.Columns[7].Rows[i].Text) ? 0m : decimal.Parse(sixWorksheet.Columns[7].Rows[i].Text);
-                //    sixWorksheet.Columns[9].Rows[i].Text = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-                //}
-
-                //sixWorksheet.ImportArray(new string[] { "%" }, 1, 10, false);
-                //var sixFormation = excavationData.Select(e => e.Formation).Distinct().ToArray();
-                //sixWorksheet.ImportArray(sixFormation, 1, 11, false);
-                //for (int i = 1; i < sixWorksheet.Rows.Length; i++)
-                //{
-                //    for (int j = 10; j < 10 + sixFormation.Length; j++)
-                //    {
-                //        decimal excavationsAmount = excavationData.Where
-                //            (e => e.Monument == sixWorksheet.Columns[0].Rows[i].Text &&
-                //            e.Formation == sixWorksheet.Columns[j].Rows[0].DisplayText &&
-                //            e.Sprinkling == sixWorksheet.Columns[1].Rows[i].Text &&
-                //            e.Safety != null && e.Safety.Contains(sixWorksheet.Columns[5].Rows[i].Text) &&
-                //            e.Relief != null && e.Relief.Contains(sixWorksheet.Columns[6].Rows[i].Text) &&
-                //            e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(sixWorksheet.Columns[2].Rows[i].Text) &&
-                //            e.Clay != null && e.Clay.Contains(sixWorksheet.Columns[3].Rows[i].Text) &&
-                //            e.Admixture != null && e.Admixture.Contains(sixWorksheet.Columns[4].Rows[i].Text)).Sum(s =>
-                //            {
-                //                if (decimal.TryParse(s.Analogy, out decimal result))
-                //                {
-                //                    return result;
-                //                }
-
-                //                return 0;
-                //            });
-                //        sixWorksheet.Columns[j].Rows[i].Text = excavationsAmount.ToString();
-                //    }
-                //}
+                WriteFirstWorkSheet(excavationData, workbook.Worksheets[0]);
+                WriteSecondWorkSheet(excavationData, workbook.Worksheets[1]);
+                WriteThirdWorkSheet(excavationData, workbook.Worksheets[2]);
+                WriteFouthWorkSheet(excavationData, workbook.Worksheets[3]);
+                WriteFifthWorkSheet(excavationData, workbook.Worksheets[4]);
+                WriteSixthWorkSheet(excavationData, workbook.Worksheets[5]);
 
                 // 7
                 IWorksheet seventhWorksheet = workbook.Worksheets[6];
@@ -289,55 +62,39 @@ namespace AnalyticsTableExcel
             }
         }
 
-        private void WriteSecondWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
+        private void WriteSixthWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
         {
-            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic2Header();
+            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic6Header();
             ExcavationViewModelFiller filler = new();
-            IList<Statistic2ViewModel> statisticData = filler.FillStatistic2(excavations);
+            IList<Statistic6ViewModel> statisticData = filler.FillStatistic6(excavations);
 
             worksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
             worksheet.ImportData(statisticData, 2, 1, false);
+            worksheet.InsertColumn(9);
+            worksheet.InsertColumn(10);
 
-            // TODO: убрать все в один цикл.
-            string[] analogiesSum = NewMethod(excavationData, worksheet, statisticData);
+            var analogiesSum = new string[worksheet.Rows.Length];
+            var analogiesSum1 = new string[worksheet.Rows.Length];
+            var formations = excavationData.Select(e => e.Formation).Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, formations.Length];
 
-            worksheet.InsertColumn(12);
-            analogiesSum = new string[worksheet.Rows.Length];
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/').FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/').FirstOrDefault());
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch1 = (int index) => excavationData.Where(e =>
+                e.Monument == statisticData[index - 1].Monument);
+
             for (int i = 1; i < worksheet.Rows.Length; i++)
             {
-                // TODO: Вынести в метод с Expression.
-                decimal analogySum = excavationData.Where(e => e.Formation == statisticData[i - 1].Formation &&
-                            e.Monument == statisticData[i - 1].Monument &&
-                            e.Description == statisticData[i - 1].Description).Sum(s =>
-                            {
-                                if (decimal.TryParse(s.Analogy, out decimal result))
-                                {
-                                    return result;
-                                }
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
+                CalculateAnalogiesSum(analogiesSum1, statisticData[i - 1].Analogy, i, excavationSearch1);
 
-                                return 0;
-                            });
-                decimal currentAnalogy = string.IsNullOrWhiteSpace(statisticData[i - 1].Analogy) ? 0m : decimal.Parse(statisticData[i - 1].Analogy);
-                analogiesSum[i - 1] = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-            }
-            worksheet.ImportArray(analogiesSum, 2, 12, true);
-            worksheet.ImportArray(new string[] { "%" }, 1, 12, false);
-
-            var secondSquares = excavationData.Select(e => e.Square.HasValue ? e.Square.Value.ToString() : string.Empty).Distinct().ToArray();
-            worksheet.ImportArray(secondSquares, 1, 13, false);
-
-            // TODO: Вынести в метод.
-            var excavationsAmounts = new object[worksheet.Rows.Length, secondSquares.Length];
-            for (int i = 1; i < worksheet.Rows.Length; i++)
-            {
-                for (int j = 12; j < 12 + secondSquares.Length; j++)
+                for (int j = 10; j < 10 + formations.Length; j++)
                 {
-                    excavationsAmounts[i - 1, j - 12] = excavationData.Where
+                    excavationsAmounts[i - 1, j - 10] = excavationData.Where
                         (e => e.Monument == statisticData[i - 1].Monument &&
-                        e.Formation == statisticData[i - 1].Formation &&
-                        e.Description == statisticData[i - 1].Description &&
-                        (!e.Square.HasValue && string.IsNullOrEmpty(secondSquares[j - 12]) ||
-                            e.Square.HasValue && e.Square.Value.ToString() == secondSquares[j - 12]) &&
+                        e.Formation == formations[j - 10] &&
                         e.Sprinkling == statisticData[i - 1].Sprinkling &&
                         e.Safety != null && e.Safety.Contains(statisticData[i - 1].Safety) &&
                         e.Relief != null && e.Relief.Contains(statisticData[i - 1].Relief) &&
@@ -354,33 +111,247 @@ namespace AnalyticsTableExcel
                         });
                 }
             }
-            worksheet.ImportArray(excavationsAmounts, 2, 13);
+
+            excavationSearch = null;
+            excavationSearch1 = null;
+
+            worksheet.ImportArray(analogiesSum, 2, 9, true);
+            worksheet.ImportArray(new string[] { "% от части" }, 1, 9, false);
+
+            worksheet.ImportArray(analogiesSum1, 2, 10, true);
+            worksheet.ImportArray(new string[] { "%" }, 1, 10, false);
+
+            worksheet.ImportArray(formations, 1, 11, false);
+            worksheet.ImportArray(excavationsAmounts, 2, 11);
         }
 
-        private static string[] NewMethod(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet, IList<Statistic2ViewModel> statisticData)
+        private void WriteFifthWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
         {
-            worksheet.InsertColumn(11);
+            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic5Header();
+            ExcavationViewModelFiller filler = new();
+            IList<Statistic5ViewModel> statisticData = filler.FillStatistic5(excavations);
+
+            worksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
+            worksheet.ImportData(statisticData, 2, 1, false);
+            worksheet.InsertColumn(5);
+
             var analogiesSum = new string[worksheet.Rows.Length];
+            var formations = excavationData.Select(e => e.Formation).Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, formations.Length];
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/', 1).FirstOrDefault());
+
             for (int i = 1; i < worksheet.Rows.Length; i++)
             {
-                decimal analogySum = excavationData.Where(e => e.Formation == statisticData[i - 1].Formation &&
-                            e.Monument == statisticData[i - 1].Monument &&
-                            e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[i - 1].Sprinkling.Split('/', 1).FirstOrDefault()).Sum(s =>
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
+
+                for (int j = 5; j < 5 + formations.Length; j++)
+                {
+                    excavationsAmounts[i - 1, j - 5] = excavationData.Where
+                        (e => e.Monument == statisticData[i - 1].Monument &&
+                        e.Formation == formations[j - 5] &&
+                        e.Sprinkling == statisticData[i - 1].Sprinkling &&
+                        e.Dating == statisticData[i - 1].Dating).Sum(s =>
+                        {
+                            if (decimal.TryParse(s.Analogy, out decimal result))
                             {
-                                if (decimal.TryParse(s.Analogy, out decimal result))
-                                {
-                                    return result;
-                                }
+                                return result;
+                            }
 
-                                return 0;
-                            });
-
-                decimal currentAnalogy = string.IsNullOrWhiteSpace(statisticData[i - 1].Analogy) ? 0m : decimal.Parse(statisticData[i - 1].Analogy);
-                analogiesSum[i - 1] = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
+                            return 0;
+                        });
+                }
             }
+
+            excavationSearch = null;
+
+            worksheet.ImportArray(analogiesSum, 2, 5, true);
+            worksheet.ImportArray(new string[] { "% от части" }, 1, 5, false);
+
+            worksheet.ImportArray(formations, 1, 6, false);
+            worksheet.ImportArray(excavationsAmounts, 2, 6);
+        }
+
+        private void WriteFouthWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
+        {
+            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic4Header();
+            ExcavationViewModelFiller filler = new();
+            IList<Statistic4ViewModel> statisticData = filler.FillStatistic4(excavations);
+
+            worksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
+            worksheet.ImportData(statisticData, 2, 1, false);
+            worksheet.InsertColumn(10);
+            worksheet.InsertColumn(11);
+
+            var analogiesSum = new string[worksheet.Rows.Length];
+            var analogiesSum1 = new string[worksheet.Rows.Length];
+            var descriptions = excavationData.Select(e => e.Description).Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, descriptions.Length];
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/', 1).FirstOrDefault());
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch1 = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument);
+
+            for (int i = 1; i < worksheet.Rows.Length; i++)
+            {
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
+                CalculateAnalogiesSum(analogiesSum1, statisticData[i - 1].Analogy, i, excavationSearch1);
+
+                for (int j = 11; j < 11 + descriptions.Length; j++)
+                {
+                    excavationsAmounts[i - 1, j - 11] = excavationData.Where
+                        (e => e.Monument == statisticData[i - 1].Monument &&
+                        e.Formation == statisticData[i - 1].Formation &&
+                        e.Description == descriptions[j - 11] &&
+                        e.Sprinkling == statisticData[i - 1].Sprinkling &&
+                        e.Safety != null && e.Safety.Contains(statisticData[i - 1].Safety) &&
+                        e.Relief != null && e.Relief.Contains(statisticData[i - 1].Relief) &&
+                        e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(statisticData[i - 1].ReconstructionReliability) &&
+                        e.Clay != null && e.Clay.Contains(statisticData[i - 1].Clay) &&
+                        e.Admixture != null && e.Admixture.Contains(statisticData[i - 1].Admixture)).Sum(s =>
+                        {
+                            if (decimal.TryParse(s.Analogy, out decimal result))
+                            {
+                                return result;
+                            }
+
+                            return 0;
+                        });
+                }
+            }
+
+            excavationSearch = null;
+            excavationSearch1 = null;
+
+            worksheet.ImportArray(analogiesSum, 2, 10, true);
+            worksheet.ImportArray(new string[] { "% от части" }, 1, 10, false);
+
+            worksheet.ImportArray(analogiesSum1, 2, 11, true);
+            worksheet.ImportArray(new string[] { "%" }, 1, 11, false);
+
+            worksheet.ImportArray(descriptions, 1, 12, false);
+            worksheet.ImportArray(excavationsAmounts, 2, 12);
+        }
+
+        private void WriteThirdWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
+        {
+            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic3Header();
+            ExcavationViewModelFiller filler = new();
+            IList<Statistic3ViewModel> statisticData = filler.FillStatistic3(excavations);
+
+            worksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
+            worksheet.ImportData(statisticData, 2, 1, false);
+            worksheet.InsertColumn(6);
+
+            var analogiesSum = new string[worksheet.Rows.Length];
+            var descriptions = excavationData.Select(e => e.Description).Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, descriptions.Length];
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/', 1).FirstOrDefault());
+
+            for (int i = 1; i < worksheet.Rows.Length; i++)
+            {
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
+
+                for (int j = 6; j < 6 + descriptions.Length; j++)
+                {
+                    excavationsAmounts[i - 1, j - 6] = excavationData.Where
+                        (e => e.Monument == statisticData[i - 1].Monument &&
+                        e.Formation == statisticData[i - 1].Formation &&
+                        e.Description == descriptions[j - 6] &&
+                        e.Sprinkling == statisticData[i - 1].Sprinkling &&
+                        e.Dating == statisticData[i - 1].Dating).Sum(s =>
+                        {
+                            if (decimal.TryParse(s.Analogy, out decimal result))
+                            {
+                                return result;
+                            }
+
+                            return 0;
+                        });
+                }
+            }
+            excavationSearch = null;
+
+            worksheet.ImportArray(analogiesSum, 2, 6, true);
+            worksheet.ImportArray(new string[] { "% от части" }, 1, 6, false);
+
+            worksheet.ImportArray(descriptions, 1, 7, false);
+            worksheet.ImportArray(excavationsAmounts, 2, 7);
+        }
+
+        private void WriteSecondWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
+        {
+            IEnumerable<string> statisticHeader = HeadSetter.GetStatistic2Header();
+            ExcavationViewModelFiller filler = new();
+            IList<Statistic2ViewModel> statisticData = filler.FillStatistic2(excavations);
+
+            worksheet.ImportArray(statisticHeader.ToArray(), 1, 1, false);
+            worksheet.ImportData(statisticData, 2, 1, false);
+            worksheet.InsertColumn(11);
+            worksheet.InsertColumn(12);
+
+            var analogiesSum = new string[worksheet.Rows.Length];
+            var analogiesSum1 = new string[worksheet.Rows.Length];
+            var squares = excavationData.Select(e => e.Square.HasValue ? e.Square.Value.ToString() : string.Empty).Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, squares.Length];
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/', 1).FirstOrDefault());
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch1 = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument &&
+                e.Description == statisticData[index - 1].Description);
+
+            for (int i = 1; i < worksheet.Rows.Length; i++)
+            {
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
+                CalculateAnalogiesSum(analogiesSum1, statisticData[i - 1].Analogy, i, excavationSearch1);
+
+                for (int j = 12; j < 12 + squares.Length; j++)
+                {
+                    excavationsAmounts[i - 1, j - 12] = excavationData.Where
+                        (e => e.Monument == statisticData[i - 1].Monument &&
+                        e.Formation == statisticData[i - 1].Formation &&
+                        e.Description == statisticData[i - 1].Description &&
+                        (!e.Square.HasValue && string.IsNullOrEmpty(squares[j - 12]) ||
+                            e.Square.HasValue && e.Square.Value.ToString() == squares[j - 12]) &&
+                        e.Sprinkling == statisticData[i - 1].Sprinkling &&
+                        e.Safety != null && e.Safety.Contains(statisticData[i - 1].Safety) &&
+                        e.Relief != null && e.Relief.Contains(statisticData[i - 1].Relief) &&
+                        e.ReconstructionReliability != null && e.ReconstructionReliability.Contains(statisticData[i - 1].ReconstructionReliability) &&
+                        e.Clay != null && e.Clay.Contains(statisticData[i - 1].Clay) &&
+                        e.Admixture != null && e.Admixture.Contains(statisticData[i - 1].Admixture)).Sum(s =>
+                        {
+                            if (decimal.TryParse(s.Analogy, out decimal result))
+                            {
+                                return result;
+                            }
+
+                            return 0;
+                        });
+                }
+            }
+
+            excavationSearch = null;
+            excavationSearch1 = null;
+
             worksheet.ImportArray(analogiesSum, 2, 11, true);
             worksheet.ImportArray(new string[] { "% от части" }, 1, 11, false);
-            return analogiesSum;
+
+            worksheet.ImportArray(analogiesSum1, 2, 12, true);
+            worksheet.ImportArray(new string[] { "%" }, 1, 12, false);
+
+            worksheet.ImportArray(squares, 1, 13, false);
+            worksheet.ImportArray(excavationsAmounts, 2, 13);
         }
 
         private void WriteFirstWorkSheet(IEnumerable<ExcavationViewModel> excavationData, IWorksheet worksheet)
@@ -395,39 +366,26 @@ namespace AnalyticsTableExcel
             worksheet.InsertColumn(7);
 
             var analogiesSum = new string[worksheet.Rows.Length];
+            var squares = excavationData.Select(e => e.Square.HasValue ? e.Square.Value.ToString() : string.Empty)
+                .Distinct().ToArray();
+            var excavationsAmounts = new object[worksheet.Rows.Length, squares.Length];
+
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch = (int index) => excavationData.Where(e =>
+                e.Formation == statisticData[index - 1].Formation && e.Monument == statisticData[index - 1].Monument &&
+                e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[index - 1].Sprinkling.Split('/', 1).FirstOrDefault());
+
             for (int i = 1; i < worksheet.Rows.Length; i++)
             {
-                decimal analogySum = excavationData.Where(e => e.Formation == statisticData[i - 1].Formation &&
-                            e.Monument == statisticData[i - 1].Monument &&
-                            e.Sprinkling.Split('/', 1).FirstOrDefault() == statisticData[i - 1].Sprinkling.Split('/', 1).FirstOrDefault()).Sum(s =>
-                            {
-                                if (decimal.TryParse(s.Analogy, out decimal result))
-                                {
-                                    return result;
-                                }
+                CalculateAnalogiesSum(analogiesSum, statisticData[i - 1].Analogy, i, excavationSearch);
 
-                                return 0;
-                            });
-                decimal currentAnalogy = string.IsNullOrWhiteSpace(statisticData[i - 1].Analogy) ? 0m : decimal.Parse(statisticData[i - 1].Analogy);
-                analogiesSum[i - 1] = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
-            }
-            worksheet.ImportArray(analogiesSum, 2, 7, true);
-
-            worksheet.ImportArray(new string[] { "% от части" }, 1, 7, false);
-            var firstSquares = excavationData.Select(e => e.Square.HasValue ? e.Square.Value.ToString() : string.Empty).Distinct().ToArray();
-            worksheet.ImportArray(firstSquares, 1, 8, false);
-
-            var excavationsAmounts = new object[worksheet.Rows.Length, firstSquares.Length];
-            for (int i = 1; i < worksheet.Rows.Length; i++)
-            {
-                for (int j = 7; j < 7 + firstSquares.Length; j++)
+                for (int j = 7; j < 7 + squares.Length; j++)
                 {
                     excavationsAmounts[i - 1, j - 7] = excavationData.Where
                         (e => e.Monument == statisticData[i - 1].Monument &&
                         e.Formation == statisticData[i - 1].Formation &&
                         e.Description == statisticData[i - 1].Description &&
-                        (!e.Square.HasValue && string.IsNullOrEmpty(firstSquares[j - 7]) ||
-                            e.Square.HasValue && e.Square.Value.ToString() == firstSquares[j - 7]) &&
+                        (!e.Square.HasValue && string.IsNullOrEmpty(squares[j - 7]) ||
+                            e.Square.HasValue && e.Square.Value.ToString() == squares[j - 7]) &&
                         e.Sprinkling == statisticData[i - 1].Sprinkling &&
                         e.Dating == statisticData[i - 1].Dating).Sum(s =>
                         {
@@ -440,7 +398,30 @@ namespace AnalyticsTableExcel
                         });
                 }
             }
+
+            excavationSearch = null;
+
+            worksheet.ImportArray(analogiesSum, 2, 7, true);
+            worksheet.ImportArray(new string[] { "% от части" }, 1, 7, false);
+
+            worksheet.ImportArray(squares, 1, 8, false);
             worksheet.ImportArray(excavationsAmounts, 2, 8);
+        }
+
+        private static void CalculateAnalogiesSum(string[] analogiesSum, string analogy, int index,
+            Func<int, IEnumerable<ExcavationViewModel>> excavationSearch)
+        {
+            decimal analogySum = excavationSearch(index).Sum(s =>
+                            {
+                                if (decimal.TryParse(s.Analogy, out decimal result))
+                                {
+                                    return result;
+                                }
+
+                                return 0;
+                            });
+            decimal currentAnalogy = string.IsNullOrWhiteSpace(analogy) ? 0m : decimal.Parse(analogy);
+            analogiesSum[index - 1] = analogySum == 0 ? "0" : (currentAnalogy / analogySum * 100).ToString("0.####");
         }
 
         public static void OpenDocument()
