@@ -125,7 +125,7 @@ namespace BrandDataProcessingBL
             int parentId = e.ParentId.Value;
             repository.Add(find, parentId);
             int parentFindClassId = view.SelectedParentId.Value;
-            RefreshFinds(parentFindClassId);
+            RefreshFinds(parentFindClassId, fieldNumber: find.FieldNumber);
         }
 
         private void CheckOnSameFind(Find find)
@@ -162,9 +162,14 @@ namespace BrandDataProcessingBL
             view.Properties = PropertiesRetriever.Find.Retrieve(parentFindsClass?.Class);
         }
 
-        private void RefreshFinds(int? id = null)
+        private void RefreshFinds(int? id = null, string fieldNumber = null)
         {
             finds = repository.GetAll(id);
+            if (!string.IsNullOrEmpty(fieldNumber))
+            {
+                view.FindCrud.AddedFieldNumber = fieldNumber;
+            }
+
             RefreshBrandDataList(finds);
         }
 

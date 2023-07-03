@@ -12,6 +12,8 @@ namespace Tools.CrudView
     {
         public int ClassificationId { get; set; }
 
+        public string AddedFieldNumber { get; set; }
+
         public event EventHandler<GetIdEventArgs<Classification>> GetClassificationId;
         public event EventHandler<FindInfoEventArgs> UpdateByViewModel;
         public event EventHandler<FindInfoEventArgs> AddByViewModel;

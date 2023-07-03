@@ -15,7 +15,6 @@ using BrandDataProcessing;
 using System.Collections.Generic;
 using System.IO;
 using AnalyticsTableExcel;
-using AddBrandDataUI;
 
 namespace BrandDataProcessingUI
 {
@@ -189,7 +188,6 @@ namespace BrandDataProcessingUI
         private void smiDelete_Click(object sender, EventArgs e)
         {
             Delete();
-            ClearTableSelection();
         }
 
         private void Delete()
@@ -199,23 +197,45 @@ namespace BrandDataProcessingUI
                 return;
 
             List<DataGridViewCellCollection> cells = GetSelectedRowsCells();
+            int selectedRowIndex = GetFirstSelectedRowByDelete();
+
             switch (currentTableName)
             {
                 case nameof(Excavation):
                     Delete(cells, RetrieverSelectedData.GetSelectedExcavation, ExcavationCrud);
+                    MoveToChangedRow(selectedRowIndex, true);
                     break;
                 case nameof(FindsClass):
                     Delete(cells, RetrieverSelectedData.GetSelectedFindsClass, FindsClassCrud);
+                    MoveToChangedRow(selectedRowIndex, true);
                     break;
                 case nameof(Find):
                     Delete(cells, RetrieverSelectedData.GetSelectedFind, FindCrud);
+                    MoveToChangedRow(selectedRowIndex, true);
                     break;
                 case nameof(Classification):
                     Delete(cells, RetrieverSelectedData.GetSelectedClassification, ClassificationCrud);
+                    MoveToChangedRow(selectedRowIndex, true);
                     break;
                 default:
                     break;
             }
+        }
+
+        private int GetFirstSelectedRowByDelete()
+        {
+            var firstSelectedRowIndex = 0;
+            try
+            {
+                firstSelectedRowIndex = dgvTable.SelectedRows[0].Index - 1 > 0 ?
+                    dgvTable.SelectedRows[0].Index - 1 : 0;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                firstSelectedRowIndex = 0;
+            }
+
+            return firstSelectedRowIndex;
         }
 
         private void Delete<T>(List<DataGridViewCellCollection> cells, Func<DataGridViewCellCollection, T> retrieverSelectedData, BrandDataCrud<T> dataCrud)
@@ -263,6 +283,11 @@ namespace BrandDataProcessingUI
         private void tlsAdd_Click(object sender, EventArgs e)
         {
             AddData();
+            foreach (DataGridViewRow row in dgvTable.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == FindCrud.AddedFieldNumber)
+                    MoveToChangedRow(row.Index);
+            }
         }
 
         private void AddData()
@@ -297,6 +322,7 @@ namespace BrandDataProcessingUI
         private void smiUpdate_Click(object sender, EventArgs e)
         {
             UpdateData();
+            MoveToChangedRow(selectedRowIndex);
         }
 
         private void UpdateData()
@@ -324,6 +350,18 @@ namespace BrandDataProcessingUI
                 default:
                     break;
             }
+        }
+
+        private void MoveToChangedRow(int selectedRowIndex, bool isDeleted = false)
+        {
+            if (isDeleted)
+            {
+                selectedRowIndex--;
+            }
+
+            dgvTable.FirstDisplayedScrollingRowIndex = selectedRowIndex;
+            ClearTableSelection();
+            dgvTable.Rows[selectedRowIndex].Selected = true;
         }
 
         private void UpdateFind(DataGridViewCellCollection cells)
